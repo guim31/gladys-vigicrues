@@ -30,6 +30,21 @@ Gladys before reporting a problem.
 
 In scope: the code of this repository and the Docker image it publishes.
 
+What the integration handles:
+
+- **Stored in `/data`** (`/data/vigicrues.json`): what it learnt about the followed stations
+  (name, commune, river, coordinates of the station, whether it measures a flow, its Vigicrues
+  section), the stations of the departments and sections it looked up, the last readings and
+  the last vigilance levels. No secret, no account, no token: the services need none. The
+  **house coordinates** are read from Gladys (manifest `location: true`) only to find the
+  nearest stations; they are never stored nor logged.
+- **Network**: HTTPS GET requests to two public open-data services only,
+  `hubeau.eaufrance.fr` (station referential and readings) and `www.vigicrues.gouv.fr`
+  (vigilance and referential). The requests carry station, commune or department codes and,
+  for "around my house", a box around the house whose bounds are rounded to a 0.05° grid
+  (about 5 km), so Hub'Eau learns the area of the house, not its position. Nothing listens on
+  the network.
+
 Out of scope: Gladys Assistant itself (see its
-[security policy](https://github.com/GladysAssistant/Gladys/security/policy)),
-and the third-party services and devices the integration talks to.
+[security policy](https://github.com/GladysAssistant/Gladys/security/policy)), and the Hub'Eau
+and Vigicrues services.

@@ -2,3 +2,6 @@ node_modules/
 package-lock.json
 /data/
 *.log
+# Recorded answers of Hub'Eau and Vigicrues (see test/fixtures/README.md).
+test/fixtures/hubeau/
+test/fixtures/vigicrues/

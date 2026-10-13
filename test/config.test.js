@@ -1,33 +1,52 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeConfig, DEFAULT_CONFIG } from '../src/config.js';
+import {
+  DEFAULT_CONFIG,
+  departmentOf,
+  normalizeConfig,
+  parseCommuneCodes,
+  parseStationCodes,
+  stationCodeOf,
+} from '../src/config.js';
 
-test('normalizeConfig returns the defaults when called with no argument', () => {
-  assert.deepEqual(normalizeConfig(), DEFAULT_CONFIG);
+test('the defaults: nothing followed, every 15 minutes, French names', () => {
+  assert.deepEqual(normalizeConfig(), {
+    stationCodes: [],
+    communeCodes: [],
+    invalid: [],
+    homeRadiusKm: 0,
+    refreshMinutes: 15,
+    language: 'fr',
+  });
+  assert.deepEqual(normalizeConfig(null), normalizeConfig(DEFAULT_CONFIG));
 });
 
-test('normalizeConfig keeps user values over the defaults', () => {
-  const config = normalizeConfig({ latitude: 45.5, longitude: -73.6, unit: 'fahrenheit' });
-  assert.equal(config.latitude, 45.5);
-  assert.equal(config.longitude, -73.6);
-  assert.equal(config.unit, 'fahrenheit');
+test('station codes: plain, lower case, Vigicrues URLs, duplicates and mistakes', () => {
+  assert.deepEqual(
+    parseStationCodes(
+      'O200004001, b540001001; https://www.vigicrues.gouv.fr/station/F700000103 O200004001 Toulouse',
+    ),
+    { codes: ['O200004001', 'B540001001', 'F700000103'], invalid: ['Toulouse'] },
+  );
+  assert.equal(stationCodeOf('https://www.vigicrues.gouv.fr/station/B720000001?x=1'), 'B720000001');
+  assert.equal(stationCodeOf('12345'), null);
 });
 
-test('normalizeConfig coerces numeric strings coming from a form', () => {
-  const config = normalizeConfig({ latitude: '48.8', longitude: '2.3', poll_frequency: '600' });
-  assert.equal(config.latitude, 48.8);
-  assert.equal(config.longitude, 2.3);
-  assert.equal(config.poll_frequency, 600);
-  assert.equal(typeof config.poll_frequency, 'number');
+test('commune codes: INSEE, Corsica, overseas, and their department', () => {
+  assert.deepEqual(parseCommuneCodes('31555 2a004, 97411 31555 Paris'), {
+    codes: ['31555', '2A004', '97411'],
+    invalid: ['Paris'],
+  });
+  assert.equal(departmentOf('31555'), '31');
+  assert.equal(departmentOf('2A004'), '2A');
+  assert.equal(departmentOf('97411'), '974');
 });
 
-test('normalizeConfig falls back to the default for a missing numeric field', () => {
-  const config = normalizeConfig({ unit: 'celsius' });
-  assert.equal(config.poll_frequency, DEFAULT_CONFIG.poll_frequency);
-});
-
-test('GLADYS_PREFER_LOCAL defaults to true and only an explicit false disables it', () => {
-  assert.equal(normalizeConfig().GLADYS_PREFER_LOCAL, true);
-  assert.equal(normalizeConfig({ GLADYS_PREFER_LOCAL: true }).GLADYS_PREFER_LOCAL, true);
-  assert.equal(normalizeConfig({ GLADYS_PREFER_LOCAL: false }).GLADYS_PREFER_LOCAL, false);
+test('selects outside their options fall back to the defaults', () => {
+  const config = normalizeConfig({ around_home: '7', refresh_interval: '1', language: 'it' });
+  assert.equal(config.homeRadiusKm, 0);
+  assert.equal(config.refreshMinutes, 15);
+  assert.equal(config.language, 'fr');
+  const set = normalizeConfig({ around_home: '20', refresh_interval: '30', language: 'de' });
+  assert.deepEqual([set.homeRadiusKm, set.refreshMinutes, set.language], [20, 30, 'de']);
 });

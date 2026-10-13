@@ -1,0 +1,39 @@
+{
+ "Scenario": {
+  "Flux": {
+   "Version": "1",
+   "DateRevision": "2019-07-02T10:00:00"
+  },
+  "CodeScenario": "VIC",
+  "VersionScenario": "1.1",
+  "NomScenario": "Référentiels et données de la vigilance crues métropolitaine",
+  "DateHeureCreationFichier": "2026-09-29T14:05:59+00:00",
+  "Emetteur": "1524"
+ },
+ "ListEntVigiCru": [
+  {
+   "CdEntVigiCru": "LO16",
+   "TypEntVigiCru": "8",
+   "LbEntVigiCru": "Meuse couloir meusien",
+   "CdDistrictEntVigiCru_1": "A renseigner obligatoirement",
+   "DtHrCreatEntVigiCru": "A renseigner obligatoirement",
+   "DtHrMajEntVigiCru": "A renseigner obligatoirement",
+   "StEntVigiCru": "Validé",
+   "CdTCC": "A renseigner obligatoirement",
+   "CdInt": "A renseigner obligatoirement",
+   "aNPlusUn": {
+    "CdEntVigiCruSuperieur": "2",
+    "TypEntVigiCruSuperieur": "5",
+    "Link": "https://www.vigicrues.gouv.fr/services/v1.1/TerEntVigiCru.json?CdEntVigiCru=2&TypEntVigiCru=5"
+   },
+   "aNMoinsUn": [
+    {
+     "CdEntVigiCruInferieur": "B315002001",
+     "TypEntVigiCruInferieur": "7",
+     "LbEntVigiCruInferieur": "Stenay",
+     "Link": "https://www.vigicrues.gouv.fr/services/v1.1/StaEntVigiCru.json?CdEntVigiCru=B315002001&TypEntVigiCru=7"
+    }
+   ]
+  }
+ ]
+}

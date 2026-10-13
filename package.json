@@ -1,8 +1,8 @@
 {
-  "name": "gladys-integration-template-js",
+  "name": "gladys-vigicrues",
   "version": "1.0.0",
   "private": true,
-  "description": "Official starter template to build an external integration for Gladys Assistant with the JavaScript SDK.",
+  "description": "Gladys Assistant external integration: French flood vigilance (Vigicrues) and river height and flow (Hub'Eau).",
   "type": "module",
   "main": "index.js",
   "scripts": {

@@ -1,177 +1,770 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "Demo Devices Template",
+  "name": "Vigicrues",
   "description": {
-    "en": "Starter template showing sensors, a switch, a dimmable light and a smart plug.",
-    "fr": "Template de démarrage : capteurs, interrupteur, lampe variable et prise connectée."
+    "en": "French flood vigilance, river height and flow near your home, from Vigicrues and Hub'Eau.",
+    "fr": "Vigilance crues, hauteur et débit des cours d'eau près de chez vous, par Vigicrues et Hub'Eau.",
+    "de": "Hochwasserwarnung, Wasserstand und Abfluss der Flüsse nahe deinem Zuhause (Frankreich).",
+    "es": "Vigilancia de crecidas, altura y caudal de los ríos cerca de su casa (Francia), por Vigicrues."
   },
   "version": "1.0.0",
-  "docker_image": "ghcr.io/gladysassistant/integration-template-js:1.0.0",
+  "docker_image": "ghcr.io/guim31/gladys-vigicrues:1.0.0",
   "gladys_version": ">=5.1.0",
-  "cover_image": "https://raw.githubusercontent.com/GladysAssistant/integration-template-js/master/cover.png",
-  "categories": ["lighting", "security", "environment"],
-  "transports": ["local", "cloud"],
+  "cover_image": "https://raw.githubusercontent.com/guim31/gladys-vigicrues/main/cover.png",
+  "categories": ["environment"],
+  "transports": ["cloud"],
+  "location": true,
   "config_schema": [
     {
       "key": "intro",
       "type": "section",
-      "label": { "en": "Getting started", "fr": "Pour commencer" },
+      "label": {
+        "en": "Your stations",
+        "fr": "Vos stations",
+        "de": "Deine Stationen",
+        "es": "Sus estaciones"
+      },
       "description": {
-        "en": "The demo weather station reads real data from the free Open-Meteo API: pick the coordinates to observe. No account, no API key.",
-        "fr": "La station météo de démonstration lit de vraies données via l'API gratuite Open-Meteo : choisissez les coordonnées à observer. Pas de compte, pas de clé d'API."
+        "en": "Follow the gauging stations of your rivers: by code, by commune, or the nearest ones to your house. \"Find stations\" below lists them with their river. Save, then create the devices in the Discover tab.",
+        "fr": "Suivez les stations de mesure de vos cours d'eau : par code, par commune, ou les plus proches de votre maison. « Chercher des stations » ci-dessous les liste avec leur cours d'eau. Enregistrez, puis créez les appareils dans l'onglet Découverte.",
+        "de": "Verfolge die Pegelstationen deiner Flüsse: per Code, per Gemeinde oder die nächsten zu deinem Haus. „Stationen suchen“ unten listet sie mit ihrem Fluss auf. Speichere und lege dann die Geräte im Tab „Entdecken“ an.",
+        "es": "Siga las estaciones de medición de sus ríos: por código, por municipio o las más cercanas a su casa. «Buscar estaciones» más abajo las enumera con su río. Guarde y cree los dispositivos en la pestaña Descubrir."
       },
       "links": [
         {
-          "url": "https://open-meteo.com/en/docs",
-          "label": { "en": "Open-Meteo documentation", "fr": "Documentation Open-Meteo" }
+          "url": "https://github.com/guim31/gladys-vigicrues/blob/main/docs/en.md",
+          "label": {
+            "en": "Setup guide",
+            "fr": "Guide d'installation",
+            "de": "Installationsanleitung",
+            "es": "Guía de instalación"
+          }
         }
       ]
     },
     {
-      "key": "latitude",
-      "type": "number",
-      "label": { "en": "Latitude", "fr": "Latitude" },
-      "description": {
-        "en": "Latitude used for the demo weather sensor.",
-        "fr": "Latitude utilisée par le capteur météo de démonstration."
+      "key": "about",
+      "type": "section",
+      "label": {
+        "en": "Sources and limits",
+        "fr": "Sources et limites",
+        "de": "Quellen und Grenzen",
+        "es": "Fuentes y límites"
       },
-      "placeholder": { "en": "e.g. 48.8566", "fr": "ex. 48.8566" },
-      "required": true,
-      "default": 48.8566,
-      "min": -90,
-      "max": 90
-    },
-    {
-      "key": "longitude",
-      "type": "number",
-      "label": { "en": "Longitude", "fr": "Longitude" },
       "description": {
-        "en": "Longitude used for the demo weather sensor.",
-        "fr": "Longitude utilisée par le capteur météo de démonstration."
+        "en": "Data © Vigicrues and Hub'Eau (Licence Ouverte Etalab 2.0), read without an account. A complement, not a safety alert system: the official instructions prevail. Not affiliated with Vigicrues.",
+        "fr": "Données © Vigicrues et Hub'Eau (Licence Ouverte Etalab 2.0), lues sans compte. Un complément, pas un système d'alerte de sécurité : les consignes officielles priment. Non affiliée à Vigicrues.",
+        "de": "Daten © Vigicrues und Hub'Eau (Licence Ouverte Etalab 2.0), ohne Konto gelesen. Eine Ergänzung, kein Sicherheitswarnsystem: Die offiziellen Anweisungen haben Vorrang. Nicht mit Vigicrues verbunden.",
+        "es": "Datos © Vigicrues y Hub'Eau (Licence Ouverte Etalab 2.0), leídos sin cuenta. Un complemento, no un sistema de alerta de seguridad: prevalecen las instrucciones oficiales. Sin afiliación con Vigicrues."
       },
-      "placeholder": { "en": "e.g. 2.3522", "fr": "ex. 2.3522" },
-      "required": true,
-      "default": 2.3522,
-      "min": -180,
-      "max": 180
-    },
-    {
-      "key": "unit",
-      "type": "select",
-      "label": { "en": "Temperature unit", "fr": "Unité de température" },
-      "required": false,
-      "default": "celsius",
-      "options": [
-        { "value": "celsius", "label": { "en": "Celsius", "fr": "Celsius" } },
-        { "value": "fahrenheit", "label": { "en": "Fahrenheit", "fr": "Fahrenheit" } }
+      "links": [
+        {
+          "url": "https://www.vigicrues.gouv.fr",
+          "label": {
+            "en": "Vigicrues website",
+            "fr": "Site Vigicrues",
+            "de": "Website von Vigicrues",
+            "es": "Sitio web de Vigicrues"
+          }
+        },
+        {
+          "url": "https://hubeau.eaufrance.fr/page/api-hydrometrie",
+          "label": {
+            "en": "Hub'Eau hydrometry",
+            "fr": "Hub'Eau hydrométrie",
+            "de": "Hub'Eau Hydrometrie",
+            "es": "Hub'Eau hidrometría"
+          }
+        }
       ]
     },
     {
-      "key": "poll_frequency",
-      "type": "number",
-      "label": { "en": "Refresh interval (s)", "fr": "Intervalle de rafraîchissement (s)" },
+      "key": "stations",
+      "type": "string",
+      "label": {
+        "en": "Station codes",
+        "fr": "Codes des stations",
+        "de": "Stationscodes",
+        "es": "Códigos de estación"
+      },
       "description": {
-        "en": "How often sensors are polled, in seconds (one minute minimum).",
-        "fr": "Fréquence d'interrogation des capteurs, en secondes (une minute minimum)."
+        "en": "Codes separated by commas, or the addresses of their Vigicrues pages.",
+        "fr": "Codes séparés par des virgules, ou les adresses de leurs pages Vigicrues.",
+        "de": "Codes durch Kommas getrennt, oder die Adressen ihrer Vigicrues-Seiten.",
+        "es": "Códigos separados por comas, o las direcciones de sus páginas de Vigicrues."
+      },
+      "placeholder": {
+        "en": "e.g. O200004001, B540001001",
+        "fr": "ex. O200004001, B540001001",
+        "de": "z. B. O200004001, B540001001",
+        "es": "p. ej. O200004001, B540001001"
       },
       "required": false,
-      "default": 300,
-      "min": 60,
-      "max": 3600
+      "default": ""
+    },
+    {
+      "key": "communes",
+      "type": "string",
+      "label": {
+        "en": "Communes (INSEE codes)",
+        "fr": "Communes (codes INSEE)",
+        "de": "Gemeinden (INSEE-Codes)",
+        "es": "Municipios (códigos INSEE)"
+      },
+      "description": {
+        "en": "Every station in service of these communes, e.g. 31555 for Toulouse, 75056 for Paris.",
+        "fr": "Toutes les stations en service de ces communes, par exemple 31555 pour Toulouse, 75056 pour Paris.",
+        "de": "Alle Stationen in Betrieb dieser Gemeinden, z. B. 31555 für Toulouse, 75056 für Paris.",
+        "es": "Todas las estaciones en servicio de estos municipios, p. ej. 31555 para Toulouse, 75056 para París."
+      },
+      "placeholder": {
+        "en": "e.g. 31555",
+        "fr": "ex. 31555",
+        "de": "z. B. 31555",
+        "es": "p. ej. 31555"
+      },
+      "required": false,
+      "default": ""
+    },
+    {
+      "key": "around_home",
+      "type": "select",
+      "label": {
+        "en": "Around my house",
+        "fr": "Autour de ma maison",
+        "de": "Rund um mein Haus",
+        "es": "Alrededor de mi casa"
+      },
+      "description": {
+        "en": "Also follow the 3 nearest stations that send readings, within this distance of the location of your house in Gladys.",
+        "fr": "Suivre aussi les 3 stations les plus proches qui envoient des mesures, à cette distance au plus de la position de votre maison dans Gladys.",
+        "de": "Verfolge auch die 3 nächsten Stationen, die Messwerte senden, höchstens so weit vom Standort deines Hauses in Gladys entfernt.",
+        "es": "Seguir también las 3 estaciones más cercanas que envían mediciones, como máximo a esta distancia de la ubicación de su casa en Gladys."
+      },
+      "required": false,
+      "default": "0",
+      "options": [
+        {
+          "value": "0",
+          "label": {
+            "en": "No",
+            "fr": "Non",
+            "de": "Nein",
+            "es": "No"
+          }
+        },
+        {
+          "value": "5",
+          "label": {
+            "en": "Within 5 km",
+            "fr": "À 5 km",
+            "de": "Im Umkreis von 5 km",
+            "es": "A 5 km"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "en": "Within 10 km",
+            "fr": "À 10 km",
+            "de": "Im Umkreis von 10 km",
+            "es": "A 10 km"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "en": "Within 20 km",
+            "fr": "À 20 km",
+            "de": "Im Umkreis von 20 km",
+            "es": "A 20 km"
+          }
+        }
+      ]
+    },
+    {
+      "key": "refresh_interval",
+      "type": "select",
+      "label": {
+        "en": "Refresh interval",
+        "fr": "Fréquence de mise à jour",
+        "de": "Aktualisierungsintervall",
+        "es": "Intervalo de actualización"
+      },
+      "description": {
+        "en": "Stations send a reading every 5 to 60 minutes. The vigilance is read every 30 minutes.",
+        "fr": "Les stations envoient une mesure toutes les 5 à 60 minutes. La vigilance est lue toutes les 30 minutes.",
+        "de": "Die Stationen senden alle 5 bis 60 Minuten einen Messwert. Die Warnstufe wird alle 30 Minuten gelesen.",
+        "es": "Las estaciones envían una medición cada 5 a 60 minutos. La vigilancia se lee cada 30 minutos."
+      },
+      "required": false,
+      "default": "15",
+      "options": [
+        {
+          "value": "15",
+          "label": {
+            "en": "15 minutes",
+            "fr": "15 minutes",
+            "de": "15 Minuten",
+            "es": "15 minutos"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "en": "20 minutes",
+            "fr": "20 minutes",
+            "de": "20 Minuten",
+            "es": "20 minutos"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "en": "30 minutes",
+            "fr": "30 minutes",
+            "de": "30 Minuten",
+            "es": "30 minutos"
+          }
+        }
+      ]
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the feature names",
+        "fr": "Langue des noms de fonctionnalités",
+        "de": "Sprache der Funktionsnamen",
+        "es": "Idioma de los nombres de las funciones"
+      },
+      "description": {
+        "en": "Names given to the features of new devices (Water height, Flow…) and language of their texts (colour, last reading).",
+        "fr": "Noms donnés aux fonctionnalités des nouveaux appareils (Hauteur d'eau, Débit…) et langue de leurs textes (couleur, dernière mesure).",
+        "de": "Namen der Funktionen neuer Geräte (Wasserstand, Abfluss…) und Sprache ihrer Texte (Farbe, letzte Messung).",
+        "es": "Nombres de las funciones de los nuevos dispositivos (Altura del agua, Caudal…) e idioma de sus textos (color, última medición)."
+      },
+      "required": false,
+      "default": "fr",
+      "options": [
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ]
     }
   ],
   "actions": [
     {
-      "key": "test_weather",
-      "label": { "en": "Test the weather provider", "fr": "Tester le fournisseur météo" },
-      "timeout_seconds": 30
-    },
-    {
-      "key": "identify",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
+      "key": "search_stations",
+      "label": {
+        "en": "Find stations",
+        "fr": "Chercher des stations",
+        "de": "Stationen suchen",
+        "es": "Buscar estaciones"
+      },
+      "description": {
+        "en": "Lists the stations in service with their river and whether they send readings: around your house, in a commune, a department or by code.",
+        "fr": "Liste les stations en service avec leur cours d'eau et si elles envoient des mesures : autour de votre maison, dans une commune, un département ou par code.",
+        "de": "Listet die Stationen in Betrieb mit ihrem Fluss auf und ob sie Messwerte senden: rund um dein Haus, in einer Gemeinde, einem Département oder per Code.",
+        "es": "Enumera las estaciones en servicio con su río y si envían mediciones: alrededor de su casa, en un municipio, un departamento o por código."
+      },
+      "timeout_seconds": 60,
       "fields": [
         {
-          "key": "device",
+          "key": "query",
+          "type": "string",
+          "label": {
+            "en": "Where",
+            "fr": "Où",
+            "de": "Wo",
+            "es": "Dónde"
+          },
+          "description": {
+            "en": "Empty: around your house. Or a commune code (31555), a department and a name (31 Toulouse, 75 Seine), a station code.",
+            "fr": "Vide : autour de votre maison. Ou un code de commune (31555), un département et un nom (31 Toulouse, 75 Seine), un code de station.",
+            "de": "Leer: rund um dein Haus. Oder ein Gemeindecode (31555), ein Département und ein Name (31 Toulouse, 75 Seine), ein Stationscode.",
+            "es": "Vacío: alrededor de su casa. O un código de municipio (31555), un departamento y un nombre (31 Toulouse, 75 Seine), un código de estación."
+          },
+          "placeholder": {
+            "en": "e.g. 31 Toulouse",
+            "fr": "ex. 31 Toulouse",
+            "de": "z. B. 31 Toulouse",
+            "es": "p. ej. 31 Toulouse"
+          },
+          "required": false
+        },
+        {
+          "key": "radius",
           "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
+          "label": {
+            "en": "Distance around the house",
+            "fr": "Distance autour de la maison",
+            "de": "Entfernung um das Haus",
+            "es": "Distancia alrededor de la casa"
+          },
+          "description": {
+            "en": "10 km when empty.",
+            "fr": "10 km si vide.",
+            "de": "10 km, wenn leer.",
+            "es": "10 km si está vacío."
+          },
+          "required": false,
+          "options": [
+            {
+              "value": "5",
+              "label": {
+                "en": "5 km",
+                "fr": "5 km",
+                "de": "5 km",
+                "es": "5 km"
+              }
+            },
+            {
+              "value": "10",
+              "label": {
+                "en": "10 km",
+                "fr": "10 km",
+                "de": "10 km",
+                "es": "10 km"
+              }
+            },
+            {
+              "value": "20",
+              "label": {
+                "en": "20 km",
+                "fr": "20 km",
+                "de": "20 km",
+                "es": "20 km"
+              }
+            },
+            {
+              "value": "50",
+              "label": {
+                "en": "50 km",
+                "fr": "50 km",
+                "de": "50 km",
+                "es": "50 km"
+              }
+            }
+          ]
         }
       ]
     }
   ],
   "scene_triggers": [
     {
-      "key": "motion_detected",
-      "label": { "en": "Motion detected", "fr": "Mouvement détecté" },
+      "key": "vigilance_raised",
+      "label": {
+        "en": "Flood vigilance raised",
+        "fr": "La vigilance crues monte",
+        "de": "Hochwasserwarnung steigt",
+        "es": "La vigilancia de crecidas sube"
+      },
       "description": {
-        "en": "A demo motion sensor saw a person or an animal move.",
-        "fr": "Un détecteur de démonstration a vu bouger une personne ou un animal."
+        "en": "The section of a followed station goes to yellow, orange or red, or to a higher colour.",
+        "fr": "Le tronçon d'une station suivie passe au jaune, à l'orange ou au rouge, ou à une couleur plus haute.",
+        "de": "Der Abschnitt einer verfolgten Station wechselt auf Gelb, Orange oder Rot oder auf eine höhere Farbe.",
+        "es": "El tramo de una estación seguida pasa a amarillo, naranja o rojo, o a un color superior."
       },
       "fields": [
         {
-          "key": "device",
+          "key": "station",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Sensor", "fr": "Détecteur" }
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          }
         },
         {
-          "key": "target",
+          "key": "section",
+          "type": "string",
+          "label": {
+            "en": "Vigicrues section (optional)",
+            "fr": "Tronçon Vigicrues (facultatif)",
+            "de": "Vigicrues-Abschnitt (optional)",
+            "es": "Tramo Vigicrues (opcional)"
+          },
+          "placeholder": {
+            "en": "e.g. LO18",
+            "fr": "ex. LO18",
+            "de": "z. B. LO18",
+            "es": "p. ej. LO18"
+          },
+          "description": {
+            "en": "Code of the section, shown in the parameters of the device (VIGICRUES_SECTION).",
+            "fr": "Code du tronçon, visible dans les paramètres de l'appareil (VIGICRUES_SECTION).",
+            "de": "Code des Abschnitts, sichtbar in den Parametern des Geräts (VIGICRUES_SECTION).",
+            "es": "Código del tramo, visible en los parámetros del dispositivo (VIGICRUES_SECTION)."
+          }
+        },
+        {
+          "key": "color",
           "type": "multi_select",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" },
+          "label": {
+            "en": "New colour",
+            "fr": "Nouvelle couleur",
+            "de": "Neue Farbe",
+            "es": "Nuevo color"
+          },
           "options": [
-            { "value": "person", "label": { "en": "Person", "fr": "Personne" } },
-            { "value": "animal", "label": { "en": "Animal", "fr": "Animal" } }
+            {
+              "value": "yellow",
+              "label": {
+                "en": "Yellow",
+                "fr": "Jaune",
+                "de": "Gelb",
+                "es": "Amarillo"
+              }
+            },
+            {
+              "value": "orange",
+              "label": {
+                "en": "Orange",
+                "fr": "Orange",
+                "de": "Orange",
+                "es": "Naranja"
+              }
+            },
+            {
+              "value": "red",
+              "label": {
+                "en": "Red",
+                "fr": "Rouge",
+                "de": "Rot",
+                "es": "Rojo"
+              }
+            }
           ]
         }
       ],
       "variables": [
         {
-          "key": "target",
+          "key": "station_name",
           "type": "string",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" }
+          "label": {
+            "en": "Station name",
+            "fr": "Nom de la station",
+            "de": "Name der Station",
+            "es": "Nombre de la estación"
+          }
+        },
+        {
+          "key": "river",
+          "type": "string",
+          "label": {
+            "en": "River",
+            "fr": "Cours d'eau",
+            "de": "Gewässer",
+            "es": "Río"
+          }
+        },
+        {
+          "key": "section",
+          "type": "string",
+          "label": {
+            "en": "Section code",
+            "fr": "Code du tronçon",
+            "de": "Code des Abschnitts",
+            "es": "Código del tramo"
+          }
+        },
+        {
+          "key": "section_name",
+          "type": "string",
+          "label": {
+            "en": "Section name",
+            "fr": "Nom du tronçon",
+            "de": "Name des Abschnitts",
+            "es": "Nombre del tramo"
+          }
+        },
+        {
+          "key": "color",
+          "type": "string",
+          "label": {
+            "en": "Colour (green, yellow, orange, red)",
+            "fr": "Couleur (green, yellow, orange, red)",
+            "de": "Farbe (green, yellow, orange, red)",
+            "es": "Color (green, yellow, orange, red)"
+          }
+        },
+        {
+          "key": "color_name",
+          "type": "string",
+          "label": {
+            "en": "Colour, in words",
+            "fr": "Couleur, en toutes lettres",
+            "de": "Farbe, ausgeschrieben",
+            "es": "Color, en palabras"
+          }
+        },
+        {
+          "key": "previous_color",
+          "type": "string",
+          "label": {
+            "en": "Previous colour",
+            "fr": "Couleur précédente",
+            "de": "Vorherige Farbe",
+            "es": "Color anterior"
+          }
+        },
+        {
+          "key": "previous_color_name",
+          "type": "string",
+          "label": {
+            "en": "Previous colour, in words",
+            "fr": "Couleur précédente, en toutes lettres",
+            "de": "Vorherige Farbe, ausgeschrieben",
+            "es": "Color anterior, en palabras"
+          }
         }
       ]
-    }
-  ],
-  "scene_actions": [
+    },
     {
-      "key": "identify_device",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "description": {
-        "en": "Make a device signal itself (the demo light blinks).",
-        "fr": "Fait se signaler un appareil (la lampe de démonstration clignote)."
+      "key": "vigilance_lowered",
+      "label": {
+        "en": "Flood vigilance lowered",
+        "fr": "La vigilance crues redescend",
+        "de": "Hochwasserwarnung sinkt",
+        "es": "La vigilancia de crecidas baja"
       },
-      "timeout_seconds": 15,
+      "description": {
+        "en": "The section of a followed station goes back to a lower colour.",
+        "fr": "Le tronçon d'une station suivie redescend à une couleur plus basse.",
+        "de": "Der Abschnitt einer verfolgten Station sinkt auf eine niedrigere Farbe.",
+        "es": "El tramo de una estación seguida baja a un color inferior."
+      },
       "fields": [
         {
-          "key": "device",
+          "key": "station",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          }
+        },
+        {
+          "key": "section",
+          "type": "string",
+          "label": {
+            "en": "Vigicrues section (optional)",
+            "fr": "Tronçon Vigicrues (facultatif)",
+            "de": "Vigicrues-Abschnitt (optional)",
+            "es": "Tramo Vigicrues (opcional)"
+          },
+          "placeholder": {
+            "en": "e.g. LO18",
+            "fr": "ex. LO18",
+            "de": "z. B. LO18",
+            "es": "p. ej. LO18"
+          },
+          "description": {
+            "en": "Code of the section, shown in the parameters of the device (VIGICRUES_SECTION).",
+            "fr": "Code du tronçon, visible dans les paramètres de l'appareil (VIGICRUES_SECTION).",
+            "de": "Code des Abschnitts, sichtbar in den Parametern des Geräts (VIGICRUES_SECTION).",
+            "es": "Código del tramo, visible en los parámetros del dispositivo (VIGICRUES_SECTION)."
+          }
+        },
+        {
+          "key": "color",
+          "type": "multi_select",
+          "label": {
+            "en": "New colour",
+            "fr": "Nouvelle couleur",
+            "de": "Neue Farbe",
+            "es": "Nuevo color"
+          },
+          "options": [
+            {
+              "value": "green",
+              "label": {
+                "en": "Green",
+                "fr": "Vert",
+                "de": "Grün",
+                "es": "Verde"
+              }
+            },
+            {
+              "value": "yellow",
+              "label": {
+                "en": "Yellow",
+                "fr": "Jaune",
+                "de": "Gelb",
+                "es": "Amarillo"
+              }
+            },
+            {
+              "value": "orange",
+              "label": {
+                "en": "Orange",
+                "fr": "Orange",
+                "de": "Orange",
+                "es": "Naranja"
+              }
+            }
+          ]
         }
       ],
-      "outputs": [
+      "variables": [
         {
-          "key": "signalled",
-          "type": "boolean",
-          "label": { "en": "Device signalled", "fr": "Appareil signalé" }
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station name",
+            "fr": "Nom de la station",
+            "de": "Name der Station",
+            "es": "Nombre de la estación"
+          }
+        },
+        {
+          "key": "river",
+          "type": "string",
+          "label": {
+            "en": "River",
+            "fr": "Cours d'eau",
+            "de": "Gewässer",
+            "es": "Río"
+          }
+        },
+        {
+          "key": "section",
+          "type": "string",
+          "label": {
+            "en": "Section code",
+            "fr": "Code du tronçon",
+            "de": "Code des Abschnitts",
+            "es": "Código del tramo"
+          }
+        },
+        {
+          "key": "section_name",
+          "type": "string",
+          "label": {
+            "en": "Section name",
+            "fr": "Nom du tronçon",
+            "de": "Name des Abschnitts",
+            "es": "Nombre del tramo"
+          }
+        },
+        {
+          "key": "color",
+          "type": "string",
+          "label": {
+            "en": "Colour (green, yellow, orange, red)",
+            "fr": "Couleur (green, yellow, orange, red)",
+            "de": "Farbe (green, yellow, orange, red)",
+            "es": "Color (green, yellow, orange, red)"
+          }
+        },
+        {
+          "key": "color_name",
+          "type": "string",
+          "label": {
+            "en": "Colour, in words",
+            "fr": "Couleur, en toutes lettres",
+            "de": "Farbe, ausgeschrieben",
+            "es": "Color, en palabras"
+          }
+        },
+        {
+          "key": "previous_color",
+          "type": "string",
+          "label": {
+            "en": "Previous colour",
+            "fr": "Couleur précédente",
+            "de": "Vorherige Farbe",
+            "es": "Color anterior"
+          }
+        },
+        {
+          "key": "previous_color_name",
+          "type": "string",
+          "label": {
+            "en": "Previous colour, in words",
+            "fr": "Couleur précédente, en toutes lettres",
+            "de": "Vorherige Farbe, ausgeschrieben",
+            "es": "Color anterior, en palabras"
+          }
         }
       ]
     }
   ],
   "widgets": [
     {
-      "key": "demo_status",
-      "label": { "en": "Demo status", "fr": "État de la démo" },
-      "description": {
-        "en": "Live temperature and plug power, plug connection and observed location.",
-        "fr": "Température et puissance en direct, connexion de la prise, position observée."
+      "key": "stations",
+      "label": {
+        "en": "Vigicrues",
+        "fr": "Vigicrues",
+        "de": "Vigicrues",
+        "es": "Vigicrues"
       },
-      "icon": "activity",
-      "action_timeout_seconds": 15
+      "description": {
+        "en": "Followed stations: water height, trend and vigilance colour of their section.",
+        "fr": "Stations suivies : hauteur d'eau, tendance et couleur de vigilance de leur tronçon.",
+        "de": "Verfolgte Stationen: Wasserstand, Tendenz und Warnfarbe ihres Abschnitts.",
+        "es": "Estaciones seguidas: altura del agua, tendencia y color de vigilancia de su tramo."
+      },
+      "icon": "droplet",
+      "settings": [
+        {
+          "key": "station",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          },
+          "description": {
+            "en": "Leave empty to list every station (10 at most); pick one for its details.",
+            "fr": "Laissez vide pour lister toutes les stations (10 au plus) ; choisissez-en une pour son détail.",
+            "de": "Leer lassen, um alle Stationen aufzulisten (höchstens 10); wähle eine für ihre Details.",
+            "es": "Déjelo vacío para listar todas las estaciones (10 como máximo); elija una para ver su detalle."
+          }
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,2193 @@
+{
+ "count": 364,
+ "first": "https://hubeau.eaufrance.fr/api/v2/hydrometrie/observations_tr?code_entite=A*,B*,D*,E1*,E2*,E3*&fields=code_site,code_station,grandeur_hydro,date_obs,resultat_obs,code_qualification_obs,code_statut&date_debut_obs=2026-09-29T12:28:26Z&cursor=&size=20000",
+ "prev": null,
+ "next": null,
+ "api_version": "2.0.1",
+ "data": [
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": -67.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 3160.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 3160.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 159.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 2646.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 13000.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 13000.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 594.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 288.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 3551.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 486.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 17000.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:30:00Z",
+   "resultat_obs": 38.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": -68.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 137.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 2642.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 12700.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 12700.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 594.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 288.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 3548.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 486.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 17000.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:25:00Z",
+   "resultat_obs": 41.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": -68.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 354.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 3520.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 3520.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 144.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 2644.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 12800.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 12800.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B540001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 2590.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 594.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 288.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 3550.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 486.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 17000.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:20:00Z",
+   "resultat_obs": 41.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": -72.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 3120.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 3120.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 367.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 3720.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 3720.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 126.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 2646.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 13000.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 13000.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B540001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 2590.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 594.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 288.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 3553.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 486.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 17000.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:15:00Z",
+   "resultat_obs": 40.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": -68.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 386.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 4020.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 4020.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 135.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 2645.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 12900.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 12900.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 593.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 288.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 3548.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 486.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 17000.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:10:00Z",
+   "resultat_obs": 42.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": -68.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 413.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 4430.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 4430.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 157.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 2643.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 12700.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 12700.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 594.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 287.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 1070.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 1070.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 3549.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 487.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 17100.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:05:00Z",
+   "resultat_obs": 44.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": -72.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 3120.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 3120.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 436.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 4790.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 4790.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 122.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 2643.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 12700.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 12700.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B540001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 2587.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 594.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 285.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 1050.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 1050.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 3551.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 487.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 17100.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 44.0
+  },
+  {
+   "code_station": "B720000004",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 485.0
+  },
+  {
+   "code_station": "B720000004",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 17000.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 17000.0
+  },
+  {
+   "code_station": "B732201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T13:00:00Z",
+   "resultat_obs": 145.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": -72.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 3120.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 3120.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 454.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 5070.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 5070.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 136.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 2645.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 12900.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 12900.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B540001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 2591.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 600.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 284.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 1040.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 1040.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 3550.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 487.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 17100.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 46.0
+  },
+  {
+   "code_station": "B732201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:55:00Z",
+   "resultat_obs": 145.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": -72.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 3120.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 3120.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 475.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 5390.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 5390.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 156.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 2645.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 12900.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 12900.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B540001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 2592.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 598.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 288.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 1080.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 3549.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 488.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 17100.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 46.0
+  },
+  {
+   "code_station": "B732201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:50:00Z",
+   "resultat_obs": 144.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": -68.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 502.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 5860.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 5860.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 145.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 2645.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 12900.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 12900.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B540001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 2590.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 608.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 285.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 1050.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 1050.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 3550.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 488.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 17100.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 43.0
+  },
+  {
+   "code_station": "B732201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:45:00Z",
+   "resultat_obs": 144.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": -68.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 529.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 6320.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 6320.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 147.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 2644.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 12800.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 12800.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B540001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 2584.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 600.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 284.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 1040.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 1040.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 3550.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 488.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 17100.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 41.0
+  },
+  {
+   "code_station": "B732201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:40:00Z",
+   "resultat_obs": 143.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": -68.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 557.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 6800.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 6800.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 122.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 2647.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 13100.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 13100.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B540001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 2593.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 601.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 285.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 1050.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 1050.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 3547.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 488.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 17100.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 47.0
+  },
+  {
+   "code_station": "B732201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:35:00Z",
+   "resultat_obs": 143.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": -68.0
+  },
+  {
+   "code_station": "B315002001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 3150.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 585.0
+  },
+  {
+   "code_station": "B463101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 7290.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 7290.0
+  },
+  {
+   "code_station": "B466010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 159.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 2647.0
+  },
+  {
+   "code_station": "B502001001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 13100.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 13100.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 355.0
+  },
+  {
+   "code_station": "B517201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 774.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 510.0
+  },
+  {
+   "code_station": "B532201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 447.0
+  },
+  {
+   "code_station": "B540001001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 2593.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 58.0
+  },
+  {
+   "code_station": "B557201001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 671.0
+  },
+  {
+   "code_station": "B560010101",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 600.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 286.0
+  },
+  {
+   "code_station": "B611101001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 1060.0
+  },
+  {
+   "code_station": null,
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 1060.0
+  },
+  {
+   "code_station": "B700001002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 3547.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 488.0
+  },
+  {
+   "code_station": "B720000001",
+   "grandeur_hydro": "Q",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 17100.0
+  },
+  {
+   "code_station": "B720000002",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 47.0
+  },
+  {
+   "code_station": "B732201001",
+   "grandeur_hydro": "H",
+   "date_obs": "2026-09-29T12:30:00Z",
+   "resultat_obs": 144.0
+  }
+ ]
+}

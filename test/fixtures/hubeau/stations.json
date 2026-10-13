@@ -1,0 +1,219 @@
+{
+ "count": 19,
+ "first": null,
+ "last": null,
+ "prev": null,
+ "next": null,
+ "api_version": "2.0.1",
+ "data": [
+  {
+   "code_station": "B463101001",
+   "libelle_station": "La Chiers à Carignan",
+   "code_commune_station": "08090",
+   "libelle_commune": "CARIGNAN",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Chiers",
+   "longitude_station": 5.158859906,
+   "latitude_station": 49.629367897,
+   "en_service": true
+  },
+  {
+   "code_station": "B466010101",
+   "libelle_station": "La Chiers à Brévilly",
+   "code_commune_station": "08083",
+   "libelle_commune": "BREVILLY",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Chiers",
+   "longitude_station": 5.084206019,
+   "latitude_station": 49.668721571,
+   "en_service": true
+  },
+  {
+   "code_station": "B502001001",
+   "libelle_station": "La Meuse à Sedan",
+   "code_commune_station": "08409",
+   "libelle_commune": "SEDAN",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.936060665,
+   "latitude_station": 49.701334161,
+   "en_service": true
+  },
+  {
+   "code_station": "B504000101",
+   "libelle_station": "Le ruisseau la Vrigne à Vrigne-aux-Bois",
+   "code_commune_station": "08491",
+   "libelle_commune": "VRIGNE AUX BOIS",
+   "code_departement": "08",
+   "libelle_cours_eau": "Ruisseau la Vrigne",
+   "longitude_station": 4.850895474,
+   "latitude_station": 49.753941814,
+   "en_service": false
+  },
+  {
+   "code_station": "B517201001",
+   "libelle_station": "La Bar à Cheveuges",
+   "code_commune_station": "08119",
+   "libelle_commune": "CHEVEUGES",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Bar",
+   "longitude_station": 4.882921052,
+   "latitude_station": 49.660373067,
+   "en_service": true
+  },
+  {
+   "code_station": "B532201001",
+   "libelle_station": "La Vence à la Francheville",
+   "code_commune_station": "08180",
+   "libelle_commune": "FRANCHEVILLE",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Vence",
+   "longitude_station": 4.714066451,
+   "latitude_station": 49.727795887,
+   "en_service": true
+  },
+  {
+   "code_station": "B540001001",
+   "libelle_station": "La Meuse à Charleville-Mézières",
+   "code_commune_station": "08105",
+   "libelle_commune": "CHARLEVILLE-MEZIERES",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.715855889,
+   "latitude_station": 49.75966562,
+   "en_service": true
+  },
+  {
+   "code_station": "B557201001",
+   "libelle_station": "La Sormonne à Belval",
+   "code_commune_station": "08058",
+   "libelle_commune": "BELVAL",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Sormonne",
+   "longitude_station": 4.637737085,
+   "latitude_station": 49.779935674,
+   "en_service": true
+  },
+  {
+   "code_station": "B560001001",
+   "libelle_station": "La Meuse à Montcy-Notre-Dame",
+   "code_commune_station": "08298",
+   "libelle_commune": "MONTCY-NOTRE-DAME",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.733184158,
+   "latitude_station": 49.78221986,
+   "en_service": false
+  },
+  {
+   "code_station": "B560010101",
+   "libelle_station": "La Meuse à Aiglemont",
+   "code_commune_station": "08003",
+   "libelle_commune": "AIGLEMONT",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.752270876,
+   "latitude_station": 49.774218453,
+   "en_service": true
+  },
+  {
+   "code_station": "B611101001",
+   "libelle_station": "La Semoy à Haulmé",
+   "code_commune_station": "08217",
+   "libelle_commune": "HAULME",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Semoy",
+   "longitude_station": 4.786287894,
+   "latitude_station": 49.862932676,
+   "en_service": true
+  },
+  {
+   "code_station": "B700001001",
+   "libelle_station": "La Meuse à Monthermé - Débitmètre",
+   "code_commune_station": "08302",
+   "libelle_commune": "MONTHERME",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.730564947,
+   "latitude_station": 49.880313503,
+   "en_service": false
+  },
+  {
+   "code_station": "B700001002",
+   "libelle_station": "La Meuse à Monthermé - Limnimètre",
+   "code_commune_station": "08302",
+   "libelle_commune": "MONTHERME",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.730564947,
+   "latitude_station": 49.880313503,
+   "en_service": true
+  },
+  {
+   "code_station": "B720000001",
+   "libelle_station": "La Meuse à Chooz - Trou du Diable \"DREAL\"",
+   "code_commune_station": "08122",
+   "libelle_commune": "CHOOZ",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.782579717,
+   "latitude_station": 50.089049099,
+   "en_service": true
+  },
+  {
+   "code_station": "B720000002",
+   "libelle_station": "La Meuse à Chooz - Ile Graviat",
+   "code_commune_station": "08122",
+   "libelle_commune": "CHOOZ",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.806642899,
+   "latitude_station": 50.092335449,
+   "en_service": true
+  },
+  {
+   "code_station": "B720000003",
+   "libelle_station": "La Meuse à Chooz - Chooz Petit",
+   "code_commune_station": "08122",
+   "libelle_commune": "CHOOZ",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.809672784,
+   "latitude_station": 50.101866633,
+   "en_service": true
+  },
+  {
+   "code_station": "B720000004",
+   "libelle_station": "La Meuse à Chooz - Trou du Diable \"EDF\"",
+   "code_commune_station": "08122",
+   "libelle_commune": "CHOOZ",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 4.782579717,
+   "latitude_station": 50.089049099,
+   "en_service": true
+  },
+  {
+   "code_station": "B732201001",
+   "libelle_station": "La Houille à Landrichamps",
+   "code_commune_station": "08247",
+   "libelle_commune": "LANDRICHAMPS",
+   "code_departement": "08",
+   "libelle_cours_eau": "La Houille",
+   "longitude_station": 4.826520214,
+   "latitude_station": 50.084369331,
+   "en_service": true
+  },
+  {
+   "code_station": "B315002001",
+   "libelle_station": "La Meuse à Stenay",
+   "code_commune_station": "55502",
+   "libelle_commune": "STENAY",
+   "code_departement": "55",
+   "libelle_cours_eau": "La Meuse",
+   "longitude_station": 5.178850491,
+   "latitude_station": 49.494346826,
+   "en_service": true
+  }
+ ]
+}

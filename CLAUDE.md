@@ -31,16 +31,24 @@ pushing.
 ## Architecture
 
 ```
-index.js                          SDK wiring only: handlers registered before connect()
-src/devices/index.js              registry of the device blueprints + dispatch helpers
-src/devices/<type>.js             one device type per file (buildDevice, onPoll, onSetValue...)
-src/scenes.js                     scene action handlers (manifest `scene_actions`)
-src/widgets.js                    dashboard widget handlers (manifest `widgets`)
+index.js                          SDK wiring only: src/app.js registers the handlers before connect()
+src/app.js                        handlers → monitor, the `search_stations` action, the widget
+src/monitor.js                    followed stations, refresh cycles (own timer), states, vigilance triggers
+src/hubeau.js                     Hub'Eau Hydrométrie v2 client: referential, observations, mm → m, l/s → m³/s
+src/vigicrues.js                  Vigicrues client: InfoVigiCru vigilance, station → territory → sections
+src/http.js                       GET JSON with timeout and User-Agent
+src/search.js                     "Find stations" action
+src/devices.js                    Gladys device of a station (features, four-language names)
+src/widgets.js                    `stations` dashboard widget
+src/messages.js                   texts sent from the container (en, fr, de, es), vigilance levels
+src/geo.js                        distances, box around the house (rounded to 0.05°)
+src/store.js                      /data/vigicrues.json
 src/config.js                     DEFAULT_CONFIG (mirrors the manifest defaults) + normalization
-src/weather.js                    example driver (Open-Meteo)
-gladys-assistant-integration.json manifest: name, config_schema, actions, image...
-docs/en.md, docs/fr.md            user documentation, re-hosted by Gladys (mandatory)
+gladys-assistant-integration.json manifest: name, config_schema, actions, triggers, widget...
+docs/{en,fr,de,es}.md             user documentation, re-hosted by Gladys, same sections
 test/                             node --test, against the SDK's fake Gladys (integration-sdk/testing)
+test/helpers/world.js             fake Gladys + fake Hub'Eau/Vigicrues serving the recorded answers
+test/fixtures/                    recorded real answers of Hub'Eau and Vigicrues (see its README)
 .github/scripts/release.mjs       release helpers (manifest bump, changelog), tested in test/
 ```
 
@@ -70,8 +78,9 @@ test/                             node --test, against the SDK's fake Gladys (in
   `type: "provider"`: 5.1.0). `test/manifest.test.js` ties the manifest to the
   code (defaults, action, scene and widget handlers): change both sides
   together.
-- **User-facing text** is bilingual (English and French): action messages,
-  manifest texts, and `docs/en.md` / `docs/fr.md`, kept in sync.
+- **User-facing text** exists in English, French, German and Spanish: action
+  messages, manifest texts, feature names, widget texts, and `docs/en.md`,
+  `docs/fr.md`, `docs/de.md`, `docs/es.md`, kept in sync (`test/i18n.test.js`).
 - **Style.** Prettier formats, ESLint catches mistakes. Comments explain why,
   in English. Tests never touch the network.
 
@@ -119,6 +128,15 @@ code de ce dépôt. Compléter ce fichier quand un nouveau piège est découvert
   « Ajouter à Gladys » échoue en HTTP 422. Mettre 0/0, comme Zigbee2MQTT.
 - Un état publié sur une fonctionnalité **pas encore ajoutée** dans Gladys reçoit un 200 puis est
   jeté (simple ligne de log) : republier les états dans `onDeviceCreated`.
+- **Un état publié avec `created_at` ne déclenche aucune scène** : le cœur le range par
+  `saveHistoricalState`, qui n'émet pas `TRIGGERS.CHECK` (seul `saveState` le fait, vérifié sur
+  la 5.2.1). Ne dater un état dans le passé que pour de l'historique, jamais pour une valeur
+  qu'une scène doit voir (relevé sur gladys-vigicrues).
+- **`risk/integer` s'affiche en pastille de 0 à 3** : 0 « Pas de risque » (vert), 1 faible
+  (jaune), 2 moyen (orange), 3 élevé (rouge) (`BadgeNumberDeviceValue`). Une échelle 1-4 publiée
+  telle quelle montre « faible » pour un niveau vert.
+- **Pas d'unité m³/s** dans le cœur (seulement `cubic-meter-per-hour`) : un débit de rivière se
+  publie sans unité, l'unité dans le nom.
 - `level-sensor/decimal` n'existe pas côté serveur. `light-sensor/binary` n'a pas de libellé dans
   le front (pastille vide) : préférer `input/binary`. Un `text/text` reçoit `{ text }`, jamais
   vide, sinon l'état est ignoré.
@@ -233,3 +251,36 @@ long, et sur un « Sie »/« Ihr… » de politesse en allemand. Le store exige 
 - Docs `en`, `fr`, `de`, `es` avec les mêmes sections.
 - Chauffe, ouverture, sécurité : ne rien rendre pilotable « comme un thermostat » ou par un assistant
   vocal quand une erreur serait dangereuse (leçon d'OctoPrint).
+
+## Propre à cette intégration (Vigicrues, 13/10/2026)
+
+- **Sources** : Hub'Eau Hydrométrie v2 (`hubeau.eaufrance.fr/api/v2/hydrometrie`, la v1 répond
+  403 depuis le 05/05/2025) pour le référentiel et les mesures ; Vigicrues
+  (`www.vigicrues.gouv.fr/services`) pour la vigilance et les tronçons. Sans clé, Licence
+  Ouverte Etalab 2.0, « © VIGICRUES » et la date à citer (le widget le fait). Aucun quota
+  publié : une requête Hub'Eau par cycle pour toutes les stations, la vigilance toutes les
+  30 minutes, le référentiel Vigicrues une fois par semaine.
+- **Hub'Eau** : hauteurs en **mm**, débits en **l/s** ; une page suivie répond **206** avec
+  `next` ; les mesures sont triées de la plus récente et gardées un mois ; un débit de site
+  arrive avec `code_station: null` à côté de celui de la station ; `date_debut_obs` ne remonte
+  pas au-delà d'un mois. Le filtre `code_commune_station` n'est pas documenté en v2 : les
+  communes passent par `code_departement`, filtré côté code.
+- **Vigicrues** : une erreur est un **HTTP 200** `{ "error_msg", "code": 400 }`, « rien » un
+  200 `{ "message", "code": 204 }`. `InfoVigiCru.geojson` pèse 2,2 Mo (géométrie jetée dès la
+  lecture), `NivInfViCr` 1 à 4, propriétés en minuscules en 2026 (`lbentcru`) et en
+  CamelCase en 2023 (`LbEntCru`) : lire les deux. Le lien montant `StaEntVigiCru` d'une station
+  vaut « A renseigner » : le tronçon se trouve par `station.json` (territoire) →
+  `TerEntVigiCru` → `TronEntVigiCru` (stations de chaque tronçon). La vigilance ne couvre que
+  la métropole.
+- **La session de code n'atteint ni Hub'Eau ni Vigicrues** (politique réseau de
+  l'environnement : CONNECT refusé, WebFetch aussi). Les fixtures sont de vraies réponses
+  enregistrées ailleurs et publiées sur GitHub (voir `test/fixtures/README.md`) ; ajouter les
+  deux hôtes aux domaines autorisés pour tester en direct.
+- La vigilance est publiée **moins un** (échelle de la pastille `risk`) ; les déclencheurs
+  portent la couleur en anglais (`green`…`red`), jamais un nombre, pour ne pas mélanger les
+  deux échelles.
+- Une mesure de plus de 3 h n'est plus publiée (ni par le heartbeat) : la fonctionnalité
+  « Dernière mesure » dit depuis quand. La mémoire de déduplication du SDK est datée par
+  `Date.now()` : tester le heartbeat avec `t.mock.timers.enable({ apis: ['Date'] })`.
+- La boîte envoyée à Hub'Eau autour de la maison est arrondie à 0,05° : la position exacte ne
+  quitte pas Gladys, et n'est ni écrite dans `/data` ni dans les logs.

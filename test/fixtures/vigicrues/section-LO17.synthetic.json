@@ -1,0 +1,51 @@
+{
+ "Scenario": {
+  "Flux": {
+   "Version": "1",
+   "DateRevision": "2019-07-02T10:00:00"
+  },
+  "CodeScenario": "VIC",
+  "VersionScenario": "1.1",
+  "NomScenario": "Référentiels et données de la vigilance crues métropolitaine",
+  "DateHeureCreationFichier": "2026-09-29T14:05:59+00:00",
+  "Emetteur": "1524"
+ },
+ "ListEntVigiCru": [
+  {
+   "CdEntVigiCru": "LO17",
+   "TypEntVigiCru": "8",
+   "LbEntVigiCru": "Meuse plaine ardennaise",
+   "CdDistrictEntVigiCru_1": "A renseigner obligatoirement",
+   "DtHrCreatEntVigiCru": "A renseigner obligatoirement",
+   "DtHrMajEntVigiCru": "A renseigner obligatoirement",
+   "StEntVigiCru": "Validé",
+   "CdTCC": "A renseigner obligatoirement",
+   "CdInt": "A renseigner obligatoirement",
+   "aNPlusUn": {
+    "CdEntVigiCruSuperieur": "2",
+    "TypEntVigiCruSuperieur": "5",
+    "Link": "https://www.vigicrues.gouv.fr/services/v1.1/TerEntVigiCru.json?CdEntVigiCru=2&TypEntVigiCru=5"
+   },
+   "aNMoinsUn": [
+    {
+     "CdEntVigiCruInferieur": "B540001001",
+     "TypEntVigiCruInferieur": "7",
+     "LbEntVigiCruInferieur": "Charleville-Mézières",
+     "Link": "https://www.vigicrues.gouv.fr/services/v1.1/StaEntVigiCru.json?CdEntVigiCru=B540001001&TypEntVigiCru=7"
+    },
+    {
+     "CdEntVigiCruInferieur": "B502001001",
+     "TypEntVigiCruInferieur": "7",
+     "LbEntVigiCruInferieur": "Sedan",
+     "Link": "https://www.vigicrues.gouv.fr/services/v1.1/StaEntVigiCru.json?CdEntVigiCru=B502001001&TypEntVigiCru=7"
+    },
+    {
+     "CdEntVigiCruInferieur": "B560010101",
+     "TypEntVigiCruInferieur": "7",
+     "LbEntVigiCruInferieur": "Aiglemont",
+     "Link": "https://www.vigicrues.gouv.fr/services/v1.1/StaEntVigiCru.json?CdEntVigiCru=B560010101&TypEntVigiCru=7"
+    }
+   ]
+  }
+ ]
+}

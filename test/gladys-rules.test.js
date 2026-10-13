@@ -14,7 +14,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { LANGUAGES } from '../src/config.js';
+import { FLOW_UNITS, LANGUAGES } from '../src/config.js';
 import { CHARLEVILLE, CHOOZ, STENAY, createWorld } from './helpers/world.js';
 
 const table = JSON.parse(
@@ -27,12 +27,24 @@ const CONFIG = {
   around_home: '20',
 };
 
-for (const language of LANGUAGES) {
-  test(`every discovered device follows the Gladys rules (${language} names)`, async (t) => {
-    const world = await createWorld({ config: { ...CONFIG, language } });
+const cases = LANGUAGES.flatMap((language) =>
+  FLOW_UNITS.map((flowUnit) => ({ language, flowUnit })),
+);
+
+for (const { language, flowUnit } of cases) {
+  test(`every discovered device follows the Gladys rules (${language} names, flow in ${flowUnit})`, async (t) => {
+    const world = await createWorld({ config: { ...CONFIG, language, flow_unit: flowUnit } });
     t.after(() => world.app.stop());
     const devices = world.fake.discoveredDevices;
     assert.ok(devices.length >= 6, `${devices.length} devices`);
+    // The flow: the m³/h unit of the core, or no unit at all (Gladys has no m³/s).
+    const flows = devices.flatMap((device) =>
+      device.features.filter((feature) => feature.external_id.endsWith(':flow')),
+    );
+    assert.ok(flows.length > 0, 'a flow feature');
+    for (const flow of flows) {
+      assert.equal(flow.unit, flowUnit === 'm3h' ? 'cubic-meter-per-hour' : undefined);
+    }
     const featureCounts = new Set(devices.map((device) => device.features.length));
     assert.ok(featureCounts.has(5), 'a station with flow and vigilance');
     assert.ok(featureCounts.has(4), 'a station without flow, with vigilance');
@@ -82,6 +94,12 @@ for (const language of LANGUAGES) {
         );
         if (feature.unit !== undefined) {
           assert.ok(table.units.includes(feature.unit), `${at}: unknown unit ${feature.unit}`);
+        }
+        if (feature.unit !== undefined && table.units_by_category?.[feature.category]) {
+          assert.ok(
+            table.units_by_category[feature.category].includes(feature.unit),
+            `${at}: ${feature.unit} is not a unit of ${feature.category}`,
+          );
         }
 
         assert.ok(!externalIds.has(feature.external_id), `${at}: duplicate external_id`);

@@ -16,6 +16,11 @@ export const HOME_RADII = ['0', '5', '10', '20'];
 // faster would only ask Hub'Eau the same thing again.
 export const REFRESH_INTERVALS = ['15', '20', '30'];
 
+// Unit of the published flow. Gladys has no m³/s unit: 'm3h' converts to its
+// cubic-meter-per-hour (shown by every Gladys screen), 'm3s' keeps the unit of
+// Vigicrues, published without a unit (the feature name says it).
+export const FLOW_UNITS = ['m3h', 'm3s'];
+
 // Stations followed "around my house": the nearest ones that send real-time data.
 export const HOME_STATIONS = 3;
 
@@ -27,8 +32,12 @@ export const MAX_STATIONS = 20;
 export const DEFAULT_CONFIG = {
   stations: '',
   communes: '',
+  // A `source: "houses"` select takes no default (store rule): empty = the
+  // first house of Gladys that has a location.
+  house: '',
   around_home: '0',
   refresh_interval: '15',
+  flow_unit: 'm3h',
   language: 'fr',
 };
 
@@ -102,12 +111,16 @@ export function normalizeConfig(raw = {}) {
     stationCodes: stations.codes,
     communeCodes: communes.codes,
     invalid: [...stations.invalid, ...communes.invalid],
+    // The selector of the chosen house (source: "houses"), null = the first located one.
+    houseSelector:
+      typeof source.house === 'string' && source.house.trim() !== '' ? source.house.trim() : null,
     homeRadiusKm: pick(source.around_home, HOME_RADII, DEFAULT_CONFIG.around_home),
     refreshMinutes: pick(
       source.refresh_interval,
       REFRESH_INTERVALS,
       DEFAULT_CONFIG.refresh_interval,
     ),
+    flowUnit: FLOW_UNITS.includes(source.flow_unit) ? source.flow_unit : DEFAULT_CONFIG.flow_unit,
     language: LANGUAGES.includes(source.language) ? source.language : DEFAULT_CONFIG.language,
   };
 }

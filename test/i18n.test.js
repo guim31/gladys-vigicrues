@@ -122,6 +122,7 @@ const SAMPLE = {
   values: 'Toulouse, abc',
   max: 20,
   count: 10,
+  name: 'Résidence secondaire du bord du lac',
 };
 const renderSample = (value) => (typeof value === 'function' ? value(SAMPLE) : value);
 

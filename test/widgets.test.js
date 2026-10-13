@@ -12,8 +12,8 @@ import { WIDGET_KEY } from '../src/monitor.js';
 import { stationValue } from '../src/widgets.js';
 import { CHARLEVILLE, CHOOZ, STENAY, create, createWorld, cycle } from './helpers/world.js';
 
-async function worldWith(t, codes) {
-  const world = await createWorld({ config: { stations: codes.join(',') } });
+async function worldWith(t, codes, config = {}) {
+  const world = await createWorld({ config: { stations: codes.join(','), ...config } });
   t.after(() => world.app.stop());
   const devices = [];
   for (const code of codes) {
@@ -104,6 +104,10 @@ test('the detail of one station: live tiles bound to its features, then its stat
     tiles.map((tile) => tile.device_feature.split(':').pop()),
     ['height', 'flow'],
   );
+  assert.deepEqual(
+    tiles.map((tile) => tile.label),
+    ['Hauteur', 'Débit (m³/h)'],
+  );
   const known = features(devices);
   for (const tile of tiles) {
     assert.ok(known.has(tile.device_feature), `${tile.device_feature} exists`);
@@ -121,6 +125,16 @@ test('the detail of one station: live tiles bound to its features, then its stat
   // Without flow: one tile.
   const charleville = await content(world, { station: devices[1].external_id });
   assert.equal(charleville.components.filter((c) => c.type === 'value').length, 1);
+});
+
+test('the flow tile names the unit of the device, m³/s included', async (t) => {
+  const { world, devices } = await worldWith(t, [CHOOZ], { flow_unit: 'm3s' });
+  for (const language of LANGUAGES) {
+    const widget = await content(world, { station: devices[0].external_id }, language);
+    assert.deepEqual(validateWidgetContent(widget), []);
+    const flow = widget.components.find((c) => c.device_feature?.endsWith(':flow'));
+    assert.match(flow.label, / \(m³\/s\)$/, language);
+  }
 });
 
 test('empty, and a station no longer followed', async (t) => {

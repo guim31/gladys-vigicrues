@@ -12,9 +12,11 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { MAX_STATIONS } from '../src/config.js';
 import { TRIGGERS, trendOf } from '../src/monitor.js';
+import { flowIn } from '../src/devices.js';
 import {
   CHARLEVILLE,
   CHOOZ,
+  HOUSE,
   STENAY,
   create,
   createApi,
@@ -41,14 +43,15 @@ const last = (world, device, key) => world.fake.lastState(featureId(device, key)
 const statesOf = (world, device, key) =>
   world.fake.states.filter((state) => state.device_feature_external_id === featureId(device, key));
 
-test('a station is published in metres and m³/s, with its vigilance and last reading', async (t) => {
+test('a station is published in metres and m³/h, with its vigilance and last reading', async (t) => {
   const { world, devices } = await worldWith(t, [CHOOZ]);
   const chooz = devices[CHOOZ];
   assert.equal(chooz.name, 'La Meuse à Chooz - Trou du Diable "DREAL"');
   assert.equal(chooz.should_poll, false);
   // Hub'Eau: 486 mm and 17000 l/s at 13:30 UTC.
   assert.equal(last(world, chooz, 'height'), 0.486);
-  assert.equal(last(world, chooz, 'flow'), 17);
+  // 17 m³/s, in the m³/h of Gladys (the default unit).
+  assert.equal(last(world, chooz, 'flow'), 61200);
   assert.equal(last(world, chooz, 'last_reading'), '29/09 15:30');
   // Section LO18, green on 13/10/2026: the risk badge "no risk".
   assert.equal(last(world, chooz, 'vigilance'), 0);
@@ -57,6 +60,47 @@ test('a station is published in metres and m³/s, with its vigilance and last re
     chooz.params.find((p) => p.name === 'VIGICRUES_SECTION'),
     { name: 'VIGICRUES_SECTION', value: 'LO18' },
   );
+});
+
+test('the flow: m³/h with the Gladys unit by default, m³/s without unit on demand', async (t) => {
+  const { devices } = await worldWith(t, [CHOOZ]);
+  const flow = devices[CHOOZ].features.find((f) => f.external_id.endsWith(':flow'));
+  assert.equal(flow.unit, 'cubic-meter-per-hour');
+  assert.equal(flow.name, 'Débit');
+  assert.deepEqual([flow.min, flow.max], [-180000000, 180000000]);
+
+  const m3s = await worldWith(t, [CHOOZ], { config: { stations: CHOOZ, flow_unit: 'm3s' } });
+  const device = m3s.devices[CHOOZ];
+  const feature = device.features.find((f) => f.external_id.endsWith(':flow'));
+  assert.equal(feature.unit, undefined);
+  assert.equal(feature.name, 'Débit (m³/s)');
+  assert.deepEqual([feature.min, feature.max], [-50000, 50000]);
+  assert.equal(last(m3s.world, device, 'flow'), 17);
+});
+
+test("the m³/h conversion keeps every litre per second of Hub'Eau", () => {
+  assert.equal(flowIn('m3h', 17), 61200);
+  assert.equal(flowIn('m3h', 0.001), 3.6);
+  assert.equal(flowIn('m3h', 0.123), 442.8);
+  assert.equal(flowIn('m3h', -2.5), -9000);
+  assert.equal(flowIn('m3s', 0.123), 0.123);
+});
+
+test('a device created in m³/s keeps m³/s until it is updated in the Discover tab', async (t) => {
+  const { world, devices } = await worldWith(t, [CHOOZ], {
+    config: { stations: CHOOZ, flow_unit: 'm3s' },
+  });
+  await world.fake.configUpdated({ stations: CHOOZ, flow_unit: 'm3h' });
+  await cycle(world, 15);
+  // Gladys still holds the feature without unit: the value stays in m³/s.
+  assert.equal(last(world, devices[CHOOZ], 'flow'), 17);
+  const updated = discovered(world, CHOOZ);
+  assert.equal(
+    updated.features.find((f) => f.external_id.endsWith(':flow')).unit,
+    'cubic-meter-per-hour',
+  );
+  await world.fake.deviceUpdated(updated);
+  assert.equal(last(world, updated, 'flow'), 61200);
 });
 
 test('a station without flow has no flow feature and sends none', async (t) => {
@@ -79,7 +123,7 @@ test('the states refresh with the internal timer, without any onPoll', async (t)
   t.mock.timers.tick(15 * MINUTE);
   await world.monitor.running;
   assert.equal(last(world, device, 'height'), 0.512);
-  assert.equal(last(world, device, 'flow'), 18.2);
+  assert.equal(last(world, device, 'flow'), 65520);
   assert.equal(last(world, device, 'last_reading'), '29/09 15:50');
   assert.equal(poll.mock.callCount(), 0);
 });
@@ -325,6 +369,73 @@ test('"around my house" without a located house is reported', async (t) => {
   const world = await createWorld({ config: { around_home: '10' }, houses: [] });
   t.after(() => world.app.stop());
   assert.match(world.fake.connectionStatus.message.fr, /Autour de ma maison/);
+});
+
+// A second house, first by name, far from the recorded stations of the Ardennes.
+const FLAT = {
+  id: 'house-2',
+  name: 'Appartement',
+  selector: 'appartement',
+  latitude: 43.6045,
+  longitude: 1.4442,
+};
+const UNLOCATED = {
+  id: 'house-3',
+  name: 'Chalet',
+  selector: 'chalet',
+  latitude: null,
+  longitude: null,
+};
+
+test('"around my house": the house chosen in the configuration, else the first located one', async (t) => {
+  const houses = [UNLOCATED, FLAT, HOUSE];
+  const empty = await createWorld({ config: { around_home: '10' }, houses });
+  t.after(() => empty.app.stop());
+  // Empty: the first house that has a location (Appartement, no station around it).
+  assert.deepEqual(empty.monitor.followed(), []);
+  assert.equal((await empty.monitor.house()).selector, 'appartement');
+
+  const chosen = await createWorld({ config: { around_home: '10', house: 'maison' }, houses });
+  t.after(() => chosen.app.stop());
+  assert.deepEqual(chosen.monitor.followed(), ['B540001001', 'B560010101', 'B532201001']);
+  // Its selector is stored with the stations, never its coordinates.
+  await chosen.store.flush();
+  const saved = await chosen.store.load();
+  assert.equal(saved.home.house, 'maison');
+  assert.doesNotMatch(JSON.stringify(saved), /49\.762|4\.725/);
+
+  // Choosing another house chooses the stations again.
+  await chosen.fake.configUpdated({ around_home: '10', house: 'appartement' });
+  assert.deepEqual(chosen.monitor.followed(), []);
+});
+
+test('"around my house": a chosen house without location is named in the status', async (t) => {
+  const world = await createWorld({
+    config: { around_home: '10', house: 'chalet' },
+    houses: [UNLOCATED, HOUSE],
+  });
+  t.after(() => world.app.stop());
+  // Not replaced by the other house: the user chose this one.
+  assert.deepEqual(world.monitor.followed(), []);
+  const { message } = world.fake.connectionStatus;
+  assert.match(message.fr, /la maison « Chalet » n'a pas de position/);
+  assert.match(message.en, /the house "Chalet" has no location/);
+  assert.match(message.de, /Das Haus „Chalet“ hat in Gladys keinen Standort/);
+  assert.match(message.es, /la casa «Chalet» no tiene ubicación/);
+});
+
+test('"around my house": a chosen house deleted since is reported', async (t) => {
+  const world = await createWorld({
+    config: { around_home: '10', house: 'maison-de-vacances' },
+    houses: [HOUSE],
+  });
+  t.after(() => world.app.stop());
+  assert.deepEqual(world.monitor.followed(), []);
+  assert.match(
+    world.fake.connectionStatus.message.fr,
+    /la maison « maison-de-vacances » n'existe plus dans Gladys/,
+  );
+  assert.doesNotMatch(world.fake.connectionStatus.message.fr, /Aucune station/);
 });
 
 test('an empty configuration says what to do', async (t) => {

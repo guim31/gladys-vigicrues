@@ -7,7 +7,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { DEFAULT_CONFIG, HOME_RADII, LANGUAGES, REFRESH_INTERVALS } from '../src/config.js';
+import {
+  DEFAULT_CONFIG,
+  FLOW_UNITS,
+  HOME_RADII,
+  LANGUAGES,
+  REFRESH_INTERVALS,
+} from '../src/config.js';
+import { FLOW_FORMATS } from '../src/devices.js';
 import { VIGILANCE_LEVELS } from '../src/messages.js';
 import { TRIGGERS, WIDGET_KEY } from '../src/monitor.js';
 import { SEARCH_RADII } from '../src/search.js';
@@ -64,9 +71,10 @@ test('"around my house" reads the house location: the manifest declares it', () 
   assert.equal(manifest.location, true);
 });
 
-test('Gladys 5.1.0 at least: widgets and scene triggers', () => {
+test('Gladys 5.2.0 at least: widgets, scene triggers and the houses source', () => {
+  // `source: "houses"` is only accepted from 5.2.0 (store schema, enforced by the indexer).
   const [major, minor] = minGladysVersion();
-  assert.ok(major > 5 || (major === 5 && minor >= 1), manifest.gladys_version);
+  assert.ok(major > 5 || (major === 5 && minor >= 2), manifest.gladys_version);
 });
 
 test('every manifest action has a handler, and vice versa', () => {
@@ -133,6 +141,8 @@ test('config_schema defaults and options are the ones of the code', () => {
   );
   assert.deepEqual(optionValues(field(manifest.config_schema, 'language')), LANGUAGES);
   assert.deepEqual(optionValues(field(manifest.config_schema, 'around_home')), HOME_RADII);
+  assert.deepEqual(optionValues(field(manifest.config_schema, 'flow_unit')), FLOW_UNITS);
+  assert.deepEqual(Object.keys(FLOW_FORMATS), FLOW_UNITS);
   assert.deepEqual(
     optionValues(field(manifest.config_schema, 'refresh_interval')),
     REFRESH_INTERVALS,
@@ -151,13 +161,25 @@ test('section fields are purely presentational', () => {
   }
 });
 
-test('dynamic selects declare the devices source and no static options', () => {
+test('dynamic selects declare their source, no static options and no default', () => {
   const dynamic = allFields.filter((entry) => entry.source !== undefined);
-  assert.equal(dynamic.length, 3);
+  assert.deepEqual(
+    dynamic.map((entry) => entry.source),
+    ['houses', 'devices', 'devices', 'devices'],
+  );
   for (const entry of dynamic) {
-    assert.equal(entry.source, 'devices');
     assert.equal(entry.options, undefined, entry.key);
+    assert.equal(entry.default, undefined, entry.key);
   }
+});
+
+test('the house is an optional select of the houses of Gladys, next to "around my house"', () => {
+  const keys = keysOf(manifest.config_schema);
+  const house = field(manifest.config_schema, 'house');
+  assert.equal(house.type, 'select');
+  assert.equal(house.source, 'houses');
+  assert.notEqual(house.required, true);
+  assert.equal(keys.indexOf('house') + 1, keys.indexOf('around_home'));
 });
 
 test('number fields have integer bounds (the form has no step)', () => {

@@ -153,7 +153,13 @@ function detail(monitor, code, language) {
     { type: 'value', label: t(TEXT.height, language), device_feature: ids.height },
   ];
   if (view.hasFlow) {
-    components.push({ type: 'value', label: t(TEXT.flow, language), device_feature: ids.flow });
+    // The tile shows the unit of the feature; the label names it too, since a
+    // flow in m³/s has no Gladys unit.
+    components.push({
+      type: 'value',
+      label: `${t(TEXT.flow, language)} (${view.flowUnit})`,
+      device_feature: ids.flow,
+    });
   }
   const items = [];
   if (view.hasSection) {

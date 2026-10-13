@@ -6,7 +6,13 @@
 //
 // Followed stations: the codes, communes and "around my house" of the
 // configuration (MAX_STATIONS at most), plus every station whose device the
-// user created (deleting the device stops following it).
+// user created (deleting the device stops following it). The house is the one
+// chosen in the configuration (`house`, its selector), or else the first house
+// of Gladys that has a location.
+//
+// Flow unit: the states follow the unit of the flow feature as Gladys created
+// it, not the configuration, until the user updates the device in the Discover
+// tab: a value in m³/h never lands in a feature created in m³/s.
 //
 // Scheduling: the devices are published with should_poll: false (the core does
 // not poll external devices reliably, GladysAssistant/Gladys#3198). The monitor
@@ -26,7 +32,15 @@
 
 import { createLogger } from '@gladysassistant/integration-sdk';
 import { HOME_STATIONS, MAX_STATIONS, departmentOf } from './config.js';
-import { buildDevice, stationCodeOfId, stationIds } from './devices.js';
+import {
+  FEATURE_KEYS,
+  FLOW_FORMATS,
+  buildDevice,
+  flowIn,
+  flowUnitOfFeature,
+  stationCodeOfId,
+  stationIds,
+} from './devices.js';
 import { boxAround, distanceKm } from './geo.js';
 import { HubEau } from './hubeau.js';
 import {
@@ -133,7 +147,7 @@ export class Monitor {
     this.data = emptyData();
     // Stations of the configuration, in order (codes, communes, house).
     this.configured = [];
-    this.problems = { unknown: [], noHouse: false, tooMany: false };
+    this.problems = { unknown: [], house: null, tooMany: false };
     this.resolved = false;
     this.vigilance = null;
     this.lastVigilanceTry = -Infinity;
@@ -284,7 +298,7 @@ export class Monitor {
    * is tried again at the next cycle.
    */
   async resolve() {
-    const problems = { unknown: [], noHouse: false, tooMany: false };
+    const problems = { unknown: [], house: null, tooMany: false };
     const codes = [];
     let complete = true;
     const add = (code) => {
@@ -315,10 +329,10 @@ export class Monitor {
       }
       if (this.config.homeRadiusKm > 0) {
         const home = await this.homeStations();
-        if (home === null) {
-          problems.noHouse = true;
+        if (home.problem) {
+          problems.house = home.problem;
         } else {
-          home.forEach(add);
+          home.codes.forEach(add);
         }
       }
       // Stations only followed through their device: their name and flow too.
@@ -390,38 +404,65 @@ export class Monitor {
     return stations;
   }
 
-  /** The first house of Gladys that has a location, or null. */
-  async house() {
+  /**
+   * The house of "around my house" and of the search: the one chosen in the
+   * configuration (its selector, as `getHouses()` gives it), or else the first
+   * house of Gladys that has a location. Without one, `problem` says why:
+   * `noHouse` (no located house, or Gladys did not answer), `houseUnlocated`
+   * (the chosen house has no location) or `houseGone` (the chosen house was
+   * deleted, or its selector changed), with the `name` of the house.
+   */
+  async findHouse() {
+    let houses;
     try {
-      const houses = await this.gladys.getHouses();
-      return (
-        houses.find(
-          (house) => Number.isFinite(house.latitude) && Number.isFinite(house.longitude),
-        ) ?? null
-      );
+      houses = await this.gladys.getHouses();
+      this.recovered('houses', 'The houses of Gladys can be read again');
     } catch (err) {
       this.failed('houses', 'warn', `Cannot read the houses of Gladys: ${err.message}`);
-      return null;
+      return { house: null, problem: { key: 'noHouse' } };
     }
+    const located = (house) => Number.isFinite(house.latitude) && Number.isFinite(house.longitude);
+    const selector = this.config.houseSelector;
+    if (!selector) {
+      const house = houses.find(located) ?? null;
+      return { house, problem: house ? null : { key: 'noHouse' } };
+    }
+    const chosen = houses.find((house) => house.selector === selector);
+    if (!chosen) {
+      // Only the selector is left of a deleted house: it is the name shown.
+      return { house: null, problem: { key: 'houseGone', name: selector } };
+    }
+    if (!located(chosen)) {
+      return { house: null, problem: { key: 'houseUnlocated', name: chosen.name } };
+    }
+    return { house: chosen, problem: null };
+  }
+
+  /** The house (see findHouse), or null. */
+  async house() {
+    return (await this.findHouse()).house;
   }
 
   /**
    * The nearest stations around the house that sent a reading lately
-   * (HOME_STATIONS at most), chosen again once a day; null without a located house.
+   * (HOME_STATIONS at most), chosen again once a day: `{ codes }`, or
+   * `{ problem }` without a located house (see findHouse).
    */
   async homeStations() {
     const radius = this.config.homeRadiusKm;
+    const selector = this.config.houseSelector ?? null;
     const cached = this.data.home;
     if (
       cached &&
       cached.radiusKm === radius &&
+      (cached.house ?? null) === selector &&
       this.now() - cached.at < this.timings.homeMaxAgeMs
     ) {
-      return cached.codes;
+      return { codes: cached.codes };
     }
-    const house = await this.house();
+    const { house, problem } = await this.findHouse();
     if (!house) {
-      return null;
+      return { problem };
     }
     const candidates = (
       await this.hubeau.stationsInBox(boxAround(house.latitude, house.longitude, radius))
@@ -450,9 +491,9 @@ export class Monitor {
         };
         return station.code;
       });
-    // The house coordinates are not stored: only the radius and the stations.
-    this.data.home = { radiusKm: radius, codes, at: this.now() };
-    return codes;
+    // The house coordinates are not stored: only its selector, the radius and the stations.
+    this.data.home = { radiusKm: radius, house: selector, codes, at: this.now() };
+    return { codes };
   }
 
   /**
@@ -512,7 +553,7 @@ export class Monitor {
 
   discoveredDevices() {
     return this.followed().map((code) =>
-      buildDevice(this.gladys, this.station(code), this.config.language),
+      buildDevice(this.gladys, this.station(code), this.config.language, this.config.flowUnit),
     );
   }
 
@@ -521,7 +562,7 @@ export class Monitor {
   }
 
   async updateConnectionStatus() {
-    const { unknown, noHouse, tooMany } = this.problems;
+    const { unknown, house, tooMany } = this.problems;
     const parts = [];
     if (this.failing.has('readings') || (!this.resolved && this.failing.has('resolve'))) {
       parts.push(render(STATUS, 'hubeauDown'));
@@ -535,13 +576,13 @@ export class Monitor {
     if (this.config.invalid.length > 0) {
       parts.push(render(STATUS, 'invalid', { values: this.config.invalid.join(', ') }));
     }
-    if (noHouse) {
-      parts.push(render(STATUS, 'noHouse'));
+    if (house) {
+      parts.push(render(STATUS, house.key, { name: house.name }));
     }
     if (tooMany) {
       parts.push(render(STATUS, 'tooMany', { max: MAX_STATIONS }));
     }
-    if (this.resolved && this.followed().length === 0 && unknown.length === 0 && !noHouse) {
+    if (this.resolved && this.followed().length === 0 && unknown.length === 0 && !house) {
       parts.push(render(STATUS, 'none'));
     }
     const message = parts.length > 0 ? join(...parts) : undefined;
@@ -567,6 +608,14 @@ export class Monitor {
     // The SDK forgot the states of the device: everything is published again.
     await this.publishStates([code]);
     this.requestRefresh();
+  }
+
+  /**
+   * "Update" in the Discover tab may change the unit of the flow feature: its
+   * states follow it at once (the value changes, so it is sent again).
+   */
+  async onDeviceUpdated(device) {
+    await this.onDeviceCreated(device);
   }
 
   async onDeviceDeleted() {
@@ -849,7 +898,10 @@ export class Monitor {
         states.push({ device_feature_external_id: ids.height, state: reading.H.v });
       }
       if (station.hasFlow && reading?.Q && this.isFresh(reading.Q.t)) {
-        states.push({ device_feature_external_id: ids.flow, state: reading.Q.v });
+        states.push({
+          device_feature_external_id: ids.flow,
+          state: flowIn(this.flowUnitOf(code), reading.Q.v),
+        });
       }
       const last = this.lastReadingAt(code);
       if (last !== null) {
@@ -913,6 +965,19 @@ export class Monitor {
     }
   }
 
+  /**
+   * The unit the flow of a station is published in: the one of its flow
+   * feature in Gladys once created (until "Update" in the Discover tab), the
+   * configuration otherwise.
+   */
+  flowUnitOf(code) {
+    const id = stationIds(this.gladys, code).device;
+    const feature = (this.gladys.devices ?? [])
+      .find((device) => device.external_id === id)
+      ?.features?.find((item) => item.external_id.endsWith(`:${FEATURE_KEYS.FLOW}`));
+    return feature ? flowUnitOfFeature(feature) : this.config.flowUnit;
+  }
+
   /** What the widget shows of one station. */
   view(code) {
     const station = this.station(code);
@@ -925,8 +990,12 @@ export class Monitor {
       name: station.name,
       river: station.river ?? null,
       hasFlow: Boolean(station.hasFlow),
+      flowUnit: FLOW_FORMATS[this.flowUnitOf(code)].label,
       height: fresh && reading?.H && this.isFresh(reading.H.t) ? reading.H.v : null,
-      flow: fresh && reading?.Q && this.isFresh(reading.Q.t) ? reading.Q.v : null,
+      flow:
+        fresh && reading?.Q && this.isFresh(reading.Q.t)
+          ? flowIn(this.flowUnitOf(code), reading.Q.v)
+          : null,
       trend: fresh ? (reading?.trend ?? null) : null,
       lastReadingAt: last,
       fresh,

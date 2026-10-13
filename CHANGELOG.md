@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-13
+
 ### Added
 
 - "House" setting: the house of Gladys whose location "Around my house" and "Find stations"
@@ -44,5 +46,6 @@ the notes of the version's GitHub Release.
   stations, the vigilance every 30 minutes), without relying on Gladys polling.
 - English, French, German and Spanish texts and documentation.
 
-[Unreleased]: https://github.com/guim31/gladys-vigicrues/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/guim31/gladys-vigicrues/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/guim31/gladys-vigicrues/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/guim31/gladys-vigicrues/releases/tag/v1.0.1

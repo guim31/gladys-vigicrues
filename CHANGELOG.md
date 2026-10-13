@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-13
+
 ### Added
 
 - One Gladys device per French gauging station: water height (m), flow (m³/s) when the station
@@ -27,3 +29,6 @@ the notes of the version's GitHub Release.
 - Refresh every 15, 20 or 30 minutes by the integration itself (one Hub'Eau request for all the
   stations, the vigilance every 30 minutes), without relying on Gladys polling.
 - English, French, German and Spanish texts and documentation.
+
+[Unreleased]: https://github.com/guim31/gladys-vigicrues/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/guim31/gladys-vigicrues/releases/tag/v1.0.1

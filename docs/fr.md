@@ -12,7 +12,7 @@ compte ni clé.
 
 ## Ce que vous obtenez
 
-- **Un appareil par station de mesure** suivie : hauteur d'eau en mètres, débit en m³/s quand
+- **Un appareil par station de mesure** suivie : hauteur d'eau en mètres, débit en m³/h (ou en m³/s, au choix) quand
   la station en mesure un, **vigilance crues** de son tronçon (vert, jaune, orange, rouge) et
   date de la dernière mesure.
 - Une station qui n'envoie plus rien est signalée comme telle (« Pas de nouvelle mesure
@@ -26,11 +26,11 @@ compte ni clé.
 
 ## Prérequis
 
-- Gladys Assistant **5.1.0** ou plus récent.
+- Gladys Assistant **5.2.0** ou plus récent.
 - Un accès à Internet depuis Gladys : l'intégration lit `hubeau.eaufrance.fr` et
   `www.vigicrues.gouv.fr`.
 - Pour « Autour de ma maison » : la position de votre maison dans Gladys (Paramètres,
-  Maisons). L'intégration la demande à l'installation (permission « localisation ») ; elle ne
+  Maisons). Avec plusieurs maisons, choisissez la vôtre dans le réglage **Maison**. L'intégration la demande à l'installation (permission « localisation ») ; elle ne
   sert qu'à trouver les stations les plus proches, n'est ni enregistrée ni écrite dans les logs.
 - La France métropolitaine pour la vigilance. Hub'Eau couvre aussi les départements
   d'outre-mer : leurs stations ont hauteur et débit, sans vigilance.
@@ -39,13 +39,15 @@ compte ni clé.
 
 ### Réglages
 
-| Réglage                            | Ce qu'il fait                                                                                                                       |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Codes des stations                 | Codes séparés par des virgules (`O200004001, B540001001`), ou les adresses des pages des stations sur vigicrues.gouv.fr.            |
-| Communes (codes INSEE)             | Toutes les stations en service de ces communes : `31555` pour Toulouse, `75056` pour Paris. Le code INSEE n'est pas le code postal. |
-| Autour de ma maison                | Suit aussi les 3 stations les plus proches qui envoient des mesures, à 5, 10 ou 20 km de votre maison.                              |
-| Fréquence de mise à jour           | 15 (par défaut), 20 ou 30 minutes. La vigilance est lue toutes les 30 minutes.                                                      |
-| Langue des noms de fonctionnalités | Noms des fonctionnalités des nouveaux appareils et langue de leurs textes (couleur, dernière mesure). Français par défaut.          |
+| Réglage                            | Ce qu'il fait                                                                                                                                               |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codes des stations                 | Codes séparés par des virgules (`O200004001, B540001001`), ou les adresses des pages des stations sur vigicrues.gouv.fr.                                    |
+| Communes (codes INSEE)             | Toutes les stations en service de ces communes : `31555` pour Toulouse, `75056` pour Paris. Le code INSEE n'est pas le code postal.                         |
+| Maison                             | La maison dont la position sert à « Autour de ma maison » et à « Chercher des stations ». Vide : la première maison de Gladys qui a une position.           |
+| Autour de ma maison                | Suit aussi les 3 stations les plus proches qui envoient des mesures, à 5, 10 ou 20 km de votre maison.                                                      |
+| Fréquence de mise à jour           | 15 (par défaut), 20 ou 30 minutes. La vigilance est lue toutes les 30 minutes.                                                                              |
+| Unité du débit                     | **m³/h** (par défaut) : l'unité que Gladys affiche partout. **m³/s** : l'unité de Vigicrues, sans unité dans Gladys (le nom de la fonctionnalité la donne). |
+| Langue des noms de fonctionnalités | Noms des fonctionnalités des nouveaux appareils et langue de leurs textes (couleur, dernière mesure). Français par défaut.                                  |
 
 La configuration apporte 20 stations au plus. Enregistrez, puis ouvrez l'onglet
 **Découverte** et créez les appareils voulus. Une station dont vous avez créé l'appareil reste
@@ -57,7 +59,7 @@ Le bouton **Chercher des stations** de la configuration liste les stations en se
 plus proches d'abord, avec leur cours d'eau, leur distance et si elles ont envoyé une mesure
 ces dernières heures. Tapez, dans le champ « Où » :
 
-- rien : les stations autour de votre maison (10 km, ou la distance choisie) ;
+- rien : les stations autour de la maison choisie dans les réglages (10 km, ou la distance choisie) ;
 - un code INSEE de commune : `31555` ;
 - un département et un nom : `31 Toulouse`, `75 Seine`, `08 Meuse` ;
 - un code de station : `O200004001`.
@@ -70,18 +72,24 @@ est aussi la fin de l'adresse de sa page sur vigicrues.gouv.fr.
 Un appareil par station, nommé comme Hub'Eau la nomme (« La Meuse à Charleville-Mézières »).
 Ses fonctionnalités sont en lecture seule :
 
-| Fonctionnalité       | Type (Gladys)               | Valeur                                                                                                                                        |
-| -------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Hauteur d'eau        | Profondeur du liquide, en m | Hauteur à l'échelle, au-dessus de son zéro : une valeur négative est normale à l'étiage. Ce n'est pas une altitude.                           |
-| Débit (m³/s)         | Débit d'eau, sans unité     | En mètres cubes par seconde, comme sur vigicrues.gouv.fr (Gladys n'a pas d'unité m³/s). Seulement si la station mesure un débit.              |
-| Vigilance crues      | Niveau de risque            | La couleur du tronçon de la station, en pastille de risque Gladys : 0 vert, 1 jaune, 2 orange, 3 rouge. Seulement pour une station Vigicrues. |
-| Couleur de vigilance | Texte                       | Vert, Jaune, Orange ou Rouge.                                                                                                                 |
-| Dernière mesure      | Texte                       | Date de la dernière mesure (« 29/09 15:30 »), ou « Pas de nouvelle mesure depuis… » après 3 heures sans mesure.                               |
+| Fonctionnalité       | Type (Gladys)               | Valeur                                                                                                                                                                                                                          |
+| -------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hauteur d'eau        | Profondeur du liquide, en m | Hauteur à l'échelle, au-dessus de son zéro : une valeur négative est normale à l'étiage. Ce n'est pas une altitude.                                                                                                             |
+| Débit                | Débit d'eau, en m³/h        | Converti depuis les m³/s de Vigicrues (1 m³/s = 3 600 m³/h). Avec l'unité **m³/s**, la fonctionnalité s'appelle « Débit (m³/s) » et n'a pas d'unité : Gladys n'en a pas pour les m³/s. Seulement si la station mesure un débit. |
+| Vigilance crues      | Niveau de risque            | La couleur du tronçon de la station, en pastille de risque Gladys : 0 vert, 1 jaune, 2 orange, 3 rouge. Seulement pour une station Vigicrues.                                                                                   |
+| Couleur de vigilance | Texte                       | Vert, Jaune, Orange ou Rouge.                                                                                                                                                                                                   |
+| Dernière mesure      | Texte                       | Date de la dernière mesure (« 29/09 15:30 »), ou « Pas de nouvelle mesure depuis… » après 3 heures sans mesure.                                                                                                                 |
 
 La hauteur et le débit ne sont envoyés que quand ils changent, et une fois toutes les 12 heures
 sinon. Après 3 heures sans nouvelle mesure, ils ne sont plus envoyés : Gladys affiche leur âge
 réel. Une station qui se met à mesurer un débit reçoit la fonctionnalité : l'onglet Découverte
 propose alors de mettre l'appareil à jour.
+
+**Changer d'unité du débit** change la structure des appareils : l'onglet **Découverte**
+propose « Mettre à jour » pour chaque station qui mesure un débit. Tant que vous ne l'avez pas
+fait, le débit reste envoyé dans l'unité de l'appareil créé, pour ne jamais mélanger les deux.
+Le nom d'une fonctionnalité est figé à sa création : renommez-la dans l'appareil (« Débit » ou
+« Débit (m³/s) ») si besoin. L'historique déjà enregistré garde son ancienne unité.
 
 ## Widget
 
@@ -91,7 +99,7 @@ Ajoutez le widget **Vigicrues** à un tableau de bord.
   selon la vigilance de son tronçon : vert, jaune, rouge pour orange et rouge (la palette des
   widgets n'a pas d'orange, le titre donne la couleur exacte). Gris : pas de tronçon, ou pas de
   mesure récente.
-- Avec une station choisie : ses tuiles de hauteur et de débit, en direct, puis sa vigilance
+- Avec une station choisie : ses tuiles de hauteur et de débit (avec son unité, m³/h ou m³/s), en direct, puis sa vigilance
   avec le nom du tronçon, sa tendance et sa dernière mesure.
 
 Le widget se termine par la source et sa date, et un lien vers Vigicrues.
@@ -159,7 +167,9 @@ déclencheur.
   service est en panne ou Gladys n'a pas accès à Internet. Les valeurs reviennent toutes
   seules.
 - **« Autour de ma maison »** ne fait rien : indiquez la position de votre maison dans Gladys
-  (Paramètres, Maisons) ; l'écran de configuration le signale.
+  (Paramètres, Maisons) ; l'écran de configuration le signale. Si vous avez choisi une maison
+  dans le réglage **Maison**, c'est la sienne qui compte : l'écran de configuration la nomme
+  quand elle n'a pas de position ou n'existe plus (choisissez-en une autre, ou videz le champ).
 - **Logs** : calmes par défaut (démarrage, station muette ou revenue, changement de vigilance,
   pannes une seule fois). `LOG_LEVEL=debug` montre chaque mise à jour.
 

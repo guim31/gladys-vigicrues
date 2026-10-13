@@ -68,6 +68,7 @@ export function registerHandlers(gladys, options = {}) {
   gladys.onPoll(whenReady((device) => monitor.poll(device)));
 
   gladys.onDeviceCreated(whenReady((device) => monitor.onDeviceCreated(device)));
+  gladys.onDeviceUpdated(whenReady((device) => monitor.onDeviceUpdated(device)));
   gladys.onDeviceDeleted(whenReady((device) => monitor.onDeviceDeleted(device)));
 
   gladys.onConfigUpdated(whenReady((newConfig) => monitor.reconfigure(normalizeConfig(newConfig))));

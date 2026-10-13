@@ -63,6 +63,10 @@ export const STATUS = {
     unknown: ({ codes }) => `Unknown station code: ${codes}.`,
     invalid: ({ values }) => `Ignored (neither a station code nor an INSEE code): ${values}.`,
     noHouse: 'Around my house: give your house a location in Gladys (Settings, Houses).',
+    houseUnlocated: ({ name }) =>
+      `Around my house: the house "${name}" has no location in Gladys (Settings, Houses).`,
+    houseGone: ({ name }) =>
+      `Around my house: the house "${name}" no longer exists in Gladys, choose another one in the configuration.`,
     tooMany: ({ max }) => `Only the first ${max} stations are followed.`,
     none: 'No station yet: fill in the configuration, or use "Find stations".',
   },
@@ -74,6 +78,10 @@ export const STATUS = {
     invalid: ({ values }) => `Ignoré (ni code de station ni code INSEE) : ${values}.`,
     noHouse:
       'Autour de ma maison : indiquez la position de votre maison dans Gladys (Paramètres, Maisons).',
+    houseUnlocated: ({ name }) =>
+      `Autour de ma maison : la maison « ${name} » n'a pas de position dans Gladys (Paramètres, Maisons).`,
+    houseGone: ({ name }) =>
+      `Autour de ma maison : la maison « ${name} » n'existe plus dans Gladys, choisissez-en une autre dans la configuration.`,
     tooMany: ({ max }) => `Seules les ${max} premières stations sont suivies.`,
     none: 'Aucune station : remplissez la configuration, ou utilisez « Chercher des stations ».',
   },
@@ -84,6 +92,10 @@ export const STATUS = {
     unknown: ({ codes }) => `Unbekannter Stationscode: ${codes}.`,
     invalid: ({ values }) => `Ignoriert (weder Stationscode noch INSEE-Code): ${values}.`,
     noHouse: 'Rund um mein Haus: Gib deinem Haus in Gladys einen Standort (Einstellungen, Häuser).',
+    houseUnlocated: ({ name }) =>
+      `Rund um mein Haus: Das Haus „${name}“ hat in Gladys keinen Standort (Einstellungen, Häuser).`,
+    houseGone: ({ name }) =>
+      `Rund um mein Haus: Das Haus „${name}“ gibt es in Gladys nicht mehr, wähle in der Konfiguration ein anderes.`,
     tooMany: ({ max }) => `Nur die ersten ${max} Stationen werden verfolgt.`,
     none: 'Noch keine Station: Fülle die Konfiguration aus oder nutze „Stationen suchen“.',
   },
@@ -94,6 +106,10 @@ export const STATUS = {
     unknown: ({ codes }) => `Código de estación desconocido: ${codes}.`,
     invalid: ({ values }) => `Ignorado (ni código de estación ni código INSEE): ${values}.`,
     noHouse: 'Alrededor de mi casa: indique la ubicación de su casa en Gladys (Ajustes, Casas).',
+    houseUnlocated: ({ name }) =>
+      `Alrededor de mi casa: la casa «${name}» no tiene ubicación en Gladys (Ajustes, Casas).`,
+    houseGone: ({ name }) =>
+      `Alrededor de mi casa: la casa «${name}» ya no existe en Gladys, elija otra en la configuración.`,
     tooMany: ({ max }) => `Solo se siguen las ${max} primeras estaciones.`,
     none: 'Aún no hay estaciones: rellene la configuración o use «Buscar estaciones».',
   },
@@ -104,6 +120,10 @@ export const SEARCH = {
   en: {
     noHouse:
       'Your house has no location in Gladys: type a commune code (31555), a department and a name (31 Toulouse) or a station code.',
+    houseUnlocated: ({ name }) =>
+      `The house "${name}" has no location in Gladys: type a commune code (31555), a department and a name (31 Toulouse) or a station code.`,
+    houseGone: ({ name }) =>
+      `The house "${name}" of the configuration no longer exists in Gladys: choose another one, or type a commune code (31555).`,
     needDepartment:
       'Add the department number to the name, e.g. "31 Toulouse", or give your house a location in Gladys.',
     none: 'No station in service found.',
@@ -116,6 +136,10 @@ export const SEARCH = {
   fr: {
     noHouse:
       "Votre maison n'a pas de position dans Gladys : tapez un code de commune (31555), un département et un nom (31 Toulouse) ou un code de station.",
+    houseUnlocated: ({ name }) =>
+      `La maison « ${name} » n'a pas de position dans Gladys : tapez un code de commune (31555), un département et un nom (31 Toulouse) ou un code de station.`,
+    houseGone: ({ name }) =>
+      `La maison « ${name} » de la configuration n'existe plus dans Gladys : choisissez-en une autre, ou tapez un code de commune (31555).`,
     needDepartment:
       'Ajoutez le numéro du département au nom, par exemple « 31 Toulouse », ou donnez une position à votre maison dans Gladys.',
     none: 'Aucune station en service trouvée.',
@@ -128,6 +152,10 @@ export const SEARCH = {
   de: {
     noHouse:
       'Dein Haus hat in Gladys keinen Standort: Gib einen Gemeindecode (31555), ein Département und einen Namen (31 Toulouse) oder einen Stationscode ein.',
+    houseUnlocated: ({ name }) =>
+      `Das Haus „${name}“ hat in Gladys keinen Standort: Gib einen Gemeindecode (31555), ein Département und einen Namen (31 Toulouse) oder einen Stationscode ein.`,
+    houseGone: ({ name }) =>
+      `Das Haus „${name}“ der Konfiguration gibt es in Gladys nicht mehr: Wähle ein anderes oder gib einen Gemeindecode (31555) ein.`,
     needDepartment:
       'Ergänze den Namen um die Nummer des Départements, z. B. „31 Toulouse“, oder gib deinem Haus in Gladys einen Standort.',
     none: 'Keine Station in Betrieb gefunden.',
@@ -140,6 +168,10 @@ export const SEARCH = {
   es: {
     noHouse:
       'Su casa no tiene ubicación en Gladys: escriba un código de municipio (31555), un departamento y un nombre (31 Toulouse) o un código de estación.',
+    houseUnlocated: ({ name }) =>
+      `La casa «${name}» no tiene ubicación en Gladys: escriba un código de municipio (31555), un departamento y un nombre (31 Toulouse) o un código de estación.`,
+    houseGone: ({ name }) =>
+      `La casa «${name}» de la configuración ya no existe en Gladys: elija otra o escriba un código de municipio (31555).`,
     needDepartment:
       'Añada el número del departamento al nombre, por ejemplo «31 Toulouse», o indique la ubicación de su casa en Gladys.',
     none: 'No se ha encontrado ninguna estación en servicio.',

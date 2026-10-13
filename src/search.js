@@ -76,9 +76,12 @@ async function candidates(monitor, query, radiusKm) {
       origin: await monitor.house(),
     };
   }
-  const house = await monitor.house();
+  // The house of the configuration, as for "around my house".
+  const { house, problem } = await monitor.findHouse();
   if (!house) {
-    return { error: query.words.length > 0 ? 'needDepartment' : 'noHouse' };
+    return query.words.length > 0
+      ? { error: 'needDepartment' }
+      : { error: problem.key, params: { name: problem.name } };
   }
   const radius = query.words.length > 0 ? Math.max(radiusKm, WORDS_RADIUS_KM) : radiusKm;
   const stations = (
@@ -105,7 +108,7 @@ export async function searchStations(monitor, fields = {}) {
   try {
     const found = await candidates(monitor, query, radiusKm);
     if (found.error) {
-      return render(SEARCH, found.error);
+      return render(SEARCH, found.error, found.params);
     }
     const { origin } = found;
     const unique = [...new Map(found.stations.map((station) => [station.code, station])).values()];

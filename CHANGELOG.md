@@ -10,6 +10,20 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Added
+
+- "House" setting: the house of Gladys whose location "Around my house" and "Find stations"
+  use. Empty keeps the former behaviour (the first house that has a location); a chosen house
+  without a location, or deleted since, is named in the Configuration screen.
+- "Flow unit" setting: m³/h (default) or m³/s.
+
+### Changed
+
+- The flow is published in m³/h by default, with the Gladys unit, so every Gladys screen shows
+  it ("10.1" alone before). Existing devices keep m³/s until "Update" in the Discover tab;
+  choose m³/s in the settings to keep the Vigicrues unit.
+- Requires Gladys 5.2.0 or later (house selection in the configuration).
+
 ## [1.0.1] - 2026-10-13
 
 ### Added

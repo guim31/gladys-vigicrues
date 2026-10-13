@@ -10,7 +10,7 @@
   },
   "version": "1.0.1",
   "docker_image": "ghcr.io/guim31/gladys-vigicrues:1.0.1",
-  "gladys_version": ">=5.1.0",
+  "gladys_version": ">=5.2.0",
   "cover_image": "https://raw.githubusercontent.com/guim31/gladys-vigicrues/main/cover.png",
   "categories": ["environment"],
   "transports": ["cloud"],
@@ -128,6 +128,24 @@
       "default": ""
     },
     {
+      "key": "house",
+      "type": "select",
+      "source": "houses",
+      "label": {
+        "en": "House",
+        "fr": "Maison",
+        "de": "Haus",
+        "es": "Casa"
+      },
+      "description": {
+        "en": "The house whose location is used by \"Around my house\" and by \"Find stations\". Empty: the first house of Gladys that has a location.",
+        "fr": "La maison dont la position sert à « Autour de ma maison » et à « Chercher des stations ». Vide : la première maison de Gladys qui a une position.",
+        "de": "Das Haus, dessen Standort „Rund um mein Haus“ und „Stationen suchen“ verwenden. Leer: das erste Haus in Gladys mit einem Standort.",
+        "es": "La casa cuya ubicación usan «Alrededor de mi casa» y «Buscar estaciones». Vacío: la primera casa de Gladys que tiene ubicación."
+      },
+      "required": false
+    },
+    {
       "key": "around_home",
       "type": "select",
       "label": {
@@ -226,6 +244,44 @@
             "fr": "30 minutes",
             "de": "30 Minuten",
             "es": "30 minutos"
+          }
+        }
+      ]
+    },
+    {
+      "key": "flow_unit",
+      "type": "select",
+      "label": {
+        "en": "Flow unit",
+        "fr": "Unité du débit",
+        "de": "Einheit des Abflusses",
+        "es": "Unidad del caudal"
+      },
+      "description": {
+        "en": "m³/h: the unit Gladys shows on every screen. m³/s: the unit of Vigicrues, shown without a unit (the feature name says it). Changing it: \"Update\" the devices in the Discover tab.",
+        "fr": "m³/h : l'unité que Gladys affiche sur tous ses écrans. m³/s : l'unité de Vigicrues, affichée sans unité (le nom de la fonctionnalité la donne). En cas de changement : « Mettre à jour » les appareils dans l'onglet Découverte.",
+        "de": "m³/h: die Einheit, die Gladys überall anzeigt. m³/s: die Einheit von Vigicrues, ohne Einheit angezeigt (der Name der Funktion nennt sie). Nach einer Änderung: die Geräte im Tab „Entdecken“ aktualisieren.",
+        "es": "m³/h: la unidad que Gladys muestra en todas sus pantallas. m³/s: la unidad de Vigicrues, mostrada sin unidad (el nombre de la función la indica). Si la cambia: «Actualice» los dispositivos en la pestaña Descubrir."
+      },
+      "required": false,
+      "default": "m3h",
+      "options": [
+        {
+          "value": "m3h",
+          "label": {
+            "en": "m³/h (shown by Gladys)",
+            "fr": "m³/h (affiché par Gladys)",
+            "de": "m³/h (von Gladys angezeigt)",
+            "es": "m³/h (mostrado por Gladys)"
+          }
+        },
+        {
+          "value": "m3s",
+          "label": {
+            "en": "m³/s (Vigicrues unit)",
+            "fr": "m³/s (unité de Vigicrues)",
+            "de": "m³/s (Einheit von Vigicrues)",
+            "es": "m³/s (unidad de Vigicrues)"
           }
         }
       ]

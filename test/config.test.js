@@ -9,13 +9,15 @@ import {
   stationCodeOf,
 } from '../src/config.js';
 
-test('the defaults: nothing followed, every 15 minutes, French names', () => {
+test('the defaults: nothing followed, every 15 minutes, flow in m³/h, French names', () => {
   assert.deepEqual(normalizeConfig(), {
     stationCodes: [],
     communeCodes: [],
     invalid: [],
+    houseSelector: null,
     homeRadiusKm: 0,
     refreshMinutes: 15,
+    flowUnit: 'm3h',
     language: 'fr',
   });
   assert.deepEqual(normalizeConfig(null), normalizeConfig(DEFAULT_CONFIG));
@@ -43,10 +45,31 @@ test('commune codes: INSEE, Corsica, overseas, and their department', () => {
 });
 
 test('selects outside their options fall back to the defaults', () => {
-  const config = normalizeConfig({ around_home: '7', refresh_interval: '1', language: 'it' });
+  const config = normalizeConfig({
+    around_home: '7',
+    refresh_interval: '1',
+    flow_unit: 'l/s',
+    language: 'it',
+  });
   assert.equal(config.homeRadiusKm, 0);
+  assert.equal(config.flowUnit, 'm3h');
   assert.equal(config.refreshMinutes, 15);
   assert.equal(config.language, 'fr');
-  const set = normalizeConfig({ around_home: '20', refresh_interval: '30', language: 'de' });
-  assert.deepEqual([set.homeRadiusKm, set.refreshMinutes, set.language], [20, 30, 'de']);
+  const set = normalizeConfig({
+    around_home: '20',
+    refresh_interval: '30',
+    flow_unit: 'm3s',
+    language: 'de',
+  });
+  assert.deepEqual(
+    [set.homeRadiusKm, set.refreshMinutes, set.flowUnit, set.language],
+    [20, 30, 'm3s', 'de'],
+  );
+});
+
+test('the house: its selector, empty or missing means the first located house', () => {
+  assert.equal(normalizeConfig({ house: ' maison-2 ' }).houseSelector, 'maison-2');
+  assert.equal(normalizeConfig({ house: '' }).houseSelector, null);
+  assert.equal(normalizeConfig({ house: null }).houseSelector, null);
+  assert.equal(normalizeConfig({}).houseSelector, null);
 });

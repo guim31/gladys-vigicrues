@@ -12,7 +12,7 @@ no account, no key.
 
 ## Features
 
-- **One device per gauging station**: water height (m), flow (m³/s) when the station measures
+- **One device per gauging station**: water height (m), flow (m³/h, or m³/s by choice) when the station measures
   one, the flood vigilance of its river section (green, yellow, orange, red, shown as the Gladys
   risk badge) and the date of the last reading. A station that stops sending says so ("No new
   reading since…") instead of showing an old value as a fresh one.
@@ -29,7 +29,7 @@ no account, no key.
 
 ## Requirements
 
-- Gladys Assistant **5.1.0** or later (widgets and scene triggers).
+- Gladys Assistant **5.2.0** or later (widgets, scene triggers, house selection in the configuration).
 - Internet access from Gladys to `hubeau.eaufrance.fr` and `www.vigicrues.gouv.fr`.
 - For "around my house": the location of your house in Gladys. The integration declares
   `location: true`, shown on the install screen.
@@ -62,7 +62,9 @@ Gladys core ── devices, states, scene events, widget
   minutes, with **one** Hub'Eau request for all the stations; the vigilance file (2.2 MB) is
   read every 30 minutes, the Vigicrues referential once a week.
 - Hub'Eau gives heights in mm and flows in l/s: they are converted to m and m³/s, the units of
-  vigicrues.gouv.fr. Gladys has no m³/s unit, so the flow feature has none and its name says it.
+  vigicrues.gouv.fr. Gladys has no m³/s unit: by default the flow is published in m³/h, the one
+  flow unit of the core; with `flow_unit: m3s` the feature has no unit and its name says it.
+  The states follow the unit of the feature as created in Gladys until the device is updated.
 - The section of a station is found from Vigicrues: `station.json` gives its territory,
   `TerEntVigiCru` the sections of the territory, `TronEntVigiCru` their stations (the upward link
   of a station only holds a placeholder).

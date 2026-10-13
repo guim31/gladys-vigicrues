@@ -6,10 +6,12 @@
 //   - height        level-sensor/liquid-depth in metres: the water height at
 //                   the gauge, as Vigicrues shows it. It is a stage above the
 //                   gauge zero, negative values are normal;
-//   - flow          water-valve/flow, in m³/s, only when the station measures
-//                   one. Gladys has no m³/s unit (only m³/h): the feature has
-//                   no unit and its name says it, so the value reads like on
-//                   vigicrues.gouv.fr;
+//   - flow          water-valve/flow, only when the station measures one, in
+//                   the unit of the configuration (`flow_unit`). Gladys has no
+//                   m³/s unit, only m³/h (the one unit the core accepts for
+//                   water-valve/flow): 'm3h' converts and publishes that unit,
+//                   which every Gladys screen shows; 'm3s' keeps the unit of
+//                   vigicrues.gouv.fr, without a unit, and the name says it;
 //   - vigilance     risk/integer, and the colour as text, only when the station
 //                   belongs to a Vigicrues section. The Gladys front draws a
 //                   risk badge for 0 (green, "no risk") to 3 (red, "high
@@ -44,32 +46,63 @@ export const FEATURE_KEYS = {
 export const HEIGHT_BOUND_M = 30;
 export const FLOW_BOUND_M3S = 50000;
 
+const SECONDS_PER_HOUR = 3600;
+
+// How each `flow_unit` publishes the flow: the Gladys unit (none for m³/s),
+// the bounds of the feature and the label the widget shows.
+export const FLOW_FORMATS = {
+  m3h: {
+    unit: DEVICE_FEATURE_UNITS.CUBIC_METER_PER_HOUR,
+    bound: FLOW_BOUND_M3S * SECONDS_PER_HOUR,
+    label: 'm³/h',
+  },
+  m3s: { unit: undefined, bound: FLOW_BOUND_M3S, label: 'm³/s' },
+};
+
+/**
+ * A flow in m³/s (as src/hubeau.js gives it) in the unit of `flowUnit`. Hub'Eau
+ * sends whole litres per second: one decimal in m³/h (1 l/s = 3.6 m³/h) keeps
+ * every digit of the measurement.
+ */
+export function flowIn(flowUnit, m3s) {
+  return flowUnit === 'm3h' ? Math.round(m3s * SECONDS_PER_HOUR * 10) / 10 : m3s;
+}
+
+/** The `flow_unit` a flow feature of Gladys was created with ('m3s' without unit). */
+export const flowUnitOfFeature = (feature) =>
+  feature?.unit === FLOW_FORMATS.m3h.unit ? 'm3h' : 'm3s';
+
 // Feature names, frozen at creation in Gladys (language of the configuration).
+// The flow in m³/h shows its unit; in m³/s, without a unit, its name says it.
 export const NAMES = {
   en: {
     height: 'Water height',
-    flow: 'Flow (m³/s)',
+    flow: 'Flow',
+    flow_m3s: 'Flow (m³/s)',
     vigilance: 'Flood vigilance',
     vigilance_color: 'Vigilance colour',
     last_reading: 'Last reading',
   },
   fr: {
     height: "Hauteur d'eau",
-    flow: 'Débit (m³/s)',
+    flow: 'Débit',
+    flow_m3s: 'Débit (m³/s)',
     vigilance: 'Vigilance crues',
     vigilance_color: 'Couleur de vigilance',
     last_reading: 'Dernière mesure',
   },
   de: {
     height: 'Wasserstand',
-    flow: 'Abfluss (m³/s)',
+    flow: 'Abfluss',
+    flow_m3s: 'Abfluss (m³/s)',
     vigilance: 'Hochwasserwarnstufe',
     vigilance_color: 'Warnfarbe',
     last_reading: 'Letzte Messung',
   },
   es: {
     height: 'Altura del agua',
-    flow: 'Caudal (m³/s)',
+    flow: 'Caudal',
+    flow_m3s: 'Caudal (m³/s)',
     vigilance: 'Vigilancia de crecidas',
     vigilance_color: 'Color de vigilancia',
     last_reading: 'Última medición',
@@ -113,8 +146,9 @@ const sensor = (name, externalId, category, type, extra) => ({
  * @param {object} gladys
  * @param {object} station see src/hubeau.js parseStation, plus `hasFlow` and `sections`
  * @param {string} language language of the feature names
+ * @param {string} flowUnit 'm3h' or 'm3s', see FLOW_FORMATS
  */
-export function buildDevice(gladys, station, language = 'fr') {
+export function buildDevice(gladys, station, language = 'fr', flowUnit = 'm3h') {
   const ids = stationIds(gladys, station.code);
   const names = NAMES[language] ?? NAMES.fr;
   const features = [
@@ -132,12 +166,20 @@ export function buildDevice(gladys, station, language = 'fr') {
     ),
   ];
   if (station.hasFlow) {
+    const flow = FLOW_FORMATS[flowUnit] ?? FLOW_FORMATS.m3h;
     features.push(
-      sensor(names.flow, ids.flow, DEVICE_FEATURE_CATEGORIES.WATER_VALVE, TYPES.WATER_VALVE.FLOW, {
-        keep_history: true,
-        min: -FLOW_BOUND_M3S,
-        max: FLOW_BOUND_M3S,
-      }),
+      sensor(
+        flowUnit === 'm3s' ? names.flow_m3s : names.flow,
+        ids.flow,
+        DEVICE_FEATURE_CATEGORIES.WATER_VALVE,
+        TYPES.WATER_VALVE.FLOW,
+        {
+          ...(flow.unit ? { unit: flow.unit } : {}),
+          keep_history: true,
+          min: -flow.bound,
+          max: flow.bound,
+        },
+      ),
     );
   }
   if (station.sections?.length > 0) {

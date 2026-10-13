@@ -5,7 +5,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { parseQuery } from '../src/search.js';
-import { CHARLEVILLE, CHOOZ, captureLogs, createWorld } from './helpers/world.js';
+import { CHARLEVILLE, CHOOZ, HOUSE, captureLogs, createWorld } from './helpers/world.js';
 
 async function search(t, fields, options = {}) {
   const world = await createWorld(options);
@@ -44,6 +44,27 @@ test('empty: the stations around the house, nearest first, with their river', as
   assert.match(message.de, /0,7 km, Echtzeit/);
   // The closed stations (Montcy-Notre-Dame, Vrigne-aux-Bois) are not proposed.
   assert.doesNotMatch(message.en, /B560001001|B504000101/);
+});
+
+test('empty: around the house chosen in the configuration', async (t) => {
+  const flat = {
+    id: 'h2',
+    name: 'Appartement',
+    selector: 'appartement',
+    latitude: 43.6,
+    longitude: 1.44,
+  };
+  const chalet = { id: 'h3', name: 'Chalet', selector: 'chalet', latitude: null, longitude: null };
+  const houses = [flat, chalet, HOUSE];
+  // Empty configuration: the first located house, far from the Ardennes.
+  const first = await search(t, {}, { houses });
+  assert.equal(first.message.en, 'No station in service found.');
+  const chosen = await search(t, {}, { houses, config: { house: 'maison' } });
+  assert.match(chosen.message.fr, /^4 station\(s\)/);
+  const unlocated = await search(t, {}, { houses, config: { house: 'chalet' } });
+  assert.match(unlocated.message.fr, /^La maison « Chalet » n'a pas de position dans Gladys/);
+  const gone = await search(t, {}, { houses, config: { house: 'grange' } });
+  assert.match(gone.message.en, /^The house "grange" of the configuration no longer exists/);
 });
 
 test('a larger radius, and words searched around the house', async (t) => {

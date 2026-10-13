@@ -12,7 +12,7 @@ Hub'Eau. Ohne Konto, ohne Schlüssel.
 
 ## Was du bekommst
 
-- **Ein Gerät pro verfolgter Pegelstation**: Wasserstand in Metern, Abfluss in m³/s, wenn die
+- **Ein Gerät pro verfolgter Pegelstation**: Wasserstand in Metern, Abfluss in m³/h (oder nach Wahl in m³/s), wenn die
   Station einen misst, die **Hochwasserwarnstufe** ihres Flussabschnitts (grün, gelb, orange,
   rot) und das Datum der letzten Messung.
 - Eine Station, die nichts mehr sendet, wird als solche angezeigt („Keine neue Messung
@@ -26,11 +26,11 @@ Hub'Eau. Ohne Konto, ohne Schlüssel.
 
 ## Voraussetzungen
 
-- Gladys Assistant **5.1.0** oder neuer.
+- Gladys Assistant **5.2.0** oder neuer.
 - Internetzugang von Gladys aus: Die Integration liest `hubeau.eaufrance.fr` und
   `www.vigicrues.gouv.fr`.
-- Für „Rund um mein Haus“: der Standort deines Hauses in Gladys (Einstellungen, Häuser). Die
-  Integration fragt bei der Installation danach (Berechtigung „Standort“); er dient nur dazu,
+- Für „Rund um mein Haus“: der Standort deines Hauses in Gladys (Einstellungen, Häuser). Bei mehreren
+  Häusern wählst du deins in der Einstellung **Haus**. Die Integration fragt bei der Installation danach (Berechtigung „Standort“); er dient nur dazu,
   die nächsten Stationen zu finden, und wird weder gespeichert noch protokolliert.
 - Für die Warnstufe das französische Festland. Hub'Eau deckt auch die Überseedépartements ab:
   Die Stationen dort haben Wasserstand und Abfluss, ohne Warnstufe.
@@ -39,13 +39,15 @@ Hub'Eau. Ohne Konto, ohne Schlüssel.
 
 ### Einstellungen
 
-| Einstellung                | Was sie bewirkt                                                                                                                 |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Stationscodes              | Codes durch Kommas getrennt (`O200004001, B540001001`) oder die Adressen der Stationsseiten auf vigicrues.gouv.fr.              |
-| Gemeinden (INSEE-Codes)    | Alle Stationen in Betrieb dieser Gemeinden: `31555` für Toulouse, `75056` für Paris. Der INSEE-Code ist nicht die Postleitzahl. |
-| Rund um mein Haus          | Verfolgt auch die 3 nächsten Stationen, die Messwerte senden, im Umkreis von 5, 10 oder 20 km um dein Haus.                     |
-| Aktualisierungsintervall   | 15 (Standard), 20 oder 30 Minuten. Die Warnstufe wird alle 30 Minuten gelesen.                                                  |
-| Sprache der Funktionsnamen | Namen der Funktionen neuer Geräte und Sprache ihrer Texte (Farbe, letzte Messung). Standardmäßig Französisch.                   |
+| Einstellung                | Was sie bewirkt                                                                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Stationscodes              | Codes durch Kommas getrennt (`O200004001, B540001001`) oder die Adressen der Stationsseiten auf vigicrues.gouv.fr.                                           |
+| Gemeinden (INSEE-Codes)    | Alle Stationen in Betrieb dieser Gemeinden: `31555` für Toulouse, `75056` für Paris. Der INSEE-Code ist nicht die Postleitzahl.                              |
+| Haus                       | Das Haus, dessen Standort „Rund um mein Haus“ und „Stationen suchen“ verwenden. Leer: das erste Haus in Gladys mit einem Standort.                           |
+| Rund um mein Haus          | Verfolgt auch die 3 nächsten Stationen, die Messwerte senden, im Umkreis von 5, 10 oder 20 km um dein Haus.                                                  |
+| Aktualisierungsintervall   | 15 (Standard), 20 oder 30 Minuten. Die Warnstufe wird alle 30 Minuten gelesen.                                                                               |
+| Einheit des Abflusses      | **m³/h** (Standard): die Einheit, die Gladys überall anzeigt. **m³/s**: die Einheit von Vigicrues, in Gladys ohne Einheit (der Name der Funktion nennt sie). |
+| Sprache der Funktionsnamen | Namen der Funktionen neuer Geräte und Sprache ihrer Texte (Farbe, letzte Messung). Standardmäßig Französisch.                                                |
 
 Aus der Konfiguration kommen höchstens 20 Stationen. Speichere, öffne dann den Tab
 **Entdecken** und lege die gewünschten Geräte an. Eine Station, deren Gerät du angelegt hast,
@@ -58,7 +60,7 @@ Die Schaltfläche **Stationen suchen** der Konfiguration listet die Stationen in
 die nächsten zuerst, mit ihrem Fluss, ihrer Entfernung und ob sie in den letzten Stunden einen
 Messwert gesendet haben. Gib im Feld „Wo“ ein:
 
-- nichts: die Stationen rund um dein Haus (10 km oder die gewählte Entfernung);
+- nichts: die Stationen rund um das in den Einstellungen gewählte Haus (10 km oder die gewählte Entfernung);
 - einen INSEE-Gemeindecode: `31555`;
 - ein Département und einen Namen: `31 Toulouse`, `75 Seine`, `08 Meuse`;
 - einen Stationscode: `O200004001`.
@@ -71,18 +73,24 @@ auch das Ende der Adresse ihrer Seite auf vigicrues.gouv.fr.
 Ein Gerät pro Station, benannt wie bei Hub'Eau („La Meuse à Charleville-Mézières“). Seine
 Funktionen sind schreibgeschützt:
 
-| Funktion            | Typ (Gladys)                   | Wert                                                                                                                                |
-| ------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Wasserstand         | Flüssigkeitstiefe, in m        | Stand am Pegel, über seinem Nullpunkt: Ein negativer Wert ist bei Niedrigwasser normal. Keine Höhe über dem Meer.                   |
-| Abfluss (m³/s)      | Wasserdurchfluss, ohne Einheit | In Kubikmetern pro Sekunde, wie auf vigicrues.gouv.fr (Gladys hat keine Einheit m³/s). Nur wenn die Station einen Abfluss misst.    |
-| Hochwasserwarnstufe | Risikostufe                    | Die Farbe des Abschnitts der Station, als Risiko-Badge von Gladys: 0 grün, 1 gelb, 2 orange, 3 rot. Nur für eine Vigicrues-Station. |
-| Warnfarbe           | Text                           | Grün, Gelb, Orange oder Rot.                                                                                                        |
-| Letzte Messung      | Text                           | Datum der letzten Messung („29.09., 15:30“) oder „Keine neue Messung seit…“ nach 3 Stunden ohne Messung.                            |
+| Funktion            | Typ (Gladys)              | Wert                                                                                                                                                                                                                   |
+| ------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Wasserstand         | Flüssigkeitstiefe, in m   | Stand am Pegel, über seinem Nullpunkt: Ein negativer Wert ist bei Niedrigwasser normal. Keine Höhe über dem Meer.                                                                                                      |
+| Abfluss             | Wasserdurchfluss, in m³/h | Umgerechnet aus den m³/s von Vigicrues (1 m³/s = 3.600 m³/h). Mit der Einheit **m³/s** heißt die Funktion „Abfluss (m³/s)“ und hat keine Einheit: Gladys hat keine für m³/s. Nur wenn die Station einen Abfluss misst. |
+| Hochwasserwarnstufe | Risikostufe               | Die Farbe des Abschnitts der Station, als Risiko-Badge von Gladys: 0 grün, 1 gelb, 2 orange, 3 rot. Nur für eine Vigicrues-Station.                                                                                    |
+| Warnfarbe           | Text                      | Grün, Gelb, Orange oder Rot.                                                                                                                                                                                           |
+| Letzte Messung      | Text                      | Datum der letzten Messung („29.09., 15:30“) oder „Keine neue Messung seit…“ nach 3 Stunden ohne Messung.                                                                                                               |
 
 Wasserstand und Abfluss werden nur gesendet, wenn sie sich ändern, sonst einmal alle 12
 Stunden. Nach 3 Stunden ohne neue Messung werden sie nicht mehr gesendet, damit Gladys ihr
 tatsächliches Alter zeigt. Eine Station, die später einen Abfluss misst, bekommt die Funktion:
 Der Tab „Entdecken“ bietet dann an, das Gerät zu aktualisieren.
+
+**Eine andere Einheit des Abflusses** ändert die Struktur der Geräte: Der Tab **Entdecken**
+bietet für jede Station mit Abfluss „Aktualisieren“ an. Bis du das tust, wird der Abfluss
+weiter in der Einheit des angelegten Geräts gesendet, damit sich die beiden nie vermischen. Der
+Name einer Funktion wird beim Anlegen festgelegt: Benenne sie bei Bedarf im Gerät um („Abfluss“
+oder „Abfluss (m³/s)“). Der bereits gespeicherte Verlauf behält seine alte Einheit.
 
 ## Dashboard-Widget
 
@@ -92,7 +100,7 @@ Füge das Widget **Vigicrues** zu einem Dashboard hinzu.
   Tendenz, gefärbt nach der Warnstufe ihres Abschnitts: grün, gelb, rot für Orange und Rot
   (die Widget-Palette hat kein Orange, die Überschrift nennt die genaue Farbe). Grau: kein
   Abschnitt oder keine aktuelle Messung.
-- Mit einer gewählten Station: ihre Kacheln für Wasserstand und Abfluss, live, dann ihre
+- Mit einer gewählten Station: ihre Kacheln für Wasserstand und Abfluss (mit seiner Einheit, m³/h oder m³/s), live, dann ihre
   Warnstufe mit dem Namen des Abschnitts, ihre Tendenz und ihre letzte Messung.
 
 Das Widget endet mit der Quelle und ihrem Datum sowie einem Link zu Vigicrues.
@@ -159,7 +167,10 @@ des Wasserstands ist eine Szenenbedingung auf der Funktion „Wasserstand“, ke
   Dienst ist ausgefallen oder Gladys hat keinen Internetzugang. Die Werte kommen von selbst
   zurück.
 - **„Rund um mein Haus“** bewirkt nichts: Gib deinem Haus in Gladys einen Standort
-  (Einstellungen, Häuser); der Konfigurationsbildschirm weist darauf hin.
+  (Einstellungen, Häuser); der Konfigurationsbildschirm weist darauf hin. Hast du in der
+  Einstellung **Haus** ein Haus gewählt, zählt dessen Standort: Der Konfigurationsbildschirm
+  nennt es, wenn es keinen Standort hat oder nicht mehr existiert (wähle ein anderes oder leere
+  das Feld).
 - **Protokolle**: standardmäßig ruhig (Start, Station stumm oder zurück, Wechsel der
   Warnstufe, Ausfälle nur einmal). `LOG_LEVEL=debug` zeigt jede Aktualisierung.
 

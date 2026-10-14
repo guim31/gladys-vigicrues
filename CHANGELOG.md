@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-14
+
 ### Added
 
 - Vigicrues forecasts, for the stations Vigicrues forecasts (Loire at Montjean-sur-Loire, for
@@ -64,6 +66,7 @@ the notes of the version's GitHub Release.
   stations, the vigilance every 30 minutes), without relying on Gladys polling.
 - English, French, German and Spanish texts and documentation.
 
-[Unreleased]: https://github.com/guim31/gladys-vigicrues/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/guim31/gladys-vigicrues/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/guim31/gladys-vigicrues/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/guim31/gladys-vigicrues/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/guim31/gladys-vigicrues/releases/tag/v1.0.1

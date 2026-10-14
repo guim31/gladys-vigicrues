@@ -61,6 +61,14 @@ Gladys core ── devices, states, scene events, widget
   reliably, GladysAssistant/Gladys#3198): the integration refreshes itself, every 15, 20 or 30
   minutes, with **one** Hub'Eau request for all the stations; the vigilance file (2.2 MB) is
   read every 30 minutes, the Vigicrues referential once a week.
+- Forecasts (`previsions.json/index.php`, asked directly: the folder URL answers an HTML
+  redirect): read every 30 minutes for the stations that have one, every 6 hours for the
+  others. Published per station: the peak ahead (central, low and high bound of the 80 % range)
+  and its time, the value in 24 hours in the same three scenarios, the production date; the
+  flow only when Vigicrues forecasts it (`GrdSimul` is checked: a height-only station answers a
+  flow request with its height). A threshold on them is the native "device state" trigger of
+  Gladys with "only when crossed", so there is no forecast trigger of the integration.
+  `node scripts/probe-forecast.mjs <code>` shows what a station would publish (read-only).
 - Hub'Eau gives heights in mm and flows in l/s: they are converted to m and m³/s, the units of
   vigicrues.gouv.fr. Gladys has no m³/s unit: by default the flow is published in m³/h, the one
   flow unit of the core; with `flow_unit: m3s` the feature has no unit and its name says it.
@@ -82,7 +90,7 @@ Gladys core ── devices, states, scene events, widget
   feedback welcome.
 - Heights are stages above each gauge zero: not comparable between stations, not altitudes.
 - Real-time readings are raw; some stations send once an hour, up to about 75 minutes late.
-- The Vigicrues forecasts and overseas vigilance are not read.
+- The overseas vigilance is not read. Forecasts are those of Vigicrues (80 % range).
 - 20 stations at most from the configuration (plus the ones whose device you created).
 
 ## Development

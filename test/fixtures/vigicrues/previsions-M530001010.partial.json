@@ -1,0 +1,396 @@
+{
+  "Simul": {
+    "CdStationHydro": "M530001010",
+    "LbStationHydro": "Montjean-sur-Loire",
+    "GrdSimul": "H",
+    "DtProdSimul": 1791976378000,
+    "CommentSimul": "Date de production de la prévision 14/10/2026 13:12 - La prévision comporte des incertitudes. Les niveaux attendus ont une probabilité de 80% de se trouver dans la fourchette du graphique ci-dessous.",
+    "Prevs": [
+      {
+        "DtPrev": 1792008000000,
+        "ResMinPrev": -1.72,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.65
+      },
+      {
+        "DtPrev": 1792011600000,
+        "ResMinPrev": -1.72,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.65
+      },
+      {
+        "DtPrev": 1792015200000,
+        "ResMinPrev": -1.72,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.65
+      },
+      {
+        "DtPrev": 1792018800000,
+        "ResMinPrev": -1.72,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.65
+      },
+      {
+        "DtPrev": 1792022400000,
+        "ResMinPrev": -1.73,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.64
+      },
+      {
+        "DtPrev": 1792026000000,
+        "ResMinPrev": -1.73,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.64
+      },
+      {
+        "DtPrev": 1792029600000,
+        "ResMinPrev": -1.73,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.64
+      },
+      {
+        "DtPrev": 1792033200000,
+        "ResMinPrev": -1.73,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.64
+      },
+      {
+        "DtPrev": 1792036800000,
+        "ResMinPrev": -1.73,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.64
+      },
+      {
+        "DtPrev": 1792040400000,
+        "ResMinPrev": -1.73,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.64
+      },
+      {
+        "DtPrev": 1792044000000,
+        "ResMinPrev": -1.73,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.64
+      },
+      {
+        "DtPrev": 1792047600000,
+        "ResMinPrev": -1.73,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.63
+      },
+      {
+        "DtPrev": 1792051200000,
+        "ResMinPrev": -1.74,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.63
+      },
+      {
+        "DtPrev": 1792054800000,
+        "ResMinPrev": -1.74,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.63
+      },
+      {
+        "DtPrev": 1792058400000,
+        "ResMinPrev": -1.74,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.63
+      },
+      {
+        "DtPrev": 1792062000000,
+        "ResMinPrev": -1.74,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.63
+      },
+      {
+        "DtPrev": 1792065600000,
+        "ResMinPrev": -1.74,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.63
+      },
+      {
+        "DtPrev": 1792069200000,
+        "ResMinPrev": -1.74,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.63
+      },
+      {
+        "DtPrev": 1792072800000,
+        "ResMinPrev": -1.74,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.62
+      },
+      {
+        "DtPrev": 1792076400000,
+        "ResMinPrev": -1.74,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.62
+      },
+      {
+        "DtPrev": 1792080000000,
+        "ResMinPrev": -1.75,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.62
+      },
+      {
+        "DtPrev": 1792083600000,
+        "ResMinPrev": -1.75,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.62
+      },
+      {
+        "DtPrev": 1792087200000,
+        "ResMinPrev": -1.75,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.62
+      },
+      {
+        "DtPrev": 1792090800000,
+        "ResMinPrev": -1.75,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.62
+      },
+      {
+        "DtPrev": 1792094400000,
+        "ResMinPrev": -1.75,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.62
+      },
+      {
+        "DtPrev": 1792098000000,
+        "ResMinPrev": -1.75,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.61
+      },
+      {
+        "DtPrev": 1792101600000,
+        "ResMinPrev": -1.75,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.61
+      },
+      {
+        "DtPrev": 1792105200000,
+        "ResMinPrev": -1.75,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.61
+      },
+      {
+        "DtPrev": 1792108800000,
+        "ResMinPrev": -1.76,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.61
+      },
+      {
+        "DtPrev": 1792112400000,
+        "ResMinPrev": -1.76,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.61
+      },
+      {
+        "DtPrev": 1792116000000,
+        "ResMinPrev": -1.76,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.61
+      },
+      {
+        "DtPrev": 1792119600000,
+        "ResMinPrev": -1.76,
+        "ResMoyPrev": -1.69,
+        "ResMaxPrev": -1.61
+      },
+      {
+        "DtPrev": 1792123200000,
+        "ResMinPrev": -1.76,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.6
+      },
+      {
+        "DtPrev": 1792126800000,
+        "ResMinPrev": -1.76,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.6
+      },
+      {
+        "DtPrev": 1792130400000,
+        "ResMinPrev": -1.76,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.6
+      },
+      {
+        "DtPrev": 1792134000000,
+        "ResMinPrev": -1.76,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.6
+      },
+      {
+        "DtPrev": 1792137600000,
+        "ResMinPrev": -1.77,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.6
+      },
+      {
+        "DtPrev": 1792141200000,
+        "ResMinPrev": -1.77,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.6
+      },
+      {
+        "DtPrev": 1792144800000,
+        "ResMinPrev": -1.77,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.6
+      },
+      {
+        "DtPrev": 1792148400000,
+        "ResMinPrev": -1.77,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.59
+      },
+      {
+        "DtPrev": 1792152000000,
+        "ResMinPrev": -1.77,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.59
+      },
+      {
+        "DtPrev": 1792155600000,
+        "ResMinPrev": -1.77,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.59
+      },
+      {
+        "DtPrev": 1792159200000,
+        "ResMinPrev": -1.77,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.59
+      },
+      {
+        "DtPrev": 1792162800000,
+        "ResMinPrev": -1.77,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.59
+      },
+      {
+        "DtPrev": 1792166400000,
+        "ResMinPrev": -1.78,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.59
+      },
+      {
+        "DtPrev": 1792170000000,
+        "ResMinPrev": -1.78,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.59
+      },
+      {
+        "DtPrev": 1792173600000,
+        "ResMinPrev": -1.78,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.58
+      },
+      {
+        "DtPrev": 1792177200000,
+        "ResMinPrev": -1.78,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.58
+      },
+      {
+        "DtPrev": 1792180800000,
+        "ResMinPrev": -1.78,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.58
+      },
+      {
+        "DtPrev": 1792184400000,
+        "ResMinPrev": -1.78,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.58
+      },
+      {
+        "DtPrev": 1792188000000,
+        "ResMinPrev": -1.78,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.58
+      },
+      {
+        "DtPrev": 1792191600000,
+        "ResMinPrev": -1.78,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.58
+      },
+      {
+        "DtPrev": 1792195200000,
+        "ResMinPrev": -1.79,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.58
+      },
+      {
+        "DtPrev": 1792198800000,
+        "ResMinPrev": -1.79,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.57
+      },
+      {
+        "DtPrev": 1792202400000,
+        "ResMinPrev": -1.79,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.57
+      },
+      {
+        "DtPrev": 1792206000000,
+        "ResMinPrev": -1.79,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.57
+      },
+      {
+        "DtPrev": 1792209600000,
+        "ResMinPrev": -1.79,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.57
+      },
+      {
+        "DtPrev": 1792213200000,
+        "ResMinPrev": -1.79,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.57
+      },
+      {
+        "DtPrev": 1792216800000,
+        "ResMinPrev": -1.79,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.57
+      },
+      {
+        "DtPrev": 1792220400000,
+        "ResMinPrev": -1.79,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.57
+      },
+      {
+        "DtPrev": 1792224000000,
+        "ResMinPrev": -1.8,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.56
+      },
+      {
+        "DtPrev": 1792227600000,
+        "ResMinPrev": -1.8,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.56
+      },
+      {
+        "DtPrev": 1792231200000,
+        "ResMinPrev": -1.8,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.56
+      },
+      {
+        "DtPrev": 1792234800000,
+        "ResMinPrev": -1.8,
+        "ResMoyPrev": -1.68,
+        "ResMaxPrev": -1.56
+      }
+    ]
+  },
+  "VersionFlux": "Beta 0.4f"
+}

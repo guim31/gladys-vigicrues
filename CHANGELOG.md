@@ -10,6 +10,24 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Added
+
+- Vigicrues forecasts, for the stations Vigicrues forecasts (Loire at Montjean-sur-Loire, for
+  example): the peak expected over the horizon in its central, low and high scenarios (the 80 %
+  range of Vigicrues) with its time, the height expected in 24 hours in the same three
+  scenarios, and the production date of the forecast. The same for the flow when Vigicrues
+  forecasts it too, in the flow unit of the settings. Read every 30 minutes.
+- An alert on a forecast uses the native "Device state change" trigger of Gladys on a forecast
+  feature, with "only when the threshold is crossed": the documentation gives the scene
+  ("high forecast above 4.5 m → message").
+- The station detail of the widget shows the forecast peak, its range and its time.
+
+### Changed
+
+- Existing devices of a forecast station gain the forecast features through "Update" in the
+  Discover tab; their other features keep their identifiers and history. Stations without
+  forecast do not change.
+
 ## [1.1.0] - 2026-10-13
 
 ### Added

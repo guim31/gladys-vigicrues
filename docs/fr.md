@@ -17,6 +17,9 @@ compte ni clé.
   date de la dernière mesure.
 - Une station qui n'envoie plus rien est signalée comme telle (« Pas de nouvelle mesure
   depuis… ») : une vieille valeur n'est jamais republiée comme si elle était fraîche.
+- Pour les stations que Vigicrues prévoit, la **prévision** de la hauteur (et du débit quand
+  elle est publiée) : le pic attendu et la valeur dans 24 h, centrale, basse et haute, avec
+  l'heure du pic.
 - Deux **déclencheurs de scène** : « La vigilance crues monte » (jaune, orange ou rouge) et
   « La vigilance crues redescend », filtrés par station, tronçon et couleur.
 - Un **widget** de tableau de bord : vos stations, leur hauteur, sa tendance (monte, stable,
@@ -45,7 +48,7 @@ compte ni clé.
 | Communes (codes INSEE)             | Toutes les stations en service de ces communes : `31555` pour Toulouse, `75056` pour Paris. Le code INSEE n'est pas le code postal.                         |
 | Maison                             | La maison dont la position sert à « Autour de ma maison » et à « Chercher des stations ». Vide : la première maison de Gladys qui a une position.           |
 | Autour de ma maison                | Suit aussi les 3 stations les plus proches qui envoient des mesures, à 5, 10 ou 20 km de votre maison.                                                      |
-| Fréquence de mise à jour           | 15 (par défaut), 20 ou 30 minutes. La vigilance est lue toutes les 30 minutes.                                                                              |
+| Fréquence de mise à jour           | 15 (par défaut), 20 ou 30 minutes. La vigilance et les prévisions sont lues toutes les 30 minutes.                                                          |
 | Unité du débit                     | **m³/h** (par défaut) : l'unité que Gladys affiche partout. **m³/s** : l'unité de Vigicrues, sans unité dans Gladys (le nom de la fonctionnalité la donne). |
 | Langue des noms de fonctionnalités | Noms des fonctionnalités des nouveaux appareils et langue de leurs textes (couleur, dernière mesure). Français par défaut.                                  |
 
@@ -91,6 +94,31 @@ fait, le débit reste envoyé dans l'unité de l'appareil créé, pour ne jamais
 Le nom d'une fonctionnalité est figé à sa création : renommez-la dans l'appareil (« Débit » ou
 « Débit (m³/s) ») si besoin. L'historique déjà enregistré garde son ancienne unité.
 
+### Prévisions
+
+Pour les stations que Vigicrues prévoit (surtout sur les grands cours d'eau, comme la Loire à
+Montjean-sur-Loire), l'appareil reçoit des fonctionnalités de prévision, dans les unités des
+mesures :
+
+| Fonctionnalité                                 | Valeur                                                                                                                                                     |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hauteur : pic prévu (central), (bas), (haut)   | La plus haute hauteur attendue sur l'horizon de la prévision (1 à 3 jours), dans le scénario central et aux bornes basse et haute de sa fourchette (80 %). |
+| Hauteur : heure du pic prévu                   | Quand le pic central est attendu (« 17/10 13:00 »).                                                                                                        |
+| Hauteur dans 24 h (centrale), (basse), (haute) | La hauteur attendue dans 24 heures, dans les trois mêmes scénarios. Pas envoyée quand 24 heures dépassent l'horizon.                                       |
+| Débit : pic prévu…, Débit dans 24 h…           | La même chose pour le débit, seulement quand Vigicrues le prévoit aussi (rare), en m³/h ou en m³/s comme le débit.                                         |
+| Prévision produite le                          | Date de production de la prévision, ou « Aucune prévision en cours » une fois son dernier point passé.                                                     |
+
+Chaque scénario a son propre pic : les pics bas et haut peuvent tomber à une autre heure que le
+central. Les prévisions sont lues toutes les 30 minutes (Vigicrues en produit quelques-unes par
+jour), et une valeur n'est envoyée que quand elle change. Le pic dit jusqu'où l'eau monte sur
+l'horizon, la valeur à 24 h à quelle vitesse elle arrive : une valeur à 48 h ajouterait trois
+fonctionnalités par grandeur pour un niveau situé le plus souvent entre les deux.
+
+**Appareils existants** : les fonctionnalités de prévision apparaissent la première fois que
+Vigicrues envoie une prévision pour la station ; l'onglet **Découverte** propose alors « Mettre
+à jour » pour son appareil. Les fonctionnalités existantes gardent leurs identifiants et leur
+historique. La plupart des stations n'ont pas de prévision : leurs appareils ne changent pas.
+
 ## Widget
 
 Ajoutez le widget **Vigicrues** à un tableau de bord.
@@ -101,6 +129,9 @@ Ajoutez le widget **Vigicrues** à un tableau de bord.
   mesure récente.
 - Avec une station choisie : ses tuiles de hauteur et de débit (avec son unité, m³/h ou m³/s), en direct, puis sa vigilance
   avec le nom du tronçon, sa tendance et sa dernière mesure.
+
+Pour une station que Vigicrues prévoit, le détail se termine par le pic prévu : valeur
+centrale, fourchette et heure (« 2,9 m (2,56/3,24) · 01/10 16:40 »).
 
 Le widget se termine par la source et sa date, et un lien vers Vigicrues.
 
@@ -123,6 +154,12 @@ lecture, et pas après plus d'un jour sans vigilance (redémarrage, Vigicrues in
 seuil de hauteur est une condition de scène sur la fonctionnalité « Hauteur d'eau », pas un
 déclencheur.
 
+Un seuil sur la prévision n'a pas besoin d'un déclencheur de l'intégration : utilisez le
+déclencheur natif « Changement d'état de l'appareil » sur « Hauteur : pic prévu (haut) » (ou
+central, ou bas : selon la prudence voulue), avec l'option qui ne déclenche qu'au franchissement
+du seuil. La scène part alors une fois quand la prévision passe au-dessus du seuil, pas à chaque
+nouvelle prévision. Le seuil est en mètres, ou dans l'unité de l'appareil pour un débit.
+
 ## Exemples de scènes
 
 - **Orange ou rouge près de chez soi** : déclencheur « La vigilance crues monte », couleur
@@ -132,6 +169,11 @@ déclencheur.
   « Retour au vert sur {{section_name}} ».
 - **Seuil de hauteur** : déclencheur « Changement d'état de l'appareil » sur « Hauteur d'eau »
   de votre station, au-dessus de 3,5 m → envoyer un message à toute la maison.
+- **Prévision haute au-dessus de 4,5 m : mettre ses biens hors d'eau** : déclencheur
+  « Changement d'état de l'appareil » sur « Hauteur : pic prévu (haut) » de votre station,
+  au-dessus de 4,5 m, seulement au franchissement du seuil → envoyer le message « La prévision
+  haute de Vigicrues dépasse 4,5 m : regardez l'heure du pic et vigicrues.gouv.fr ». Avec le
+  pic central, l'alerte vient plus tard et moins souvent.
 - **Station muette** : rien à faire, la fonctionnalité « Dernière mesure » le dit sur le
   tableau de bord.
 
@@ -140,6 +182,9 @@ déclencheur.
 - **Vigicrues** (`www.vigicrues.gouv.fr/services`) : la vigilance de chaque tronçon
   (`InfoVigiCru.geojson`, environ 2,2 Mo, émis au moins deux fois par jour), lue toutes les
   30 minutes, et les stations de chaque tronçon (lues une fois par semaine). © VIGICRUES.
+- **Prévisions de Vigicrues** (`previsions.json`) : pour les stations qui en ont, des points
+  horaires avec une valeur centrale et une fourchette à 80 %, lus toutes les 30 minutes. Une
+  station sans prévision est redemandée toutes les 6 heures. © VIGICRUES.
 - **Hub'Eau Hydrométrie** (`hubeau.eaufrance.fr/api/v2/hydrometrie`) : les stations et leurs
   mesures en temps réel, mises à jour toutes les 5 minutes depuis la plateforme hydrométrique
   nationale, gardées un mois. Une requête par mise à jour pour toutes vos stations.
@@ -159,6 +204,10 @@ déclencheur.
   (beaucoup de petits cours d'eau sont seulement mesurés), ou Vigicrues n'a pas répondu à la
   publication de l'appareil : l'intégration réessaie toutes les heures, puis l'onglet
   Découverte propose de mettre l'appareil à jour.
+- **Pas de fonctionnalité de prévision** : Vigicrues ne prévoit pas cette station (la plupart
+  des stations), voyez sa page sur vigicrues.gouv.fr. Si elle en a une, « Mettre à jour »
+  l'appareil dans l'onglet Découverte. Une prévision de hauteur sans prévision de débit est
+  normale : Vigicrues ne prévoit souvent que la hauteur (Montjean-sur-Loire, par exemple).
 - **Pas de fonctionnalité de débit** : la station ne mesure que la hauteur
   (Charleville-Mézières, par exemple).
 - **« Pas de nouvelle mesure depuis… »** : la station n'envoie plus rien (maintenance, panne,
@@ -183,7 +232,8 @@ déclencheur.
   comparent ni d'une station à l'autre, ni à une altitude.
 - Les mesures en temps réel sont brutes, non validées : des valeurs aberrantes arrivent.
 - Certaines stations envoient une fois par heure, avec jusqu'à 75 minutes de retard environ.
-- Les prévisions de Vigicrues ne sont pas lues.
+- Les prévisions sont celles de Vigicrues, avec leur incertitude : le niveau est attendu dans
+  la fourchette 8 fois sur 10, pas toujours. Vigicrues les révise quelques fois par jour.
 - Testée sur de vraies réponses de Hub'Eau et de Vigicrues enregistrées en septembre et
   octobre 2026, pas encore sur un Gladys réel : vos retours sont bienvenus.
 - Non affiliée au SCHAPI / Vigicrues, à l'État ni à Hub'Eau.

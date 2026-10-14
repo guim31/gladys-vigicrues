@@ -282,5 +282,13 @@ long, et sur un « Sie »/« Ihr… » de politesse en allemand. Le store exige 
 - Une mesure de plus de 3 h n'est plus publiée (ni par le heartbeat) : la fonctionnalité
   « Dernière mesure » dit depuis quand. La mémoire de déduplication du SDK est datée par
   `Date.now()` : tester le heartbeat avec `t.mock.timers.enable({ apis: ['Date'] })`.
+- **Prévisions** (`previsions.json`, 14/10/2026) : appeler `…/previsions.json/index.php?…`
+  directement, l'URL de dossier répond une redirection HTML. Réponse `Simul.Prevs[]` horaire
+  (`DtPrev` en ms, `ResMinPrev`/`ResMoyPrev`/`ResMaxPrev`, fourchette à 80 %), horizon d'environ
+  63 h. Une station sans prévision répond l'enveloppe d'erreur ; avec `GrdSerie=Q`, une station
+  qui ne prévoit que la hauteur renvoie `GrdSimul: "H"` : toujours vérifier la grandeur. Le seuil
+  sur une prévision est le déclencheur natif « état d'appareil, seulement au franchissement »
+  sur une fonctionnalité « pic prévu » : pas de déclencheur maison. `scripts/probe-forecast.mjs`
+  pour vérifier une station depuis une machine qui a le réseau.
 - La boîte envoyée à Hub'Eau autour de la maison est arrondie à 0,05° : la position exacte ne
   quitte pas Gladys, et n'est ni écrite dans `/data` ni dans les logs.

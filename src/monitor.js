@@ -17,7 +17,17 @@
 // Scheduling: the devices are published with should_poll: false (the core does
 // not poll external devices reliably, GladysAssistant/Gladys#3198). The monitor
 // runs a cycle at the configured interval: one Hub'Eau request for the readings
-// of every station, and the Vigicrues vigilance every 30 minutes.
+// of every station, the Vigicrues vigilance every 30 minutes, and the forecast
+// of each station that has one every 30 minutes (Vigicrues issues them a few
+// times a day). Most stations have none: those are asked again every 6 hours
+// only, and their flow forecast only when they forecast their height.
+//
+// Forecasts: a station gains its forecast features ("Update" in the Discover
+// tab for an existing device) the first time Vigicrues sends a forecast for it,
+// and keeps them. Their states are published while points remain ahead: the
+// "Forecast issued" feature then says that no forecast is current. They are
+// published without `created_at`, so the native scene triggers of Gladys see
+// them.
 //
 // States: `publishChangedStates` sends only what changed, plus a heartbeat every
 // 12 hours. A reading older than 3 hours is never sent again as if it were
@@ -35,7 +45,10 @@ import { HOME_STATIONS, MAX_STATIONS, departmentOf } from './config.js';
 import {
   FEATURE_KEYS,
   FLOW_FORMATS,
+  FORECAST_PEAK_TIME,
+  FORECAST_SERIES,
   buildDevice,
+  forecastFeatures,
   flowIn,
   flowUnitOfFeature,
   stationCodeOfId,
@@ -45,6 +58,7 @@ import { boxAround, distanceKm } from './geo.js';
 import { HubEau } from './hubeau.js';
 import {
   COLOR_NAMES,
+  FORECASTS,
   READINGS,
   STATUS,
   VIGILANCE_LEVELS,
@@ -52,7 +66,7 @@ import {
   join,
   render,
 } from './messages.js';
-import { Vigicrues } from './vigicrues.js';
+import { Vigicrues, summarizeForecast } from './vigicrues.js';
 
 const logger = createLogger({ name: 'vigicrues' });
 
@@ -82,6 +96,10 @@ export const DEFAULT_TIMINGS = {
   vigilanceMaxAgeMs: DAY,
   // A level remembered for longer fires no trigger when it changes (restart).
   levelMemoryMs: DAY,
+  // Forecasts of a station that has some; Vigicrues issues them a few times a day.
+  forecastEveryMs: 30 * MINUTE,
+  // A station that never had a forecast (most of them), or no flow forecast.
+  forecastNoneRetryMs: 6 * HOUR,
   heartbeatMs: 12 * HOUR,
   // Between two requests of the Vigicrues referential, to stay polite.
   requestSpacingMs: 250,
@@ -263,8 +281,7 @@ export class Monitor {
   }
 
   isCreated(code) {
-    const id = stationIds(this.gladys, code).device;
-    return (this.gladys.devices ?? []).some((device) => device.external_id === id);
+    return this.deviceOf(code) !== undefined;
   }
 
   /** Every followed station: the configured ones, then the created ones. */
@@ -272,22 +289,38 @@ export class Monitor {
     return [...new Set([...this.configured, ...this.created()])];
   }
 
+  /** The device of a station in Gladys, or undefined. */
+  deviceOf(code) {
+    const id = stationIds(this.gladys, code).device;
+    return (this.gladys.devices ?? []).find((device) => device.external_id === id);
+  }
+
+  /** Whether the device of a station has this feature in Gladys. */
+  hasFeature(code, externalId) {
+    return Boolean(this.deviceOf(code)?.features?.some((f) => f.external_id === externalId));
+  }
+
   /** What the integration knows of a station, a created device filling the gaps. */
   station(code) {
+    const device = this.deviceOf(code);
+    const featureKeys = (device?.features ?? []).map((f) => f.external_id.split(':').pop());
+    const forecast = this.data.forecasts[code];
+    // Forecast features, once there, stay: a forecast that ends removes none.
+    const forecasts = {
+      hasForecast: Boolean(forecast?.hasH) || featureKeys.includes(`${FORECAST_SERIES.H}_peak`),
+      hasFlowForecast: Boolean(forecast?.hasQ) || featureKeys.includes(`${FORECAST_SERIES.Q}_peak`),
+    };
     const known = this.data.stations[code];
     if (known) {
-      return { ...known, sections: this.data.sections[code]?.sections ?? [] };
+      return { ...known, ...forecasts, sections: this.data.sections[code]?.sections ?? [] };
     }
-    const device = (this.gladys.devices ?? []).find(
-      (item) => stationCodeOfId(this.gladys, item.external_id) === code,
-    );
     const param = (name) => device?.params?.find((p) => p.name === name)?.value;
-    const featureKeys = (device?.features ?? []).map((f) => f.external_id.split(':').pop());
     return {
       code,
       name: device?.name ?? code,
       river: param('RIVER') ?? null,
       hasFlow: featureKeys.includes('flow'),
+      ...forecasts,
       sections: this.data.sections[code]?.sections ?? [],
     };
   }
@@ -671,6 +704,7 @@ export class Monitor {
     ) {
       changed = (await this.refreshVigilance()) || changed;
     }
+    changed = (await this.refreshForecasts(codes)) || changed;
     await this.publishStates(this.created());
     await this.updateConnectionStatus();
     await this.save();
@@ -834,6 +868,102 @@ export class Monitor {
     return changed;
   }
 
+  /**
+   * Read the forecasts that are due (see forecastEveryMs and
+   * forecastNoneRetryMs); resolves true when one changed. A station that gains
+   * a forecast series gains its features: the devices are published again.
+   */
+  async refreshForecasts(codes) {
+    let changed = false;
+    let structure = false;
+    let asked = 0;
+    const ask = async (code, series) => {
+      if (asked > 0) {
+        await this.sleep(this.timings.requestSpacingMs);
+      }
+      asked += 1;
+      const forecast = await this.vigicrues.forecast(code, series);
+      // A station without a flow forecast sends its height forecast instead.
+      return forecast?.series === series ? forecast : null;
+    };
+    for (const code of codes) {
+      const now = this.now();
+      const entry = (this.data.forecasts[code] ??= {
+        H: null,
+        Q: null,
+        hasH: false,
+        hasQ: false,
+        checkedAt: null,
+        flowCheckedAt: null,
+      });
+      const due = (at, every) => at === null || now - at >= every - MINUTE;
+      const every = entry.hasH ? this.timings.forecastEveryMs : this.timings.forecastNoneRetryMs;
+      if (
+        !due(entry.checkedAt, every) ||
+        !due(entry.failedAt ?? null, this.timings.forecastEveryMs)
+      ) {
+        continue;
+      }
+      try {
+        const H = await ask(code, 'H');
+        let Q = entry.Q;
+        const flowEvery = entry.hasQ
+          ? this.timings.forecastEveryMs
+          : this.timings.forecastNoneRetryMs;
+        if (!H || !this.station(code).hasFlow) {
+          Q = null;
+        } else if (due(entry.flowCheckedAt, flowEvery)) {
+          Q = await ask(code, 'Q');
+          entry.flowCheckedAt = now;
+        }
+        this.recovered('forecasts', 'Vigicrues forecasts can be read again');
+        changed ||= H?.issuedAt !== entry.H?.issuedAt || Q?.issuedAt !== entry.Q?.issuedAt;
+        if ((H && !entry.hasH) || (Q && !entry.hasQ)) {
+          structure = true;
+          logger.debug(`Station ${code}: Vigicrues forecasts${Q ? ' (height and flow)' : ''}`);
+        }
+        Object.assign(entry, {
+          H,
+          Q,
+          hasH: entry.hasH || Boolean(H),
+          hasQ: entry.hasQ || Boolean(Q),
+          checkedAt: now,
+          failedAt: null,
+        });
+      } catch (err) {
+        entry.failedAt = now;
+        this.failed('forecasts', 'warn', `Vigicrues forecasts unavailable: ${err.message}`);
+      }
+    }
+    if (structure) {
+      await this.publishDiscovered();
+    }
+    return changed;
+  }
+
+  /**
+   * The forecasts of a station at this time (see summarizeForecast), the flow
+   * in `flowUnit`: `{ issuedAt, H, Q }`, H and Q null when none is current.
+   */
+  forecastOf(code, flowUnit = this.config.flowUnit) {
+    const entry = this.data.forecasts[code];
+    const H = summarizeForecast(entry?.H, this.now());
+    const Q = summarizeForecast(entry?.Q, this.now());
+    if (Q) {
+      const convert = (value) => (value === null ? null : flowIn(flowUnit, value));
+      const scenarios = (point) =>
+        point && {
+          ...point,
+          mid: convert(point.mid),
+          low: convert(point.low),
+          high: convert(point.high),
+        };
+      Object.assign(Q, { peak: scenarios(Q.peak), in24h: scenarios(Q.in24h) });
+    }
+    const issued = [H?.issuedAt, Q?.issuedAt].filter((t) => typeof t === 'number');
+    return { issuedAt: issued.length > 0 ? Math.max(...issued) : null, H, Q };
+  }
+
   /** The vigilance of a station: its highest section, or null if unknown. */
   levelOf(code) {
     if (!this.vigilance) {
@@ -921,6 +1051,44 @@ export class Monitor {
           { device_feature_external_id: ids.vigilanceColor, text: COLOR_NAMES[language][key] },
         );
       }
+      states.push(...this.forecastStatesOf(code));
+    }
+    return states;
+  }
+
+  /**
+   * The forecast states of a station, only for the features its device has (a
+   * device created before its forecast has none until "Update").
+   */
+  forecastStatesOf(code) {
+    const ids = stationIds(this.gladys, code);
+    const language = this.config.language;
+    const has = (externalId) => this.hasFeature(code, externalId);
+    const states = [];
+    const forecast = this.forecastOf(code, this.flowUnitOf(code, `${FORECAST_SERIES.Q}_peak`));
+    for (const series of ['H', 'Q']) {
+      const summary = forecast[series];
+      for (const { key, part, field } of forecastFeatures(series)) {
+        const value = summary?.[part]?.[field];
+        if (typeof value === 'number' && has(ids.feature(key))) {
+          states.push({ device_feature_external_id: ids.feature(key), state: value });
+        }
+      }
+    }
+    if (forecast.H && has(ids.feature(FORECAST_PEAK_TIME))) {
+      states.push({
+        device_feature_external_id: ids.feature(FORECAST_PEAK_TIME),
+        text: formatDate(forecast.H.peak.t, language),
+      });
+    }
+    if (has(ids.forecastIssued)) {
+      states.push({
+        device_feature_external_id: ids.forecastIssued,
+        text:
+          forecast.issuedAt !== null && (forecast.H || forecast.Q)
+            ? formatDate(forecast.issuedAt, language)
+            : FORECASTS[language].none,
+      });
     }
     return states;
   }
@@ -966,15 +1134,14 @@ export class Monitor {
   }
 
   /**
-   * The unit the flow of a station is published in: the one of its flow
-   * feature in Gladys once created (until "Update" in the Discover tab), the
+   * The unit a flow of a station is published in: the one of its flow feature
+   * (`key`) in Gladys once created (until "Update" in the Discover tab), the
    * configuration otherwise.
    */
-  flowUnitOf(code) {
-    const id = stationIds(this.gladys, code).device;
-    const feature = (this.gladys.devices ?? [])
-      .find((device) => device.external_id === id)
-      ?.features?.find((item) => item.external_id.endsWith(`:${FEATURE_KEYS.FLOW}`));
+  flowUnitOf(code, key = FEATURE_KEYS.FLOW) {
+    const feature = this.deviceOf(code)?.features?.find((item) =>
+      item.external_id.endsWith(`:${key}`),
+    );
     return feature ? flowUnitOfFeature(feature) : this.config.flowUnit;
   }
 
@@ -1002,6 +1169,8 @@ export class Monitor {
       level: level?.level ?? null,
       section: level?.section ?? null,
       hasSection: station.sections.length > 0,
+      // The height forecast, when one is current.
+      forecast: this.forecastOf(code).H,
     };
   }
 
@@ -1035,5 +1204,6 @@ function emptyData() {
     home: null,
     readings: {},
     levels: {},
+    forecasts: {},
   };
 }

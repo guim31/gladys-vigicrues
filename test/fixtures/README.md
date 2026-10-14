@@ -30,6 +30,21 @@ referential, 2023 vigilance) and the mirror of the official vigilance file kept 
 [PierreGuer1/bulletin-data](https://github.com/PierreGuer1/bulletin-data) (branch
 `vigilance-data`). Only the recorded service answers are reused, not their code.
 
+## `vigicrues/previsions-M530001010.partial.json`: partly recorded
+
+The forecast of Montjean-sur-Loire (Loire), `services/previsions.json/index.php?CdStationHydro=M530001010&GrdSerie=H&FormatSortie=json`,
+read on 2026-10-14 around 21:00 by the maintainer's orchestrator from a machine with network
+access (the development session cannot reach Vigicrues). Verbatim: the envelope, `Simul`
+(station, `GrdSimul`, `DtProdSimul`, `CommentSimul`), `VersionFlux`, the number of points (64,
+hourly, 14/10 22:00 to 17/10 13:00 Paris time) and the first point. The last point holds the
+values shown by Vigicrues for 17/10 13:00 (central -1.68 m, low -1.80 m, high -1.56 m); the 62
+points between them are **interpolated by hand**. The same request with `GrdSerie=Q` answered
+the same height forecast (`GrdSimul: "H"`): that station forecasts no flow.
+
+To replace it by a complete recording:
+`node scripts/probe-forecast.mjs M530001010 --raw H > test/fixtures/vigicrues/previsions-M530001010.json`
+(then adjust the tests that read the values between the first and the last point).
+
 ## Synthetic files
 
 Built by hand, from the envelope of a real answer, where no recording exists:
@@ -37,6 +52,8 @@ Built by hand, from the envelope of a real answer, where no recording exists:
 - `vigicrues/section-LO17.synthetic.json`, `section-LO16.synthetic.json`: the sections of
   Charleville-Mézières (with Sedan and Aiglemont) and Stenay, envelope of `section-LO18.json`.
   The membership is an assumption, from the section names and the river.
+- In `test/helpers/world.js`, `forecastAnswer` builds forecasts (a flood coming at Chooz,
+  heights and flows) in the envelope of the Montjean-sur-Loire answer.
 - In `test/helpers/world.js`, the other sections of territory 2 are served as the LO18 envelope
   without stations, and the error envelope of an unknown station is the one Vigicrues serves for
   a station without forecasts (`{"error_msg": …, "code": 400}`, HTTP 200).

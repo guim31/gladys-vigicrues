@@ -16,6 +16,9 @@ account, no key.
   orange, red) and the date of the last reading.
 - A station that stops sending is shown as such ("No new reading since…"): an old value is
   never sent again as if it were fresh.
+- For the stations Vigicrues forecasts, the **forecast** of the height (and of the flow when
+  it is published): the peak expected and the value in 24 hours, central, low and high, with
+  the time of the peak.
 - Two **scene triggers**: "Flood vigilance raised" (yellow, orange or red) and "Flood
   vigilance lowered", filtered by station, section and colour.
 - A **dashboard widget**: your stations, their height, its trend (rising, steady, falling) and
@@ -44,7 +47,7 @@ account, no key.
 | Communes (INSEE codes)        | Every station in service of these communes: `31555` for Toulouse, `75056` for Paris. The INSEE code is not the postcode.                     |
 | House                         | The house whose location is used by "Around my house" and "Find stations". Empty: the first house of Gladys that has a location.             |
 | Around my house               | Also follows the 3 nearest stations that send readings, within 5, 10 or 20 km of your house.                                                 |
-| Refresh interval              | 15 (default), 20 or 30 minutes. The vigilance is read every 30 minutes.                                                                      |
+| Refresh interval              | 15 (default), 20 or 30 minutes. The vigilance and the forecasts are read every 30 minutes.                                                   |
 | Flow unit                     | **m³/h** (default): the unit Gladys shows everywhere. **m³/s**: the unit of Vigicrues, without a unit in Gladys (the feature name gives it). |
 | Language of the feature names | Names of the features of new devices and language of their texts (colour, last reading). French by default.                                  |
 
@@ -90,6 +93,30 @@ unit of the created device, so the two are never mixed. A feature name is frozen
 created: rename it in the device ("Flow" or "Flow (m³/s)") if needed. The history already
 recorded keeps its former unit.
 
+### Forecasts
+
+For the stations Vigicrues forecasts (mostly on the large rivers, such as the Loire at
+Montjean-sur-Loire), the device gains forecast features, in the units of the readings:
+
+| Feature                                        | Value                                                                                                                                                          |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Height: forecast peak (central), (low), (high) | The highest height expected over the horizon of the forecast (1 to 3 days), in the central scenario and at the low and high bounds of its range (80 % likely). |
+| Height: time of the forecast peak              | When the central peak is expected ("17/10 13:00").                                                                                                             |
+| Height in 24 h (central), (low), (high)        | The height expected in 24 hours, in the same three scenarios. Not sent when 24 hours is beyond the horizon.                                                    |
+| Flow: forecast peak…, Flow in 24 h…            | The same for the flow, only when Vigicrues forecasts it too (rare), in m³/h or m³/s like the flow.                                                             |
+| Forecast issued                                | Production date of the forecast, or "No current forecast" once its last point is past.                                                                         |
+
+Each scenario has its own peak: the low and high peaks may come at another hour than the central
+one. The forecasts are read every 30 minutes (Vigicrues issues them a few times a day), and a
+value is sent only when it changes. The peak says how high the water goes within the horizon,
+the value in 24 hours how fast it comes: a value in 48 hours would add three features per series
+for a level that lies between the two most of the time.
+
+**Existing devices**: the forecast features appear the first time Vigicrues sends a forecast for
+the station; the **Discover** tab then offers "Update" for its device. The existing features
+keep their identifiers and their history. Most stations have no forecast: their devices do not
+change.
+
 ## Dashboard widget
 
 Add the **Vigicrues** widget to a dashboard.
@@ -99,6 +126,9 @@ Add the **Vigicrues** widget to a dashboard.
   has no orange, the heading gives the exact colour). Grey: no section, or no recent reading.
 - With a station chosen: its height and flow tiles (with the flow unit, m³/h or m³/s), live, then its vigilance with the name of
   the section, its trend and its last reading.
+
+For a station Vigicrues forecasts, the detail ends with the forecast peak: central value,
+range and time ("2.9 m (2.56/3.24) · 01/10 16:40").
 
 The widget ends with the source and its date, and a link to Vigicrues.
 
@@ -119,6 +149,12 @@ The triggers fire only for the stations whose device exists, never at the first 
 not after more than a day without vigilance (a restart, Vigicrues unreachable). A height
 threshold is a scene condition on the "Water height" feature, not a trigger.
 
+A forecast threshold needs no trigger of the integration: use the native trigger "Device state
+change" on "Height: forecast peak (high)" (or central, or low: as cautious as you want), with
+the option that fires only when the threshold is crossed. The scene then runs once when the
+forecast goes above the threshold, not at every new forecast. The threshold is in metres, or in
+the unit of the device for a flow.
+
 ## Scene examples
 
 - **Orange or red near home**: trigger "Flood vigilance raised", colour orange and red →
@@ -128,6 +164,11 @@ threshold is a scene condition on the "Water height" feature, not a trigger.
   {{section_name}}".
 - **Height threshold**: trigger "Device state change" on "Water height" of your station,
   above 3.5 m → send a message to everyone at home.
+- **High forecast above 4.5 m: move things out of the water's way**: trigger "Device state
+  change" on "Height: forecast peak (high)" of your station, above 4.5 m, only when the
+  threshold is crossed → send the message "The high forecast of Vigicrues goes above 4.5 m:
+  check the time of the peak and vigicrues.gouv.fr". With the central peak instead, the alert
+  comes later and less often.
 - **Station silent**: none needed: the "Last reading" feature says it, shown on the dashboard.
 
 ## Data sources, licence and quotas
@@ -135,6 +176,9 @@ threshold is a scene condition on the "Water height" feature, not a trigger.
 - **Vigicrues** (`www.vigicrues.gouv.fr/services`): the vigilance of every section
   (`InfoVigiCru.geojson`, about 2.2 MB, issued at least twice a day), read every 30 minutes,
   and the stations of each section (read once a week). © VIGICRUES.
+- **Vigicrues forecasts** (`previsions.json`): for the stations that have one, hourly points
+  with a central value and an 80 % range, read every 30 minutes. A station without forecast is
+  asked again every 6 hours. © VIGICRUES.
 - **Hub'Eau Hydrométrie** (`hubeau.eaufrance.fr/api/v2/hydrometrie`): the stations and their
   real-time readings, updated every 5 minutes from the national hydrometric platform, kept one
   month. One request per refresh for all your stations.
@@ -152,6 +196,10 @@ threshold is a scene condition on the "Water height" feature, not a trigger.
 - **No vigilance feature**: the station is not on a Vigicrues section (many small rivers are
   only measured), or Vigicrues did not answer when the device was published: the integration
   tries again every hour, then the Discover tab offers to update the device.
+- **No forecast feature**: Vigicrues does not forecast this station (most stations), see its
+  page on vigicrues.gouv.fr. If it does, use "Update" for the device in the Discover tab. A
+  forecast of the height without one of the flow is normal: Vigicrues often forecasts the
+  height only (Montjean-sur-Loire, for example).
 - **No flow feature**: the station measures only the height (Charleville-Mézières, for
   instance).
 - **"No new reading since…"**: the station stopped sending (maintenance, failure, flood
@@ -174,7 +222,8 @@ threshold is a scene condition on the "Water height" feature, not a trigger.
   one station to another, nor with an altitude.
 - Real-time readings are raw, not validated: outliers happen.
 - Some stations send once an hour, up to about 75 minutes late.
-- The forecasts of Vigicrues are not read.
+- The forecasts are those of Vigicrues, with their uncertainty: the level is expected within
+  the range 8 times out of 10, not always. Vigicrues revises them a few times a day.
 - Tested against real answers of Hub'Eau and Vigicrues recorded in September and October
   2026, not yet on a live Gladys: feedback welcome.
 - Not affiliated with the French government (Vigicrues, SCHAPI) nor with Hub'Eau.

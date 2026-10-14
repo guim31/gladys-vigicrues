@@ -17,6 +17,9 @@ Hub'Eau. Ohne Konto, ohne Schlüssel.
   rot) und das Datum der letzten Messung.
 - Eine Station, die nichts mehr sendet, wird als solche angezeigt („Keine neue Messung
   seit…“): Ein alter Wert wird nie erneut gesendet, als wäre er frisch.
+- Für die Stationen, für die Vigicrues eine Prognose erstellt, die **Prognose** des
+  Wasserstands (und des Abflusses, wenn sie veröffentlicht wird): die erwartete Spitze und der
+  Wert in 24 Stunden, zentral, niedrig und hoch, mit der Zeit der Spitze.
 - Zwei **Szenen-Auslöser**: „Hochwasserwarnung steigt“ (gelb, orange oder rot) und
   „Hochwasserwarnung sinkt“, gefiltert nach Station, Abschnitt und Farbe.
 - Ein **Dashboard-Widget**: deine Stationen, ihr Wasserstand, seine Tendenz (steigt, stabil,
@@ -45,7 +48,7 @@ Hub'Eau. Ohne Konto, ohne Schlüssel.
 | Gemeinden (INSEE-Codes)    | Alle Stationen in Betrieb dieser Gemeinden: `31555` für Toulouse, `75056` für Paris. Der INSEE-Code ist nicht die Postleitzahl.                              |
 | Haus                       | Das Haus, dessen Standort „Rund um mein Haus“ und „Stationen suchen“ verwenden. Leer: das erste Haus in Gladys mit einem Standort.                           |
 | Rund um mein Haus          | Verfolgt auch die 3 nächsten Stationen, die Messwerte senden, im Umkreis von 5, 10 oder 20 km um dein Haus.                                                  |
-| Aktualisierungsintervall   | 15 (Standard), 20 oder 30 Minuten. Die Warnstufe wird alle 30 Minuten gelesen.                                                                               |
+| Aktualisierungsintervall   | 15 (Standard), 20 oder 30 Minuten. Die Warnstufe und die Prognosen werden alle 30 Minuten gelesen.                                                           |
 | Einheit des Abflusses      | **m³/h** (Standard): die Einheit, die Gladys überall anzeigt. **m³/s**: die Einheit von Vigicrues, in Gladys ohne Einheit (der Name der Funktion nennt sie). |
 | Sprache der Funktionsnamen | Namen der Funktionen neuer Geräte und Sprache ihrer Texte (Farbe, letzte Messung). Standardmäßig Französisch.                                                |
 
@@ -92,6 +95,32 @@ weiter in der Einheit des angelegten Geräts gesendet, damit sich die beiden nie
 Name einer Funktion wird beim Anlegen festgelegt: Benenne sie bei Bedarf im Gerät um („Abfluss“
 oder „Abfluss (m³/s)“). Der bereits gespeicherte Verlauf behält seine alte Einheit.
 
+### Prognosen
+
+Für die Stationen, für die Vigicrues eine Prognose erstellt (vor allem an großen Flüssen, wie die
+Loire bei Montjean-sur-Loire), bekommt das Gerät Prognose-Funktionen, in den Einheiten der
+Messwerte:
+
+| Funktion                                                 | Wert                                                                                                                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Wasserstand: Prognosespitze (zentral), (niedrig), (hoch) | Der höchste erwartete Wasserstand im Horizont der Prognose (1 bis 3 Tage), im zentralen Szenario und an der unteren und oberen Grenze ihrer Spanne (80 %). |
+| Wasserstand: Zeit der Spitze                             | Wann die zentrale Spitze erwartet wird („17.10., 13:00“).                                                                                                  |
+| Wasserstand in 24 h (zentral), (niedrig), (hoch)         | Der in 24 Stunden erwartete Wasserstand, in denselben drei Szenarien. Nicht gesendet, wenn 24 Stunden über den Horizont hinausgehen.                       |
+| Abfluss: Prognosespitze…, Abfluss in 24 h…               | Dasselbe für den Abfluss, nur wenn Vigicrues ihn auch prognostiziert (selten), in m³/h oder m³/s wie der Abfluss.                                          |
+| Prognose erstellt am                                     | Erstellungsdatum der Prognose, oder „Keine aktuelle Prognose“, sobald ihr letzter Punkt vorbei ist.                                                        |
+
+Jedes Szenario hat seine eigene Spitze: Die niedrige und die hohe Spitze können zu einer anderen
+Stunde kommen als die zentrale. Die Prognosen werden alle 30 Minuten gelesen (Vigicrues erstellt
+einige pro Tag), und ein Wert wird nur gesendet, wenn er sich ändert. Die Spitze sagt, wie hoch
+das Wasser im Horizont steigt, der Wert in 24 Stunden, wie schnell es kommt: Ein Wert in 48
+Stunden würde drei Funktionen pro Größe hinzufügen, für einen Stand, der meist zwischen beiden
+liegt.
+
+**Vorhandene Geräte**: Die Prognose-Funktionen erscheinen, sobald Vigicrues zum ersten Mal eine
+Prognose für die Station sendet; der Tab **Entdecken** bietet dann „Aktualisieren“ für ihr Gerät
+an. Die vorhandenen Funktionen behalten ihre Kennungen und ihren Verlauf. Die meisten Stationen
+haben keine Prognose, und ihre Geräte bleiben, wie sie sind.
+
 ## Dashboard-Widget
 
 Füge das Widget **Vigicrues** zu einem Dashboard hinzu.
@@ -102,6 +131,9 @@ Füge das Widget **Vigicrues** zu einem Dashboard hinzu.
   Abschnitt oder keine aktuelle Messung.
 - Mit einer gewählten Station: ihre Kacheln für Wasserstand und Abfluss (mit seiner Einheit, m³/h oder m³/s), live, dann ihre
   Warnstufe mit dem Namen des Abschnitts, ihre Tendenz und ihre letzte Messung.
+
+Für eine Station mit Prognose endet die Detailansicht mit der Prognosespitze: zentraler Wert,
+Spanne und Zeit („2,9 m (2,56/3,24) · 01.10., 16:40“).
 
 Das Widget endet mit der Quelle und ihrem Datum sowie einem Link zu Vigicrues.
 
@@ -123,6 +155,13 @@ Die Auslöser feuern nur für Stationen, deren Gerät existiert, nie beim ersten
 nach mehr als einem Tag ohne Warnstufe (Neustart, Vigicrues nicht erreichbar). Ein Schwellenwert
 des Wasserstands ist eine Szenenbedingung auf der Funktion „Wasserstand“, kein Auslöser.
 
+Ein Schwellenwert auf der Prognose braucht keinen Auslöser der Integration: Nutze den
+eingebauten Auslöser „Änderung von Gerätestatus“ auf „Wasserstand: Prognosespitze (hoch)“ (oder
+zentral, oder niedrig: so vorsichtig, wie du willst), mit der Option, die nur beim Überschreiten
+des Schwellenwerts auslöst. Die Szene läuft dann einmal, wenn die Prognose über den
+Schwellenwert steigt, nicht bei jeder neuen Prognose. Der Schwellenwert ist in Metern, oder in
+der Einheit des Geräts für einen Abfluss.
+
 ## Szenen-Beispiele
 
 - **Orange oder Rot in der Nähe**: Auslöser „Hochwasserwarnung steigt“, Farbe Orange und Rot →
@@ -132,6 +171,11 @@ des Wasserstands ist eine Szenenbedingung auf der Funktion „Wasserstand“, ke
   {{section_name}}“.
 - **Schwellenwert des Wasserstands**: Auslöser „Änderung von Gerätestatus“ auf „Wasserstand“
   deiner Station, über 3,5 m → sende eine Nachricht an alle im Haus.
+- **Hohe Prognose über 4,5 m: Hab und Gut in Sicherheit bringen**: Auslöser „Änderung von
+  Gerätestatus“ auf „Wasserstand: Prognosespitze (hoch)“ deiner Station, über 4,5 m, nur beim
+  Überschreiten des Schwellenwerts → sende die Nachricht „Die hohe Prognose von Vigicrues
+  übersteigt 4,5 m: sieh dir die Zeit der Spitze und vigicrues.gouv.fr an“. Mit der zentralen
+  Spitze kommt die Warnung später und seltener.
 - **Stumme Station**: nichts nötig, die Funktion „Letzte Messung“ zeigt es auf dem Dashboard.
 
 ## Datenquellen, Lizenz und Kontingente
@@ -139,6 +183,9 @@ des Wasserstands ist eine Szenenbedingung auf der Funktion „Wasserstand“, ke
 - **Vigicrues** (`www.vigicrues.gouv.fr/services`): die Warnstufe jedes Abschnitts
   (`InfoVigiCru.geojson`, etwa 2,2 MB, mindestens zweimal täglich herausgegeben), alle 30
   Minuten gelesen, und die Stationen jedes Abschnitts (einmal pro Woche gelesen). © VIGICRUES.
+- **Prognosen von Vigicrues** (`previsions.json`): für die Stationen, die eine haben,
+  stündliche Punkte mit einem zentralen Wert und einer Spanne von 80 %, alle 30 Minuten
+  gelesen. Eine Station ohne Prognose wird alle 6 Stunden erneut abgefragt. © VIGICRUES.
 - **Hub'Eau Hydrométrie** (`hubeau.eaufrance.fr/api/v2/hydrometrie`): die Stationen und ihre
   Echtzeit-Messwerte, alle 5 Minuten aus der nationalen hydrometrischen Plattform
   aktualisiert, einen Monat lang aufbewahrt. Eine Anfrage pro Aktualisierung für alle deine
@@ -158,6 +205,10 @@ des Wasserstands ist eine Szenenbedingung auf der Funktion „Wasserstand“, ke
   kleine Flüsse werden nur gemessen), oder Vigicrues hat beim Veröffentlichen des Geräts nicht
   geantwortet: Die Integration versucht es jede Stunde erneut, dann bietet der Tab „Entdecken“
   an, das Gerät zu aktualisieren.
+- **Keine Prognose-Funktion**: Vigicrues erstellt für diese Station keine Prognose (die
+  meisten Stationen), sieh auf ihrer Seite auf vigicrues.gouv.fr nach. Wenn doch, aktualisiere
+  das Gerät im Tab „Entdecken“. Eine Prognose des Wasserstands ohne Prognose des Abflusses ist
+  normal: Vigicrues prognostiziert oft nur den Wasserstand (zum Beispiel Montjean-sur-Loire).
 - **Keine Abfluss-Funktion**: Die Station misst nur den Wasserstand (zum Beispiel
   Charleville-Mézières).
 - **„Keine neue Messung seit…“**: Die Station sendet nichts mehr (Wartung, Ausfall,
@@ -184,7 +235,8 @@ des Wasserstands ist eine Szenenbedingung auf der Funktion „Wasserstand“, ke
   zwischen Stationen noch mit einer Höhe über dem Meer vergleichen.
 - Echtzeit-Messwerte sind roh und nicht validiert: Ausreißer kommen vor.
 - Manche Stationen senden einmal pro Stunde, mit bis zu etwa 75 Minuten Verzögerung.
-- Die Vorhersagen von Vigicrues werden nicht gelesen.
+- Die Prognosen sind die von Vigicrues, mit ihrer Unsicherheit: Der Stand liegt in 8 von 10
+  Fällen in der Spanne, nicht immer. Vigicrues überarbeitet sie einige Male pro Tag.
 - Getestet mit echten Antworten von Hub'Eau und Vigicrues, aufgezeichnet im September und
   Oktober 2026, noch nicht auf einem echten Gladys: Rückmeldungen willkommen.
 - Nicht mit dem französischen Staat (Vigicrues, SCHAPI) oder Hub'Eau verbunden.

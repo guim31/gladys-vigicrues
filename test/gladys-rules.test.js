@@ -1,8 +1,9 @@
 // -----------------------------------------------------------------------------
 // Conformity with the Gladys core, on every device discovered from realistic
 // inputs: stations by code (with and without a flow, on a Vigicrues section or
-// not), by commune and around the house, from the recorded Hub'Eau and
-// Vigicrues answers, in every feature-name language.
+// not, with a Vigicrues forecast of the height and the flow), by commune and
+// around the house, from the recorded Hub'Eau and Vigicrues answers, in every
+// feature-name language.
 //
 // The table (test/fixtures/gladys-feature-table.json) is extracted from the
 // core code: a category/type couple missing there shows as "undefined" or
@@ -15,7 +16,15 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { FLOW_UNITS, LANGUAGES } from '../src/config.js';
-import { CHARLEVILLE, CHOOZ, STENAY, createWorld } from './helpers/world.js';
+import {
+  CHARLEVILLE,
+  CHOOZ,
+  START,
+  STENAY,
+  createApi,
+  createWorld,
+  forecastAnswer,
+} from './helpers/world.js';
 
 const table = JSON.parse(
   await readFile(new URL('./fixtures/gladys-feature-table.json', import.meta.url), 'utf8'),
@@ -33,19 +42,33 @@ const cases = LANGUAGES.flatMap((language) =>
 
 for (const { language, flowUnit } of cases) {
   test(`every discovered device follows the Gladys rules (${language} names, flow in ${flowUnit})`, async (t) => {
-    const world = await createWorld({ config: { ...CONFIG, language, flow_unit: flowUnit } });
+    const api = createApi();
+    for (const series of ['H', 'Q']) {
+      api.forecasts[`${CHOOZ}:${series}`] = forecastAnswer(CHOOZ, {
+        series,
+        issuedAt: START,
+        start: START + 3600 * 1000,
+        value: () => 1,
+        spread: 0.1,
+      });
+    }
+    const world = await createWorld({
+      config: { ...CONFIG, language, flow_unit: flowUnit },
+      api,
+    });
     t.after(() => world.app.stop());
     const devices = world.fake.discoveredDevices;
     assert.ok(devices.length >= 6, `${devices.length} devices`);
     // The flow: the m³/h unit of the core, or no unit at all (Gladys has no m³/s).
     const flows = devices.flatMap((device) =>
-      device.features.filter((feature) => feature.external_id.endsWith(':flow')),
+      device.features.filter((feature) => /:(forecast_)?flow(_|$)/.test(feature.external_id)),
     );
     assert.ok(flows.length > 0, 'a flow feature');
     for (const flow of flows) {
       assert.equal(flow.unit, flowUnit === 'm3h' ? 'cubic-meter-per-hour' : undefined);
     }
     const featureCounts = new Set(devices.map((device) => device.features.length));
+    assert.ok(featureCounts.has(19), 'a station with height and flow forecasts');
     assert.ok(featureCounts.has(5), 'a station with flow and vigilance');
     assert.ok(featureCounts.has(4), 'a station without flow, with vigilance');
     assert.ok(featureCounts.has(2), 'a station without flow nor section');
@@ -104,6 +127,7 @@ for (const { language, flowUnit } of cases) {
 
         assert.ok(!externalIds.has(feature.external_id), `${at}: duplicate external_id`);
         externalIds.add(feature.external_id);
+        assert.ok(feature.name.length <= 40, `${at}: name longer than 40 characters`);
         assert.ok(!names.has(feature.name), `${at}: duplicate feature name on the device`);
         names.add(feature.name);
       }

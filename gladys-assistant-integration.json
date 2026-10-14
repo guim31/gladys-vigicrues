@@ -3,10 +3,10 @@
   "type": "device",
   "name": "Vigicrues",
   "description": {
-    "en": "French flood vigilance, river height and flow near your home, from Vigicrues and Hub'Eau.",
-    "fr": "Vigilance crues, hauteur et débit des cours d'eau près de chez vous, par Vigicrues et Hub'Eau.",
-    "de": "Hochwasserwarnung, Wasserstand und Abfluss der Flüsse nahe deinem Zuhause (Frankreich).",
-    "es": "Vigilancia de crecidas, altura y caudal de los ríos cerca de su casa (Francia), por Vigicrues."
+    "en": "French flood vigilance, river height, flow and forecasts near your home, from Vigicrues and Hub'Eau.",
+    "fr": "Vigilance crues, hauteur, débit et prévisions des cours d'eau près de chez vous, par Vigicrues.",
+    "de": "Hochwasserwarnung, Wasserstand, Abfluss und Prognosen der Flüsse nahe deinem Zuhause (Frankreich).",
+    "es": "Vigilancia de crecidas, altura, caudal y previsiones de los ríos cerca de su casa (Francia)."
   },
   "version": "1.1.0",
   "docker_image": "ghcr.io/guim31/gladys-vigicrues:1.1.0",
@@ -211,10 +211,10 @@
         "es": "Intervalo de actualización"
       },
       "description": {
-        "en": "Stations send a reading every 5 to 60 minutes. The vigilance is read every 30 minutes.",
-        "fr": "Les stations envoient une mesure toutes les 5 à 60 minutes. La vigilance est lue toutes les 30 minutes.",
-        "de": "Die Stationen senden alle 5 bis 60 Minuten einen Messwert. Die Warnstufe wird alle 30 Minuten gelesen.",
-        "es": "Las estaciones envían una medición cada 5 a 60 minutos. La vigilancia se lee cada 30 minutos."
+        "en": "Stations send a reading every 5 to 60 minutes. The vigilance and the forecasts are read every 30 minutes.",
+        "fr": "Les stations envoient une mesure toutes les 5 à 60 minutes. La vigilance et les prévisions sont lues toutes les 30 minutes.",
+        "de": "Die Stationen senden alle 5 bis 60 Minuten einen Messwert. Die Warnstufe und die Prognosen werden alle 30 Minuten gelesen.",
+        "es": "Las estaciones envían una medición cada 5 a 60 minutos. La vigilancia y las previsiones se leen cada 30 minutos."
       },
       "required": false,
       "default": "15",
@@ -795,10 +795,10 @@
         "es": "Vigicrues"
       },
       "description": {
-        "en": "Followed stations: water height, trend and vigilance colour of their section.",
-        "fr": "Stations suivies : hauteur d'eau, tendance et couleur de vigilance de leur tronçon.",
-        "de": "Verfolgte Stationen: Wasserstand, Tendenz und Warnfarbe ihres Abschnitts.",
-        "es": "Estaciones seguidas: altura del agua, tendencia y color de vigilancia de su tramo."
+        "en": "Followed stations: water height, trend, vigilance colour and forecast peak.",
+        "fr": "Stations suivies : hauteur d'eau, tendance, couleur de vigilance et pic prévu.",
+        "de": "Verfolgte Stationen: Wasserstand, Tendenz, Warnfarbe und Prognosespitze.",
+        "es": "Estaciones seguidas: altura del agua, tendencia, color de vigilancia y pico previsto."
       },
       "icon": "droplet",
       "settings": [

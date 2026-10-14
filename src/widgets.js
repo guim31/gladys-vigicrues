@@ -8,7 +8,9 @@
 // appears when a section is yellow or worse.
 //
 // With a station chosen in the settings: its live height and flow tiles (bound
-// to the device features), then its vigilance, trend and last reading.
+// to the device features), then its vigilance, trend and last reading, and the
+// height peak forecast by Vigicrues when there is one: central value, the 80 %
+// range and its time ("-1,68 m (-1,80/-1,56) · 17/10 13:00").
 //
 // Both end with the source and its date (the Vigicrues licence asks for both)
 // and a link to vigicrues.gouv.fr. Budget: 2 texts, 1 status, 2 tiles,
@@ -66,6 +68,12 @@ export const TEXT = {
     de: 'Still seit ',
     es: 'Sin datos desde ',
   },
+  forecastPeak: {
+    en: 'Forecast peak',
+    fr: 'Pic prévu',
+    de: 'Prognosespitze',
+    es: 'Pico previsto',
+  },
   waiting: { en: 'Waiting', fr: 'En attente', de: 'Wartet', es: 'En espera' },
   unknown: { en: 'Unknown', fr: 'Inconnue', de: 'Unbekannt', es: 'Desconocida' },
   noSection: {
@@ -107,6 +115,16 @@ export function stationValue(view, language) {
   }
   const height = `${formatNumber(view.height, language)} m`;
   return clip(view.trend ? `${height}, ${TREND_NAMES[language][view.trend]}` : height);
+}
+
+/** The forecast peak of a station, e.g. "-1,68 m (-1,80/-1,56) · 17/10 13:00". */
+export function forecastValue(forecast, language) {
+  const { mid, low, high, t: time } = forecast.peak;
+  const range =
+    low !== null && high !== null
+      ? ` (${formatNumber(low, language)}/${formatNumber(high, language)})`
+      : '';
+  return clip(`${formatNumber(mid, language)} m${range} · ${formatDate(time, language)}`);
 }
 
 function footer(monitor, codes, language, link) {
@@ -195,6 +213,14 @@ function detail(monitor, code, language) {
     color: view.fresh ? WIDGET_COLORS.SUCCESS : WIDGET_COLORS.WARNING,
     icon: 'clock',
   });
+  if (view.forecast) {
+    items.push({
+      label: t(TEXT.forecastPeak, language),
+      value: forecastValue(view.forecast, language),
+      color: WIDGET_COLORS.NEUTRAL,
+      icon: 'activity',
+    });
+  }
   components.push({ type: 'status', items });
   return [...components, ...footer(monitor, [code], language, stationPage(code))];
 }

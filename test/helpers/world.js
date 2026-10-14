@@ -67,6 +67,10 @@ export function createApi() {
     vigilance,
     down: { hubeau: false, vigicrues: false },
     requests: [],
+    // previsions.json answers by station code; a station without forecasts
+    // gets the error envelope. The answer does not depend on GrdSerie: a
+    // station that only forecasts its height sends it for GrdSerie=Q too.
+    forecasts: {},
 
     /** Add observation rows, in Hub'Eau units (mm, l/s). */
     addReading(code, time, height, flow) {
@@ -140,6 +144,11 @@ export function createApi() {
       if (url.pathname.endsWith('/InfoVigiCru.geojson')) {
         return api.vigilance;
       }
+      if (url.pathname.includes('/previsions.json/index.php')) {
+        const code = params.get('CdStationHydro');
+        const series = params.get('GrdSerie') ?? 'H';
+        return api.forecasts[`${code}:${series}`] ?? api.forecasts[code] ?? refused;
+      }
       if (url.pathname.includes('/station.json')) {
         return vigicruesFiles[`station:${params.get('CdStationHydro')}`] ?? refused;
       }
@@ -173,6 +182,29 @@ export function createApi() {
     },
   };
   return api;
+}
+
+/**
+ * A previsions.json answer, in the envelope of the recorded Montjean-sur-Loire
+ * one: hourly points from `start` to `start` + `hours`, `value(i)` the central
+ * one, the 80 % range `spread` (or `spread(i)`) on each side.
+ */
+export function forecastAnswer(code, { series = 'H', issuedAt, start, hours = 63, value, spread }) {
+  const body = fixture('vigicrues/previsions-M530001010.partial.json');
+  const width = typeof spread === 'function' ? spread : () => spread;
+  const round = (number) => Math.round(number * 1000) / 1000;
+  Object.assign(body.Simul, {
+    CdStationHydro: code,
+    GrdSimul: series,
+    DtProdSimul: issuedAt,
+    Prevs: Array.from({ length: hours + 1 }, (_, i) => ({
+      DtPrev: start + i * 3600 * 1000,
+      ResMinPrev: round(value(i) - width(i)),
+      ResMoyPrev: round(value(i)),
+      ResMaxPrev: round(value(i) + width(i)),
+    })),
+  });
+  return body;
 }
 
 /** A manual clock; `sleep` moves it forward instead of waiting. */

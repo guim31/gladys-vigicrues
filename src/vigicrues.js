@@ -11,13 +11,22 @@
 //   - TronEntVigiCru.json: the stations of a section. The upward link of a
 //     station (`StaEntVigiCru`) only holds the placeholder "A renseigner": the
 //     section of a station is found by reading the sections of its territory.
+//   - previsions.json: the forecast of a station, hourly points with a central
+//     value and the low and high bounds of an 80 % range (`ResMoyPrev`,
+//     `ResMinPrev`, `ResMaxPrev`), heights in metres. Few stations have one; a
+//     station without forecasts answers the error envelope. Asked for its flow
+//     (`GrdSerie=Q`), a station that only forecasts its height sends that
+//     height forecast again (`GrdSimul: "H"`): the series is checked.
 //
 // What the live services do (captures of September and October 2026, see
 // test/fixtures/README.md):
 //   - an error is an HTTP 200 whose body is `{ "error_msg": …, "code": 400 }`,
 //     "nothing" a 200 `{ "message": …, "code": 204 }`;
 //   - the vigilance properties changed casing over the years (`lbentcru` today,
-//     `LbEntCru` in 2023): both are read.
+//     `LbEntCru` in 2023): both are read;
+//   - `previsions.json/?…` answers an HTML page that redirects to
+//     `previsions.json/index.php?…` (October 2026): the services under a
+//     `.json/` folder are asked at their index.php directly.
 // -----------------------------------------------------------------------------
 
 import { HttpError, getJson } from './http.js';
@@ -127,6 +136,78 @@ export function parseSectionStations(body) {
     .filter(Boolean);
 }
 
+const finite = (value) => {
+  if (value === null || value === undefined || value === '') {
+    return null;
+  }
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+};
+// Dates come as epoch milliseconds; an ISO text is accepted too.
+const timeOf = (value) => finite(value) ?? (typeof value === 'string' ? Date.parse(value) : NaN);
+
+/**
+ * The forecast of a station (previsions.json): null when the station has none
+ * (error envelope, "no content", no point).
+ * @returns {{ series: 'H'|'Q', issuedAt: number|null,
+ *   points: Array<{ t: number, low: number|null, mid: number, high: number|null }> }|null}
+ */
+export function parseForecast(body) {
+  if (body && typeof body === 'object' && Object.hasOwn(body, 'error_msg')) {
+    return null;
+  }
+  const simulation = envelope(body, 'the forecast')?.Simul;
+  if (!simulation || typeof simulation !== 'object') {
+    return null;
+  }
+  const series = text(simulation.GrdSimul)?.toUpperCase();
+  const points = (Array.isArray(simulation.Prevs) ? simulation.Prevs : [])
+    .map((point) => ({
+      t: timeOf(point?.DtPrev),
+      low: finite(point?.ResMinPrev),
+      mid: finite(point?.ResMoyPrev),
+      high: finite(point?.ResMaxPrev),
+    }))
+    .filter((point) => Number.isFinite(point.t) && point.mid !== null)
+    .sort((a, b) => a.t - b.t);
+  if ((series !== 'H' && series !== 'Q') || points.length === 0) {
+    return null;
+  }
+  const issued = timeOf(simulation.DtProdSimul);
+  return { series, issuedAt: Number.isFinite(issued) ? issued : null, points };
+}
+
+const HOUR = 3600 * 1000;
+
+/**
+ * What the integration publishes of a forecast at `now`: over the points still
+ * ahead, the highest value of each scenario (central, low, high: the low and
+ * high bounds of the 80 % range) and the time of the central peak; and the
+ * point nearest to `now` + 24 hours (hourly points: one hour away at most).
+ * Null once the last point is past.
+ */
+export function summarizeForecast(forecast, now) {
+  const ahead = (forecast?.points ?? []).filter((point) => point.t >= now);
+  if (ahead.length === 0) {
+    return null;
+  }
+  const highest = (key) => {
+    const values = ahead.map((point) => point[key]).filter((value) => value !== null);
+    return values.length > 0 ? Math.max(...values) : null;
+  };
+  const peak = ahead.reduce((best, point) => (point.mid > best.mid ? point : best));
+  const target = now + 24 * HOUR;
+  const nearest = ahead.reduce((best, point) =>
+    Math.abs(point.t - target) < Math.abs(best.t - target) ? point : best,
+  );
+  return {
+    series: forecast.series,
+    issuedAt: forecast.issuedAt,
+    peak: { mid: peak.mid, low: highest('low'), high: highest('high'), t: peak.t },
+    in24h: Math.abs(nearest.t - target) <= HOUR ? nearest : null,
+  };
+}
+
 export class Vigicrues {
   /**
    * @param {object} [options]
@@ -147,6 +228,25 @@ export class Vigicrues {
     try {
       return parseStationTerritory(
         await getJson(this.fetch, `${VIGICRUES_BASE}/station.json/index.php?${query}`),
+      );
+    } catch (err) {
+      if (err.status === 404) {
+        return null;
+      }
+      throw err;
+    }
+  }
+
+  /** The forecast of a station for one series, 'H' (height) or 'Q' (flow); see parseForecast. */
+  async forecast(code, series = 'H') {
+    const query = new URLSearchParams({
+      CdStationHydro: code,
+      GrdSerie: series,
+      FormatSortie: 'json',
+    });
+    try {
+      return parseForecast(
+        await getJson(this.fetch, `${VIGICRUES_BASE}/previsions.json/index.php?${query}`),
       );
     } catch (err) {
       if (err.status === 404) {

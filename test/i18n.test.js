@@ -10,7 +10,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { LANGUAGES } from '../src/config.js';
 import { NAMES } from '../src/devices.js';
-import { COLOR_NAMES, READINGS, SEARCH, STATUS, TREND_NAMES } from '../src/messages.js';
+import { COLOR_NAMES, FORECASTS, READINGS, SEARCH, STATUS, TREND_NAMES } from '../src/messages.js';
 import { TEXT } from '../src/widgets.js';
 
 const manifest = JSON.parse(
@@ -155,6 +155,7 @@ test('every message table of the code has the four languages', () => {
     ...tableProblems(COLOR_NAMES, 'COLOR_NAMES', MAX.short),
     ...tableProblems(TREND_NAMES, 'TREND_NAMES', MAX.short),
     ...tableProblems(READINGS, 'READINGS', MAX.short + 10, renderSample),
+    ...tableProblems(FORECASTS, 'FORECASTS', MAX.short),
     ...tableProblems(STATUS, 'STATUS', MAX.message, renderSample),
     ...tableProblems(SEARCH, 'SEARCH', MAX.message, renderSample),
   ];

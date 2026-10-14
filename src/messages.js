@@ -54,6 +54,14 @@ export const READINGS = {
   },
 };
 
+// Value of the "Forecast issued" feature once the forecast is over or withdrawn.
+export const FORECASTS = {
+  en: { none: 'No current forecast' },
+  fr: { none: 'Aucune prévision en cours' },
+  de: { none: 'Keine aktuelle Prognose' },
+  es: { none: 'Ninguna previsión en curso' },
+};
+
 // Connection status of the Configuration screen.
 export const STATUS = {
   en: {

@@ -92,7 +92,7 @@ test('a device created in m³/s keeps m³/s until it is updated in the Discover 
   });
   await world.fake.configUpdated({ stations: CHOOZ, flow_unit: 'm3h' });
   await cycle(world, 15);
-  // Gladys still holds the feature without unit: the value stays in m³/s.
+  // Gladys still holds the feature in m³/s: the value stays in m³/s.
   assert.equal(last(world, devices[CHOOZ], 'flow'), 17);
   const updated = discovered(world, CHOOZ);
   assert.equal(

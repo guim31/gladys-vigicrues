@@ -10,6 +10,13 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Fixed
+
+- With the **m³/s** flow unit, the flow and the forecast flows now carry the
+  m³/s unit of Gladys (`cubic-meter-per-second`) instead of none. Devices
+  created in m³/s before this version keep working without a unit: click
+  "Update" on them in the Discover tab to show it. Needs Gladys 5.3.2 or later.
+
 ## [1.2.1] - 2026-10-22
 
 ### Security

@@ -29,7 +29,7 @@ Hub'Eau. Ohne Konto, ohne Schlüssel.
 
 ## Voraussetzungen
 
-- Gladys Assistant **5.2.0** oder neuer.
+- Gladys Assistant **5.3.2** oder neuer (die Einheit m³/s).
 - Internetzugang von Gladys aus: Die Integration liest `hubeau.eaufrance.fr` und
   `www.vigicrues.gouv.fr`.
 - Für „Rund um mein Haus“: der Standort deines Hauses in Gladys (Einstellungen, Häuser). Bei mehreren
@@ -42,15 +42,15 @@ Hub'Eau. Ohne Konto, ohne Schlüssel.
 
 ### Einstellungen
 
-| Einstellung                | Was sie bewirkt                                                                                                                                              |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Stationscodes              | Codes durch Kommas getrennt (`O200004001, B540001001`) oder die Adressen der Stationsseiten auf vigicrues.gouv.fr.                                           |
-| Gemeinden (INSEE-Codes)    | Alle Stationen in Betrieb dieser Gemeinden: `31555` für Toulouse, `75056` für Paris. Der INSEE-Code ist nicht die Postleitzahl.                              |
-| Haus                       | Das Haus, dessen Standort „Rund um mein Haus“ und „Stationen suchen“ verwenden. Leer: das erste Haus in Gladys mit einem Standort.                           |
-| Rund um mein Haus          | Verfolgt auch die 3 nächsten Stationen, die Messwerte senden, im Umkreis von 5, 10 oder 20 km um dein Haus.                                                  |
-| Aktualisierungsintervall   | 15 (Standard), 20 oder 30 Minuten. Die Warnstufe und die Prognosen werden alle 30 Minuten gelesen.                                                           |
-| Einheit des Abflusses      | **m³/h** (Standard): die Einheit, die Gladys überall anzeigt. **m³/s**: die Einheit von Vigicrues, in Gladys ohne Einheit (der Name der Funktion nennt sie). |
-| Sprache der Funktionsnamen | Namen der Funktionen neuer Geräte und Sprache ihrer Texte (Farbe, letzte Messung). Standardmäßig Französisch.                                                |
+| Einstellung                | Was sie bewirkt                                                                                                                    |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Stationscodes              | Codes durch Kommas getrennt (`O200004001, B540001001`) oder die Adressen der Stationsseiten auf vigicrues.gouv.fr.                 |
+| Gemeinden (INSEE-Codes)    | Alle Stationen in Betrieb dieser Gemeinden: `31555` für Toulouse, `75056` für Paris. Der INSEE-Code ist nicht die Postleitzahl.    |
+| Haus                       | Das Haus, dessen Standort „Rund um mein Haus“ und „Stationen suchen“ verwenden. Leer: das erste Haus in Gladys mit einem Standort. |
+| Rund um mein Haus          | Verfolgt auch die 3 nächsten Stationen, die Messwerte senden, im Umkreis von 5, 10 oder 20 km um dein Haus.                        |
+| Aktualisierungsintervall   | 15 (Standard), 20 oder 30 Minuten. Die Warnstufe und die Prognosen werden alle 30 Minuten gelesen.                                 |
+| Einheit des Abflusses      | **m³/h** (Standard): die Einheit der meisten Wasserzähler. **m³/s**: die Einheit von Vigicrues für Flüsse.                         |
+| Sprache der Funktionsnamen | Namen der Funktionen neuer Geräte und Sprache ihrer Texte (Farbe, letzte Messung). Standardmäßig Französisch.                      |
 
 Aus der Konfiguration kommen höchstens 20 Stationen. Speichere, öffne dann den Tab
 **Entdecken** und lege die gewünschten Geräte an. Eine Station, deren Gerät du angelegt hast,
@@ -76,13 +76,13 @@ auch das Ende der Adresse ihrer Seite auf vigicrues.gouv.fr.
 Ein Gerät pro Station, benannt wie bei Hub'Eau („La Meuse à Charleville-Mézières“). Seine
 Funktionen sind schreibgeschützt:
 
-| Funktion            | Typ (Gladys)              | Wert                                                                                                                                                                                                                   |
-| ------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Wasserstand         | Flüssigkeitstiefe, in m   | Stand am Pegel, über seinem Nullpunkt: Ein negativer Wert ist bei Niedrigwasser normal. Keine Höhe über dem Meer.                                                                                                      |
-| Abfluss             | Wasserdurchfluss, in m³/h | Umgerechnet aus den m³/s von Vigicrues (1 m³/s = 3.600 m³/h). Mit der Einheit **m³/s** heißt die Funktion „Abfluss (m³/s)“ und hat keine Einheit: Gladys hat keine für m³/s. Nur wenn die Station einen Abfluss misst. |
-| Hochwasserwarnstufe | Risikostufe               | Die Farbe des Abschnitts der Station, als Risiko-Badge von Gladys: 0 grün, 1 gelb, 2 orange, 3 rot. Nur für eine Vigicrues-Station.                                                                                    |
-| Warnfarbe           | Text                      | Grün, Gelb, Orange oder Rot.                                                                                                                                                                                           |
-| Letzte Messung      | Text                      | Datum der letzten Messung („29.09., 15:30“) oder „Keine neue Messung seit…“ nach 3 Stunden ohne Messung.                                                                                                               |
+| Funktion            | Typ (Gladys)              | Wert                                                                                                                                                                           |
+| ------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Wasserstand         | Flüssigkeitstiefe, in m   | Stand am Pegel, über seinem Nullpunkt: Ein negativer Wert ist bei Niedrigwasser normal. Keine Höhe über dem Meer.                                                              |
+| Abfluss             | Wasserdurchfluss, in m³/h | Umgerechnet aus den m³/s von Vigicrues (1 m³/s = 3.600 m³/h). Mit der Einheit **m³/s** heißt die Funktion „Abfluss (m³/s)“, in m³/s. Nur wenn die Station einen Abfluss misst. |
+| Hochwasserwarnstufe | Risikostufe               | Die Farbe des Abschnitts der Station, als Risiko-Badge von Gladys: 0 grün, 1 gelb, 2 orange, 3 rot. Nur für eine Vigicrues-Station.                                            |
+| Warnfarbe           | Text                      | Grün, Gelb, Orange oder Rot.                                                                                                                                                   |
+| Letzte Messung      | Text                      | Datum der letzten Messung („29.09., 15:30“) oder „Keine neue Messung seit…“ nach 3 Stunden ohne Messung.                                                                       |
 
 Wasserstand und Abfluss werden nur gesendet, wenn sie sich ändern, sonst einmal alle 12
 Stunden. Nach 3 Stunden ohne neue Messung werden sie nicht mehr gesendet, damit Gladys ihr
@@ -94,6 +94,11 @@ bietet für jede Station mit Abfluss „Aktualisieren“ an. Bis du das tust, wi
 weiter in der Einheit des angelegten Geräts gesendet, damit sich die beiden nie vermischen. Der
 Name einer Funktion wird beim Anlegen festgelegt: Benenne sie bei Bedarf im Gerät um („Abfluss“
 oder „Abfluss (m³/s)“). Der bereits gespeicherte Verlauf behält seine alte Einheit.
+
+**Vor Version 1.3.0 in m³/s erstellte Geräte** haben Abflüsse ohne Einheit (Gladys hatte vor 5.3.2
+keine Einheit m³/s). Die Werte sind dieselben und kommen weiter an; um die Einheit m³/s
+anzuzeigen, klicke im Tab **Entdecken** bei diesen Stationen auf „Aktualisieren“. Verlauf und
+Szenen bleiben erhalten.
 
 ### Prognosen
 

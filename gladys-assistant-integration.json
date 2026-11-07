@@ -10,7 +10,7 @@
   },
   "version": "1.2.1",
   "docker_image": "ghcr.io/guim31/gladys-vigicrues:1.2.1",
-  "gladys_version": ">=5.2.0",
+  "gladys_version": ">=5.3.2",
   "cover_image": "https://raw.githubusercontent.com/guim31/gladys-vigicrues/main/cover.png",
   "categories": ["environment"],
   "transports": ["cloud"],
@@ -258,10 +258,10 @@
         "es": "Unidad del caudal"
       },
       "description": {
-        "en": "m³/h: the unit Gladys shows on every screen. m³/s: the unit of Vigicrues, shown without a unit (the feature name says it). Changing it: \"Update\" the devices in the Discover tab.",
-        "fr": "m³/h : l'unité que Gladys affiche sur tous ses écrans. m³/s : l'unité de Vigicrues, affichée sans unité (le nom de la fonctionnalité la donne). En cas de changement : « Mettre à jour » les appareils dans l'onglet Découverte.",
-        "de": "m³/h: die Einheit, die Gladys überall anzeigt. m³/s: die Einheit von Vigicrues, ohne Einheit angezeigt (der Name der Funktion nennt sie). Nach einer Änderung: die Geräte im Tab „Entdecken“ aktualisieren.",
-        "es": "m³/h: la unidad que Gladys muestra en todas sus pantallas. m³/s: la unidad de Vigicrues, mostrada sin unidad (el nombre de la función la indica). Si la cambia: «Actualice» los dispositivos en la pestaña Descubrir."
+        "en": "m³/h: the unit of most water meters. m³/s: the unit of Vigicrues for rivers. Changing it: \"Update\" the devices in the Discover tab.",
+        "fr": "m³/h : l'unité de la plupart des compteurs d'eau. m³/s : l'unité de Vigicrues pour les rivières. En cas de changement : « Mettre à jour » les appareils dans l'onglet Découverte.",
+        "de": "m³/h: die Einheit der meisten Wasserzähler. m³/s: die Einheit von Vigicrues für Flüsse. Nach einer Änderung: die Geräte im Tab „Entdecken“ aktualisieren.",
+        "es": "m³/h: la unidad de la mayoría de los contadores de agua. m³/s: la unidad de Vigicrues para los ríos. Si la cambia: «Actualice» los dispositivos en la pestaña Descubrir."
       },
       "required": false,
       "default": "m3h",
@@ -269,10 +269,10 @@
         {
           "value": "m3h",
           "label": {
-            "en": "m³/h (shown by Gladys)",
-            "fr": "m³/h (affiché par Gladys)",
-            "de": "m³/h (von Gladys angezeigt)",
-            "es": "m³/h (mostrado por Gladys)"
+            "en": "m³/h",
+            "fr": "m³/h",
+            "de": "m³/h",
+            "es": "m³/h"
           }
         },
         {

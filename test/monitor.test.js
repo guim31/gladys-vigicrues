@@ -62,7 +62,7 @@ test('a station is published in metres and m³/h, with its vigilance and last re
   );
 });
 
-test('the flow: m³/h with the Gladys unit by default, m³/s without unit on demand', async (t) => {
+test('the flow: m³/h by default, m³/s on demand, both with their Gladys unit', async (t) => {
   const { devices } = await worldWith(t, [CHOOZ]);
   const flow = devices[CHOOZ].features.find((f) => f.external_id.endsWith(':flow'));
   assert.equal(flow.unit, 'cubic-meter-per-hour');
@@ -72,7 +72,7 @@ test('the flow: m³/h with the Gladys unit by default, m³/s without unit on dem
   const m3s = await worldWith(t, [CHOOZ], { config: { stations: CHOOZ, flow_unit: 'm3s' } });
   const device = m3s.devices[CHOOZ];
   const feature = device.features.find((f) => f.external_id.endsWith(':flow'));
-  assert.equal(feature.unit, undefined);
+  assert.equal(feature.unit, 'cubic-meter-per-second');
   assert.equal(feature.name, 'Débit (m³/s)');
   assert.deepEqual([feature.min, feature.max], [-50000, 50000]);
   assert.equal(last(m3s.world, device, 'flow'), 17);
@@ -522,4 +522,41 @@ test('a station silent for a month says so', async (t) => {
   assert.equal(latest(), before);
   await cycle(world, 6 * 60);
   assert.equal(latest(), before + 1);
+});
+
+test('a device created in m³/s without unit (before 1.3.0) stays in m³/s', async (t) => {
+  const world = await createWorld({ config: { stations: CHOOZ, flow_unit: 'm3s' } });
+  t.after(() => world.app.stop());
+  // Gladys < 5.3.2 had no m³/s unit: the flow features were created with none.
+  const legacy = structuredClone(discovered(world, CHOOZ));
+  const flow = legacy.features.find((f) => f.external_id.endsWith(':flow'));
+  flow.unit = null;
+  await world.fake.deviceCreated(legacy);
+  await cycle(world, 15);
+  assert.equal(last(world, legacy, 'flow'), 17);
+  // Still m³/s when the configuration moves to m³/h, until "Update".
+  await world.fake.configUpdated({ stations: CHOOZ, flow_unit: 'm3h' });
+  await cycle(world, 15);
+  assert.equal(last(world, legacy, 'flow'), 17);
+  assert.ok(!world.fake.states.some((state) => state.value === 61200), 'never in m³/h');
+});
+
+test('"Update" gives an old m³/s device the m³/s unit, same ids and name', async (t) => {
+  const world = await createWorld({ config: { stations: CHOOZ, flow_unit: 'm3s' } });
+  t.after(() => world.app.stop());
+  const published = discovered(world, CHOOZ);
+  const legacy = structuredClone(published);
+  legacy.features.find((f) => f.external_id.endsWith(':flow')).unit = null;
+  await world.fake.deviceCreated(legacy);
+  const updated = discovered(world, CHOOZ);
+  const before = legacy.features.find((f) => f.external_id.endsWith(':flow'));
+  const after = updated.features.find((f) => f.external_id.endsWith(':flow'));
+  assert.equal(after.unit, 'cubic-meter-per-second');
+  assert.deepEqual(
+    [after.external_id, after.name, after.category, after.type],
+    [before.external_id, before.name, before.category, before.type],
+  );
+  await world.fake.deviceUpdated(updated);
+  await cycle(world, 15);
+  assert.equal(last(world, updated, 'flow'), 17);
 });

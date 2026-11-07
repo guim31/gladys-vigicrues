@@ -135,8 +135,10 @@ code de ce dépôt. Compléter ce fichier quand un nouveau piège est découvert
 - **`risk/integer` s'affiche en pastille de 0 à 3** : 0 « Pas de risque » (vert), 1 faible
   (jaune), 2 moyen (orange), 3 élevé (rouge) (`BadgeNumberDeviceValue`). Une échelle 1-4 publiée
   telle quelle montre « faible » pour un niveau vert.
-- **Pas d'unité m³/s** dans le cœur (seulement `cubic-meter-per-hour`) : un débit de rivière se
-  publie sans unité, l'unité dans le nom.
+- **Unité m³/s** (`cubic-meter-per-second`) seulement depuis la **5.3.2** (GladysAssistant/Gladys#3297),
+  acceptée par le front pour `water-valve/flow` (table par catégorie **et type**) ; pas encore de
+  constante dans le SDK 0.16.0 (integration-sdk-js#47). Une fonctionnalité créée avant sans unité le
+  reste jusqu'à « Mettre à jour » (l'unité entre dans `structure_changed`).
 - `level-sensor/decimal` n'existe pas côté serveur. `light-sensor/binary` n'a pas de libellé dans
   le front (pastille vide) : préférer `input/binary`. Un `text/text` reçoit `{ text }`, jamais
   vide, sinon l'état est ignoré.

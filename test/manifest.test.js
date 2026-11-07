@@ -71,6 +71,19 @@ test('"around my house" reads the house location: the manifest declares it', () 
   assert.equal(manifest.location, true);
 });
 
+test('Gladys 5.3.2 at least: the m³/s unit of the flow', () => {
+  // An older core rejects cubic-meter-per-second at discovery (unknown unit).
+  const [major, minor, patch] = manifest.gladys_version
+    .match(/>=\s*(\d+)\.(\d+)\.(\d+)/)
+    .slice(1)
+    .map(Number);
+  assert.ok(
+    major > 5 || (major === 5 && (minor > 3 || (minor === 3 && patch >= 2))),
+    manifest.gladys_version,
+  );
+  assert.equal(FLOW_FORMATS.m3s.unit, 'cubic-meter-per-second');
+});
+
 test('Gladys 5.2.0 at least: widgets, scene triggers and the houses source', () => {
   // `source: "houses"` is only accepted from 5.2.0 (store schema, enforced by the indexer).
   const [major, minor] = minGladysVersion();

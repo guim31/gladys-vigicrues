@@ -29,7 +29,7 @@ Sin cuenta ni clave.
 
 ## Requisitos
 
-- Gladys Assistant **5.2.0** o posterior.
+- Gladys Assistant **5.3.2** o posterior (la unidad m³/s).
 - Acceso a Internet desde Gladys: la integración lee `hubeau.eaufrance.fr` y
   `www.vigicrues.gouv.fr`.
 - Para «Alrededor de mi casa»: la ubicación de su casa en Gladys (Ajustes, Casas). Con varias
@@ -42,15 +42,15 @@ Sin cuenta ni clave.
 
 ### Ajustes
 
-| Ajuste                                 | Qué hace                                                                                                                                                          |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Códigos de estación                    | Códigos separados por comas (`O200004001, B540001001`), o las direcciones de las páginas de las estaciones en vigicrues.gouv.fr.                                  |
-| Municipios (códigos INSEE)             | Todas las estaciones en servicio de estos municipios: `31555` para Toulouse, `75056` para París. El código INSEE no es el código postal.                          |
-| Casa                                   | La casa cuya ubicación usan «Alrededor de mi casa» y «Buscar estaciones». Vacío: la primera casa de Gladys que tiene ubicación.                                   |
-| Alrededor de mi casa                   | Sigue también las 3 estaciones más cercanas que envían mediciones, a 5, 10 o 20 km de su casa.                                                                    |
-| Intervalo de actualización             | 15 (por defecto), 20 o 30 minutos. La vigilancia y las previsiones se leen cada 30 minutos.                                                                       |
-| Unidad del caudal                      | **m³/h** (por defecto): la unidad que Gladys muestra en todas partes. **m³/s**: la unidad de Vigicrues, sin unidad en Gladys (el nombre de la función la indica). |
-| Idioma de los nombres de las funciones | Nombres de las funciones de los nuevos dispositivos e idioma de sus textos (color, última medición). Francés por defecto.                                         |
+| Ajuste                                 | Qué hace                                                                                                                                 |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Códigos de estación                    | Códigos separados por comas (`O200004001, B540001001`), o las direcciones de las páginas de las estaciones en vigicrues.gouv.fr.         |
+| Municipios (códigos INSEE)             | Todas las estaciones en servicio de estos municipios: `31555` para Toulouse, `75056` para París. El código INSEE no es el código postal. |
+| Casa                                   | La casa cuya ubicación usan «Alrededor de mi casa» y «Buscar estaciones». Vacío: la primera casa de Gladys que tiene ubicación.          |
+| Alrededor de mi casa                   | Sigue también las 3 estaciones más cercanas que envían mediciones, a 5, 10 o 20 km de su casa.                                           |
+| Intervalo de actualización             | 15 (por defecto), 20 o 30 minutos. La vigilancia y las previsiones se leen cada 30 minutos.                                              |
+| Unidad del caudal                      | **m³/h** (por defecto): la unidad de la mayoría de los contadores de agua. **m³/s**: la unidad de Vigicrues para los ríos.               |
+| Idioma de los nombres de las funciones | Nombres de las funciones de los nuevos dispositivos e idioma de sus textos (color, última medición). Francés por defecto.                |
 
 La configuración aporta 20 estaciones como máximo. Guarde, abra la pestaña **Descubrir** y cree
 los dispositivos que desee. Una estación cuyo dispositivo haya creado sigue en seguimiento
@@ -75,13 +75,13 @@ también el final de la dirección de su página en vigicrues.gouv.fr.
 Un dispositivo por estación, con el nombre que le da Hub'Eau («La Meuse à
 Charleville-Mézières»). Sus funciones son de solo lectura:
 
-| Función                | Tipo (Gladys)                 | Valor                                                                                                                                                                                                                  |
-| ---------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Altura del agua        | Profundidad del líquido, en m | Altura en la escala, por encima de su cero: un valor negativo es normal en estiaje. No es una altitud.                                                                                                                 |
-| Caudal                 | Caudal de agua, en m³/h       | Convertido desde los m³/s de Vigicrues (1 m³/s = 3600 m³/h). Con la unidad **m³/s**, la función se llama «Caudal (m³/s)» y no tiene unidad: Gladys no tiene ninguna para los m³/s. Solo si la estación mide un caudal. |
-| Vigilancia de crecidas | Nivel de riesgo               | El color del tramo de la estación, como la insignia de riesgo de Gladys: 0 verde, 1 amarillo, 2 naranja, 3 rojo. Solo para una estación Vigicrues.                                                                     |
-| Color de vigilancia    | Texto                         | Verde, Amarillo, Naranja o Rojo.                                                                                                                                                                                       |
-| Última medición        | Texto                         | Fecha de la última medición («29/09, 15:30»), o «Sin nueva medición desde…» tras 3 horas sin medición.                                                                                                                 |
+| Función                | Tipo (Gladys)                 | Valor                                                                                                                                                                  |
+| ---------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Altura del agua        | Profundidad del líquido, en m | Altura en la escala, por encima de su cero: un valor negativo es normal en estiaje. No es una altitud.                                                                 |
+| Caudal                 | Caudal de agua, en m³/h       | Convertido desde los m³/s de Vigicrues (1 m³/s = 3600 m³/h). Con la unidad **m³/s**, la función se llama «Caudal (m³/s)», en m³/s. Solo si la estación mide un caudal. |
+| Vigilancia de crecidas | Nivel de riesgo               | El color del tramo de la estación, como la insignia de riesgo de Gladys: 0 verde, 1 amarillo, 2 naranja, 3 rojo. Solo para una estación Vigicrues.                     |
+| Color de vigilancia    | Texto                         | Verde, Amarillo, Naranja o Rojo.                                                                                                                                       |
+| Última medición        | Texto                         | Fecha de la última medición («29/09, 15:30»), o «Sin nueva medición desde…» tras 3 horas sin medición.                                                                 |
 
 La altura y el caudal solo se envían cuando cambian, y una vez cada 12 horas en caso
 contrario. Tras 3 horas sin nueva medición dejan de enviarse, para que Gladys muestre su
@@ -93,6 +93,11 @@ Descubrir propone entonces actualizar el dispositivo.
 el caudal se sigue enviando en la unidad del dispositivo creado, para no mezclar nunca las dos.
 El nombre de una función se fija al crearla: cámbielo en el dispositivo («Caudal» o
 «Caudal (m³/s)») si lo necesita. El historial ya guardado conserva su unidad anterior.
+
+**Los dispositivos creados en m³/s antes de la versión 1.3.0** tienen caudales sin unidad (Gladys no
+tenía unidad m³/s antes de la 5.3.2). Los valores son los mismos y siguen llegando; para mostrar
+la unidad m³/s, haga clic en «Actualizar» en esas estaciones en la pestaña **Descubrir**. El
+historial y las escenas se conservan.
 
 ### Previsiones
 

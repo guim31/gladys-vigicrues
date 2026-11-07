@@ -16,9 +16,8 @@ export const HOME_RADII = ['0', '5', '10', '20'];
 // faster would only ask Hub'Eau the same thing again.
 export const REFRESH_INTERVALS = ['15', '20', '30'];
 
-// Unit of the published flow. Gladys has no m³/s unit: 'm3h' converts to its
-// cubic-meter-per-hour (shown by every Gladys screen), 'm3s' keeps the unit of
-// Vigicrues, published without a unit (the feature name says it).
+// Unit of the published flow: 'm3h' converts to cubic-meter-per-hour, 'm3s'
+// keeps the unit of Vigicrues, cubic-meter-per-second (Gladys 5.3.2 and later).
 export const FLOW_UNITS = ['m3h', 'm3s'];
 
 // Stations followed "around my house": the nearest ones that send real-time data.

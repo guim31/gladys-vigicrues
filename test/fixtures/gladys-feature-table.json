@@ -1,5 +1,5 @@
 {
-  "source": "GladysAssistant/Gladys master 03d4696d (server/utils/constants.js, front/src/utils/consts.js, front i18n), generated 2026-10-09",
+  "source": "GladysAssistant/Gladys master 03d4696d (server/utils/constants.js, front/src/utils/consts.js, front i18n), generated 2026-10-09; units and units_by_category_and_type completed from tag v5.3.2 (cubic-meter-per-second), 2026-11-07",
   "categories": [
     "air-conditioning",
     "airquality-sensor",
@@ -373,6 +373,7 @@
     "milliliter",
     "cubicmeter",
     "cubic-meter-per-hour",
+    "cubic-meter-per-second",
     "euro",
     "dollar",
     "bitcoin",
@@ -2226,5 +2227,42 @@
       "icon": "droplet"
     }
   },
-  "note": "pairs = category/type couples the Gladys front can label and draw; a couple missing here shows as 'undefined' or without icon"
+  "note": "pairs = category/type couples the Gladys front can label and draw; a couple missing here shows as 'undefined' or without icon",
+  "units_by_category_and_type": {
+    "grid-carbon-sensor": {
+      "carbon-intensity": ["gram-co2eq-per-kilowatt-hour"],
+      "carbon-free-percentage": ["percent"],
+      "renewable-percentage": ["percent"]
+    },
+    "thermostat": {
+      "preset": [],
+      "mode": [],
+      "operating-state": [],
+      "active-preset": []
+    },
+    "battery": {
+      "charging": []
+    },
+    "water-heater": {
+      "binary": [],
+      "mode": [],
+      "target-temperature": ["celsius", "fahrenheit"],
+      "remaining-hot-water": ["percent", "liter"],
+      "heating": [],
+      "boost": []
+    },
+    "water-valve": {
+      "current-device-status": [],
+      "flow": ["cubic-meter-per-hour", "cubic-meter-per-second"],
+      "auto-close-when-water-shortage": [],
+      "valve-work-state": [],
+      "real-time-irrigation-duration": ["seconds"],
+      "real-time-irrigation-volume": ["liter"],
+      "daily-irrigation-volume": ["liter"]
+    },
+    "music": {
+      "duration": ["seconds"],
+      "position": ["seconds"]
+    }
+  }
 }

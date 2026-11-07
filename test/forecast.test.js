@@ -300,12 +300,12 @@ test('an existing device gains the forecast through "Update" in the Discover tab
   assert.equal(world.fake.lastState(featureId(after, 'forecast_height_peak_high')), 3.24);
 });
 
-test('the forecast flow in m³/s: without unit, the name says it', async (t) => {
+test('the forecast flow in m³/s: the m³/s unit, and the name says it', async (t) => {
   const { world, devices } = await worldWith(t, [CHOOZ], { config: { flow_unit: 'm3s' } });
   const chooz = devices[CHOOZ];
   const peak = chooz.features.find((f) => f.external_id.endsWith(':forecast_flow_peak_low'));
   assert.equal(peak.name, 'Débit : pic prévu (bas, m³/s)');
-  assert.equal(peak.unit, undefined);
+  assert.equal(peak.unit, 'cubic-meter-per-second');
   assert.equal(last(world, chooz, 'forecast_flow_peak_low'), 560);
 });
 

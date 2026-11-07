@@ -28,7 +28,7 @@ account, no key.
 
 ## Requirements
 
-- Gladys Assistant **5.2.0** or later.
+- Gladys Assistant **5.3.2** or later (the m³/s unit).
 - Internet access from Gladys: the integration reads `hubeau.eaufrance.fr` and
   `www.vigicrues.gouv.fr`.
 - For "around my house": the location of your house in Gladys (Settings, Houses). With several
@@ -41,15 +41,15 @@ account, no key.
 
 ### Settings
 
-| Setting                       | What it does                                                                                                                                 |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| Station codes                 | Codes separated by commas (`O200004001, B540001001`), or the addresses of the station pages of vigicrues.gouv.fr.                            |
-| Communes (INSEE codes)        | Every station in service of these communes: `31555` for Toulouse, `75056` for Paris. The INSEE code is not the postcode.                     |
-| House                         | The house whose location is used by "Around my house" and "Find stations". Empty: the first house of Gladys that has a location.             |
-| Around my house               | Also follows the 3 nearest stations that send readings, within 5, 10 or 20 km of your house.                                                 |
-| Refresh interval              | 15 (default), 20 or 30 minutes. The vigilance and the forecasts are read every 30 minutes.                                                   |
-| Flow unit                     | **m³/h** (default): the unit Gladys shows everywhere. **m³/s**: the unit of Vigicrues, without a unit in Gladys (the feature name gives it). |
-| Language of the feature names | Names of the features of new devices and language of their texts (colour, last reading). French by default.                                  |
+| Setting                       | What it does                                                                                                                     |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Station codes                 | Codes separated by commas (`O200004001, B540001001`), or the addresses of the station pages of vigicrues.gouv.fr.                |
+| Communes (INSEE codes)        | Every station in service of these communes: `31555` for Toulouse, `75056` for Paris. The INSEE code is not the postcode.         |
+| House                         | The house whose location is used by "Around my house" and "Find stations". Empty: the first house of Gladys that has a location. |
+| Around my house               | Also follows the 3 nearest stations that send readings, within 5, 10 or 20 km of your house.                                     |
+| Refresh interval              | 15 (default), 20 or 30 minutes. The vigilance and the forecasts are read every 30 minutes.                                       |
+| Flow unit                     | **m³/h** (default): the unit of most water meters. **m³/s**: the unit of Vigicrues for rivers.                                   |
+| Language of the feature names | Names of the features of new devices and language of their texts (colour, last reading). French by default.                      |
 
 At most 20 stations come from the configuration. Save, then open the **Discover** tab and
 create the devices you want. A station whose device you created stays followed even if you
@@ -74,13 +74,13 @@ end of its page address on vigicrues.gouv.fr.
 One device per station, named like Hub'Eau names it ("La Meuse à Charleville-Mézières").
 Its features are read-only:
 
-| Feature          | Type (Gladys)       | Value                                                                                                                                                                                                    |
-| ---------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Water height     | Liquid depth, in m  | Height at the gauge, above its zero: a negative value is normal at low water. Not an altitude.                                                                                                           |
-| Flow             | Water flow, in m³/h | Converted from the m³/s of Vigicrues (1 m³/s = 3,600 m³/h). With the **m³/s** unit, the feature is named "Flow (m³/s)" and has no unit: Gladys has none for m³/s. Only when the station measures a flow. |
-| Flood vigilance  | Risk level          | The colour of the section of the station, as the Gladys risk badge: 0 green, 1 yellow, 2 orange, 3 red. Only for a Vigicrues station.                                                                    |
-| Vigilance colour | Text                | Green, Yellow, Orange or Red.                                                                                                                                                                            |
-| Last reading     | Text                | Date of the last reading ("29/09 15:30"), or "No new reading since…" after 3 hours without one.                                                                                                          |
+| Feature          | Type (Gladys)       | Value                                                                                                                                                                   |
+| ---------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Water height     | Liquid depth, in m  | Height at the gauge, above its zero: a negative value is normal at low water. Not an altitude.                                                                          |
+| Flow             | Water flow, in m³/h | Converted from the m³/s of Vigicrues (1 m³/s = 3,600 m³/h). With the **m³/s** unit, the feature is named "Flow (m³/s)", in m³/s. Only when the station measures a flow. |
+| Flood vigilance  | Risk level          | The colour of the section of the station, as the Gladys risk badge: 0 green, 1 yellow, 2 orange, 3 red. Only for a Vigicrues station.                                   |
+| Vigilance colour | Text                | Green, Yellow, Orange or Red.                                                                                                                                           |
+| Last reading     | Text                | Date of the last reading ("29/09 15:30"), or "No new reading since…" after 3 hours without one.                                                                         |
 
 The height and the flow are only sent when they change, and once every 12 hours otherwise.
 After 3 hours without a new reading they are no longer sent, so Gladys shows their real age.
@@ -92,6 +92,10 @@ update the device.
 unit of the created device, so the two are never mixed. A feature name is frozen when it is
 created: rename it in the device ("Flow" or "Flow (m³/s)") if needed. The history already
 recorded keeps its former unit.
+
+**Devices created in m³/s before version 1.3.0** have flows without a unit (Gladys had no m³/s
+unit before 5.3.2). The values are the same and keep being sent; to show the m³/s unit, click
+"Update" on these stations in the **Discover** tab. The history and the scenes are kept.
 
 ### Forecasts
 

@@ -7,11 +7,11 @@
 //                   the gauge, as Vigicrues shows it. It is a stage above the
 //                   gauge zero, negative values are normal;
 //   - flow          water-valve/flow, only when the station measures one, in
-//                   the unit of the configuration (`flow_unit`). Gladys has no
-//                   m³/s unit, only m³/h (the one unit the core accepts for
-//                   water-valve/flow): 'm3h' converts and publishes that unit,
-//                   which every Gladys screen shows; 'm3s' keeps the unit of
-//                   vigicrues.gouv.fr, without a unit, and the name says it;
+//                   the unit of the configuration (`flow_unit`): 'm3h'
+//                   converts to cubic-meter-per-hour; 'm3s' keeps the unit of
+//                   vigicrues.gouv.fr, cubic-meter-per-second, accepted by the
+//                   core since 5.3.2 (before it, the feature was published
+//                   without a unit and its name says m³/s);
 //   - vigilance     risk/integer, and the colour as text, only when the station
 //                   belongs to a Vigicrues section. The Gladys front draws a
 //                   risk badge for 0 (green, "no risk") to 3 (red, "high
@@ -90,15 +90,21 @@ export const FLOW_BOUND_M3S = 50000;
 
 const SECONDS_PER_HOUR = 3600;
 
-// How each `flow_unit` publishes the flow: the Gladys unit (none for m³/s),
-// the bounds of the feature and the label the widget shows.
+// How each `flow_unit` publishes the flow: the Gladys unit, the bounds of the
+// feature and the label the widget shows.
 export const FLOW_FORMATS = {
   m3h: {
     unit: DEVICE_FEATURE_UNITS.CUBIC_METER_PER_HOUR,
     bound: FLOW_BOUND_M3S * SECONDS_PER_HOUR,
     label: 'm³/h',
   },
-  m3s: { unit: undefined, bound: FLOW_BOUND_M3S, label: 'm³/s' },
+  m3s: {
+    // DEVICE_FEATURE_UNITS.CUBIC_METER_PER_SECOND of Gladys 5.3.2, not in the
+    // SDK 0.16.0 yet (integration-sdk-js#47).
+    unit: 'cubic-meter-per-second',
+    bound: FLOW_BOUND_M3S,
+    label: 'm³/s',
+  },
 };
 
 /**
@@ -110,13 +116,18 @@ export function flowIn(flowUnit, m3s) {
   return flowUnit === 'm3h' ? Math.round(m3s * SECONDS_PER_HOUR * 10) / 10 : m3s;
 }
 
-/** The `flow_unit` a flow feature of Gladys was created with ('m3s' without unit). */
+/**
+ * The `flow_unit` a flow feature of Gladys was created with: 'm3h' for the
+ * m³/h unit, 'm3s' otherwise, with the m³/s unit or without any (features
+ * created before 1.3.0, until "Update" in the Discover tab).
+ */
 export const flowUnitOfFeature = (feature) =>
   feature?.unit === FLOW_FORMATS.m3h.unit ? 'm3h' : 'm3s';
 
 // Feature names, frozen at creation in Gladys (language of the configuration).
-// The flow in m³/h shows its unit; in m³/s, without a unit, its name says it
-// (the forecast flows too, see flowName).
+// The flow in m³/s keeps "m³/s" in its name (the forecast flows too, see
+// flowName): it was published without a unit before Gladys 5.3.2, and names
+// are frozen at creation.
 export const NAMES = {
   en: {
     height: 'Water height',
@@ -279,7 +290,7 @@ export function buildDevice(gladys, station, language = 'fr', flowUnit = 'm3h') 
         DEVICE_FEATURE_CATEGORIES.WATER_VALVE,
         TYPES.WATER_VALVE.FLOW,
         {
-          ...(flow.unit ? { unit: flow.unit } : {}),
+          unit: flow.unit,
           keep_history: true,
           min: -flow.bound,
           max: flow.bound,
@@ -342,7 +353,7 @@ export function buildDevice(gladys, station, language = 'fr', flowUnit = 'm3h') 
             DEVICE_FEATURE_CATEGORIES.WATER_VALVE,
             TYPES.WATER_VALVE.FLOW,
             {
-              ...(flow.unit ? { unit: flow.unit } : {}),
+              unit: flow.unit,
               keep_history: true,
               min: -flow.bound,
               max: flow.bound,

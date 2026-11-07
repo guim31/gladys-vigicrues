@@ -2,8 +2,8 @@
 
 ## `gladys-feature-table.json`
 
-The category/type couples, units and poll frequencies the Gladys core (5.2.x) knows, extracted
-from its code. Used by `test/gladys-rules.test.js`.
+The category/type couples, units and poll frequencies the Gladys core knows, extracted from its
+code (5.2.x; the units completed from 5.3.2, which adds m³/s). Used by `test/gladys-rules.test.js`.
 
 ## `hubeau/` and `vigicrues/`: recorded answers of the real services
 

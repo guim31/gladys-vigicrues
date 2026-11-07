@@ -29,7 +29,8 @@ no account, no key.
 
 ## Requirements
 
-- Gladys Assistant **5.2.0** or later (widgets, scene triggers, house selection in the configuration).
+- Gladys Assistant **5.3.2** or later (the m³/s unit; widgets, scene triggers and house selection
+  need 5.2.0).
 - Internet access from Gladys to `hubeau.eaufrance.fr` and `www.vigicrues.gouv.fr`.
 - For "around my house": the location of your house in Gladys. The integration declares
   `location: true`, shown on the install screen.
@@ -70,8 +71,9 @@ Gladys core ── devices, states, scene events, widget
   Gladys with "only when crossed", so there is no forecast trigger of the integration.
   `node scripts/probe-forecast.mjs <code>` shows what a station would publish (read-only).
 - Hub'Eau gives heights in mm and flows in l/s: they are converted to m and m³/s, the units of
-  vigicrues.gouv.fr. Gladys has no m³/s unit: by default the flow is published in m³/h, the one
-  flow unit of the core; with `flow_unit: m3s` the feature has no unit and its name says it.
+  vigicrues.gouv.fr. By default the flow is published in m³/h; with `flow_unit: m3s` in m³/s
+  (`cubic-meter-per-second`, Gladys 5.3.2), and its name says it: before 1.3.0 that feature had
+  no unit, and an older device keeps none until "Update" in the Discover tab.
   The states follow the unit of the feature as created in Gladys until the device is updated.
 - The section of a station is found from Vigicrues: `station.json` gives its territory,
   `TerEntVigiCru` the sections of the territory, `TronEntVigiCru` their stations (the upward link

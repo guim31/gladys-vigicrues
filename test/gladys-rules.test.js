@@ -59,13 +59,16 @@ for (const { language, flowUnit } of cases) {
     t.after(() => world.app.stop());
     const devices = world.fake.discoveredDevices;
     assert.ok(devices.length >= 6, `${devices.length} devices`);
-    // The flow: the m³/h unit of the core, or no unit at all (Gladys has no m³/s).
+    // The flow: the m³/h or the m³/s unit of the core (m³/s since Gladys 5.3.2).
     const flows = devices.flatMap((device) =>
       device.features.filter((feature) => /:(forecast_)?flow(_|$)/.test(feature.external_id)),
     );
     assert.ok(flows.length > 0, 'a flow feature');
     for (const flow of flows) {
-      assert.equal(flow.unit, flowUnit === 'm3h' ? 'cubic-meter-per-hour' : undefined);
+      assert.equal(
+        flow.unit,
+        flowUnit === 'm3h' ? 'cubic-meter-per-hour' : 'cubic-meter-per-second',
+      );
     }
     const featureCounts = new Set(devices.map((device) => device.features.length));
     assert.ok(featureCounts.has(19), 'a station with height and flow forecasts');
@@ -118,10 +121,15 @@ for (const { language, flowUnit } of cases) {
         if (feature.unit !== undefined) {
           assert.ok(table.units.includes(feature.unit), `${at}: unknown unit ${feature.unit}`);
         }
-        if (feature.unit !== undefined && table.units_by_category?.[feature.category]) {
+        // The front offers the units of the category and type first, those of
+        // the category otherwise (UpdateDeviceFeature.jsx).
+        const allowedUnits =
+          table.units_by_category_and_type?.[feature.category]?.[feature.type] ??
+          table.units_by_category?.[feature.category];
+        if (feature.unit !== undefined && allowedUnits) {
           assert.ok(
-            table.units_by_category[feature.category].includes(feature.unit),
-            `${at}: ${feature.unit} is not a unit of ${feature.category}`,
+            allowedUnits.includes(feature.unit),
+            `${at}: ${feature.unit} is not a unit of ${feature.category}/${feature.type}`,
           );
         }
 

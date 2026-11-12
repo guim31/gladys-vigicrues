@@ -13,6 +13,7 @@
   "gladys_version": ">=5.3.2",
   "cover_image": "https://raw.githubusercontent.com/guim31/gladys-vigicrues/main/cover.png",
   "categories": ["environment"],
+  "countries": ["FR"],
   "transports": ["cloud"],
   "location": true,
   "config_schema": [

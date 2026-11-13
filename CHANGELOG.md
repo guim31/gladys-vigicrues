@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-11-13
+
 ### Changed
 
 - Declared for France only (`countries: ["FR"]`): the Gladys catalog of an
@@ -89,7 +91,8 @@ the notes of the version's GitHub Release.
   stations, the vigilance every 30 minutes), without relying on Gladys polling.
 - English, French, German and Spanish texts and documentation.
 
-[Unreleased]: https://github.com/guim31/gladys-vigicrues/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/guim31/gladys-vigicrues/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/guim31/gladys-vigicrues/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/guim31/gladys-vigicrues/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/guim31/gladys-vigicrues/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/guim31/gladys-vigicrues/compare/v1.1.0...v1.2.0
